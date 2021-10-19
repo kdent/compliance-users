@@ -3,8 +3,8 @@
   height='48'
 />
 
-# python-project-template
-A carbonplan template for a developing a python project
+# carbonplan/compliance-users
+Working repo to make a simple tool for querying CA compliance data. 
 
 [![CI](https://github.com/carbonplan/python-project-template/actions/workflows/main.yaml/badge.svg)](https://github.com/carbonplan/python-project-template/actions/workflows/main.yaml)
 ![MIT License][]
@@ -12,20 +12,11 @@ A carbonplan template for a developing a python project
 [mit license]: https://badgen.net/badge/license/MIT/blue
 
 
-This carbonplan repository contains a template for developing a python project. To start, click on the green [Use this template](https://github.com/carbonplan/python-project-template/generate) in the top right. This will allow you to create a new project using this base template.
+This repository is being used to develop a simple tool to query California Cap & Trade compliance data. Specifically, the tool allows a user to ask which regulated entities in California – whom we call users throughout the repo – have turned in credits from a particular offset project (project-->users) or which offset projects a particular user has used credits from (user-->projects). 
 
-## Modifications
+Compliance submission data are derived from the regulator's [Compliance Reports](https://ww2.arb.ca.gov/our-work/programs/cap-and-trade-program/cap-and-trade-program-data). 
 
-### Updating project name
-
-`scripts` and `tests` contain filler .py files. Update/remove these with your project name.
-### Updating workflows/main.yaml
-
-In the workflows/main.yaml file, the pytest and docker sections of the github actions configuration are currently commented out. If you wish to add them, uncomment them.
-
-### Updating requirements.txt
-
-requirements.txt is currently empty. You can populate it with: ```pip3 freeze > requirements.txt```
+Offset project data is available is derived from the regulator's [Issuance Table](https://ww2.arb.ca.gov/our-work/programs/cap-and-trade-program/cap-and-trade-program-data). 
 
 ## license
 
@@ -33,4 +24,4 @@ All the code in this repository is [MIT](https://choosealicense.com/licenses/mit
 
 ## about us
 
-CarbonPlan is a non-profit organization working on the science and data of carbon removal. We aim to improve the transparency and scientific integrity of carbon removal and climate solutions through open data and tools. Find out more at [carbonplan.org](https://carbonplan.org/) or get in touch by [opening an issue](https://github.com/carbonplan/python-project-template/issues/new) or [sending us an email](mailto:hello@carbonplan.org).
+CarbonPlan is a non-profit organization working on the science and data of carbon removal. We aim to improve the transparency and scientific integrity of carbon removal and climate solutions through open data and tools. Find out more at [carbonplan.org](https://carbonplan.org/) or get in touch by [opening an issue](https://github.com/carbonplan/compliance-users/issues/new) or [sending us an email](mailto:hello@carbonplan.org).
