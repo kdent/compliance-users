@@ -1,59 +1,54 @@
 import json
-
 import pandas as pd
-import numpy as np
 
-import project_to_users
-import user_to_projects
+import projects
+import users_and_projects
+import users_and_facilities
+import facilities
 
+# Todo: address pandas warning w/out silencing
+pd.options.mode.chained_assignment = None 
+
+# Define years over which compliance data will be considered and where to find it
 compliance_reports =['2013-2014', '2015-2017', '2018', '2019']
+mrr_data_years = ['2013', '2014', '2015', '2016', '2017', '2018', '2019']
+
 compliance_report_path = 'data/compliance-reports/'
+mrr_data_path = 'data/mrr-data/'
 issuance_table_path = 'data/'
 
-project_types = {
-    'Forest': 'U.S. Forest Project',
-    'ODS': 'Ozone Depleting Substance Project',
-    'Livestock': 'Livestock Project',
-    'MMC': 'Mine Methane Capture Project',
-    'Rice': 'Rice Cultivation Project', 
-    'Urban': 'Urban Forest Project'
-}
 
-def read_project_id_map(): 
-    issuance = pd.read_excel(issuance_table_path + 'arboc_issuance.xlsx','ARB Offset Credit Issuance')
-    project_id_map = issuance[['CARB Issuance ID','OPR Project ID', 'Offset Project Name', 'Project Type']].drop_duplicates()
-    project_id_map.rename(columns = {'CARB Issuance ID': 'arb_id',
-                            'OPR Project ID': 'opr_id', 
-                            'Offset Project Name': 'project_name',
-                            'Project Type': 'project_type'}, 
-                            inplace = True)
-    project_id_map['arb_id'] = project_id_map['arb_id'].str.strip()
-    project_id_map['opr_id'] = project_id_map['opr_id'].astype(str).str.strip()
-    for i,row in project_id_map.iterrows(): 
-        row['project_type'] = project_types[row['project_type']]
-    return project_id_map
+def prune_user_facility_data(user_project_df, user_facility_df):
+    """ Prunes user_facility data to include only entities who have
+    have used turned in offsets to meet their compliance obligations 
+    """
+    uids_1 = user_project_df['user_id'].unique()
+    uids_2 = user_facility_df['user_id'].unique()
+    l = list(set(uids_2) - set(uids_1))
+    uf_df = user_facility_df[~user_facility_df['user_id'].isin(l)]
+    return uf_df
 
 
-def read_entity_project_data():
-    entity_project_df = pd.DataFrame()
-    for r in compliance_reports:
-        df = pd.read_excel(compliance_report_path + r + 'compliancereport.xlsx', r +' '+ 'Offset Detail')
-        df.columns = df.iloc[3]
-        df = df[~np.any(df.isna(), axis=1)]
-        df = df[4:].reset_index(drop="true")
-        df['reporting_period'] = r
-        entity_project_df = entity_project_df.append(df)
-    entity_project_df.rename(columns = {'Entity ID': 'entity_id',
-                                    'Legal Name': 'entity_name',
-                                    'Vintage': 'vintage',
-                                    'Quantity': 'quantity',
-                                    'ARB Project ID #': 'arb_id'}, 
-                                    inplace = True)
-    entity_project_df['entity_id'] = entity_project_df['entity_id'].str.strip()
-    entity_project_df['arb_id'] = entity_project_df['arb_id'].str.strip()
-    project_id_map = read_project_id_map()
-    entity_project_df = entity_project_df.merge(project_id_map, how='left', on='arb_id')
-    return entity_project_df
+def prune_mismatched_facility_ids(user_facility_df, facility_df): 
+    """ Prunes user_facility and facility data to exclude facility ids
+    that only appear in one or the other. 
+
+    As of 10/22/21,  four facility IDs appear in compliance reports associated
+    with users, but nowhere in the MRR facility data. Two of these have been 
+    confirmed on non-relavent facility IDs by CARB ('5043': a legacy ID used
+    for fee purposes, not relavent to GHG reporting, and '57555': a typo waiting
+    to be corrected.)
+
+    There are also four facility IDs with non-zer covered emissions that appear in the
+    MRR data, but are not associated with any compliance entities' submissions in the 
+    compliance reports. These are unresolved mismatches.   
+    """
+    fids1 = user_facility_df['facility_id'].unique()
+    fids2 = facility_df['facility_id'].unique()
+    l = list(set(fids1) ^ set(fids2))
+    uf_df = user_facility_df[~user_facility_df['facility_id'].isin(l)]
+    f_df = facility_df[~facility_df['facility_id'].isin(l)]
+    return uf_df, f_df
 
 
 def write_json(collection, output):
@@ -62,12 +57,49 @@ def write_json(collection, output):
 
 
 def main():
-    entity_project_df = read_entity_project_data()
-    project_collection = project_to_users.make_project_collection(entity_project_df)
-    user_collection = user_to_projects.make_users_collection(entity_project_df)
-    output_suffix = compliance_reports[0]+'_'+compliance_reports[-1]
-    write_json(project_collection, 'data/outputs/project_users_' + output_suffix + '.json')
-    write_json(user_collection, 'data/outputs/user_projects_' + output_suffix + '.json')
+    # Read and process offset project data from CARB's issuance table
+    project_df = projects.read_project_data(issuance_table_path)
+    opr_to_arbs = projects.make_opr_to_arbs(project_df)
+    arb_to_oprs = projects.make_arb_to_oprs(project_df)
+    project_name_to_opr, opr_to_project_info = projects.make_project_info(project_df)
+    
+    # Read and process offset use data from compliance reports
+    user_project_df = users_and_projects.read_user_project_data(compliance_report_path, compliance_reports)
+    user_to_arbs = users_and_projects.make_user_to_arbs(user_project_df)
+    arb_to_users = users_and_projects.make_arb_to_users(user_project_df)
+
+    # Read and process user data from the compliance reports, including associated facility ids
+    user_facility_df = users_and_facilities.read_user_facility_data(compliance_report_path, compliance_reports)
+    user_facility_df = prune_user_facility_data(user_project_df, user_facility_df)
+    user_to_facilities = users_and_facilities.make_user_to_facilities(user_facility_df)
+    facility_to_user = users_and_facilities.make_facility_to_users(user_facility_df)
+    
+    # Read and process facility data from the mrr emissions data
+    facility_df = facilities.read_facility_data(mrr_data_path, mrr_data_years)
+    user_facility_df, facility_df = prune_mismatched_facility_ids(user_facility_df, facility_df)
+    user_name_to_id = users_and_facilities.make_user_name_to_id(user_facility_df)
+    user_id_to_name = users_and_facilities.make_user_id_to_name(user_facility_df)
+    
+    facility_name_to_id, facility_id_to_info = facilities.make_facility_info(facility_df)
+    facility_collection = {'facility_name_to_id': facility_name_to_id,
+                            'facility_id_to_info': facility_id_to_info}
+
+    collection = {'opr_to_arbs': opr_to_arbs,
+                    'arb_to_oprs': arb_to_oprs,
+                    'opr_to_project_info': opr_to_project_info,
+                    'project_name_to_opr': project_name_to_opr,
+                    'opr_to_project_info': opr_to_project_info,
+                    'user_to_arbs': user_to_arbs,
+                    'arb_to_users': arb_to_users,
+                    'user_to_facilities': user_to_facilities,
+                    'facility_to_user': facility_to_user,
+                    'user_name_to_id': user_name_to_id,
+                    'user_id_to_name': user_id_to_name,
+                    'facility_name_to_id': facility_name_to_id,
+                    'facility_id_to_info': facility_id_to_info}
+    
+    output_suffix = mrr_data_years[0]+'_'+mrr_data_years[-1]
+    write_json(collection, 'data/outputs/user_data_' + output_suffix + '.json')
 
 
 if __name__ == "__main__":
