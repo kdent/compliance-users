@@ -4,7 +4,7 @@
 />
 
 # carbonplan/compliance-users
-Working repo to make a simple tool for querying CA compliance data. 
+Working repo to make a simple tool for querying CA compliance data.
 
 [![CI](https://github.com/carbonplan/python-project-template/actions/workflows/main.yaml/badge.svg)](https://github.com/carbonplan/python-project-template/actions/workflows/main.yaml)
 ![MIT License][]
@@ -12,11 +12,11 @@ Working repo to make a simple tool for querying CA compliance data.
 [mit license]: https://badgen.net/badge/license/MIT/blue
 
 
-This repository is being used to develop a simple tool to query California Cap & Trade compliance data. Specifically, the tool allows a user to ask which regulated entities in California – whom we call users throughout the repo – have turned in credits from a particular offset project (project-->users) or which offset projects a particular user has used credits from (user-->projects). 
+This repository is being used to develop a simple tool to query California Cap & Trade compliance data. Specifically, the tool allows a user to ask which regulated entities in California – whom we call users throughout the repo – have turned in credits from a particular offset project (project-->users) or which offset projects a particular user has used credits from (user-->projects).
 
-Compliance submission data are derived from the regulator's [Compliance Reports](https://ww2.arb.ca.gov/our-work/programs/cap-and-trade-program/cap-and-trade-program-data). 
+Compliance submission data are derived from the regulator's [Compliance Reports](https://ww2.arb.ca.gov/our-work/programs/cap-and-trade-program/cap-and-trade-program-data).
 
-Offset project data is available is derived from the regulator's [Issuance Table](https://ww2.arb.ca.gov/our-work/programs/cap-and-trade-program/cap-and-trade-program-data). 
+Offset project data is available is derived from the regulator's [Issuance Table](https://ww2.arb.ca.gov/our-work/programs/cap-and-trade-program/cap-and-trade-program-data).
 
 ## license
 
