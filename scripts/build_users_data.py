@@ -20,7 +20,7 @@ issuance_table_path = 'data/'
 
 def prune_user_facility_data(user_project_df, user_facility_df):
     """Prunes user_facility data to include only entities who have
-    have used turned in offsets to meet their compliance obligations
+    have used offsets to meet their compliance obligations
     """
     uids_1 = user_project_df['user_id'].unique()
     uids_2 = user_facility_df['user_id'].unique()
@@ -31,16 +31,16 @@ def prune_user_facility_data(user_project_df, user_facility_df):
 
 def prune_mismatched_facility_ids(user_facility_df, facility_df):
     """Prunes user_facility and facility data to exclude facility ids
-    that only appear in one or the other.
+    that only appear in dataset one or the other.
 
-    As of 10/22/21,  four facility IDs appear in compliance reports associated
+    As of 10/22/21, four facility IDs appear in compliance reports associated
     with users, but nowhere in the MRR facility data. Two of these have been
-    confirmed on non-relavent facility IDs by CARB ('5043': a legacy ID used
-    for fee purposes, not relavent to GHG reporting, and '57555': a typo waiting
+    confirmed as non-relavent facility IDs by CARB ('5043'- a legacy ID used
+    for fee purposes, not relavent to GHG reporting; '57555'- a typo waiting
     to be corrected.)
 
-    There are also four facility IDs with non-zer covered emissions that appear in the
-    MRR data, but are not associated with any compliance entities' submissions in the
+    There are also four facility IDs with non-zero covered emissions that appear in the
+    MRR data, but are not associated with any compliance entities in the
     compliance reports. These are unresolved mismatches.
     """
     fids1 = user_facility_df['facility_id'].unique()
@@ -86,6 +86,7 @@ def main():
 
     facility_name_to_id, facility_id_to_info = facilities.make_facility_info(facility_df)
 
+    # Create collection and write to json
     collection = {
         'opr_to_arbs': opr_to_arbs,
         'arb_to_oprs': arb_to_oprs,
