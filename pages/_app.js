@@ -1,8 +1,8 @@
-import { ThemeProvider } from "theme-ui";
-import { MDXProvider } from "@mdx-js/react";
-import "@carbonplan/components/fonts.css";
-import "@carbonplan/components/globals.css";
-import theme from "@carbonplan/theme";
+import { ThemeProvider } from 'theme-ui'
+import { MDXProvider } from '@mdx-js/react'
+import '@carbonplan/components/fonts.css'
+import '@carbonplan/components/globals.css'
+import theme from '@carbonplan/theme'
 
 const App = ({ Component, pageProps }) => {
   return (
@@ -11,7 +11,7 @@ const App = ({ Component, pageProps }) => {
         <Component {...pageProps} />
       </MDXProvider>
     </ThemeProvider>
-  );
-};
+  )
+}
 
-export default App;
+export default App

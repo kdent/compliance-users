@@ -1,11 +1,11 @@
-import Document, { Html, Main, NextScript, Head } from "next/document";
-import { Tracking } from "@carbonplan/components";
-import { InitializeColorMode } from "theme-ui";
+import Document, { Html, Main, NextScript, Head } from 'next/document'
+import { Tracking } from '@carbonplan/components'
+import { InitializeColorMode } from 'theme-ui'
 
 class MyDocument extends Document {
   render() {
     return (
-      <Html lang="en" className="no-focus-outline">
+      <Html lang='en' className='no-focus-outline'>
         <Head>
           <Tracking id={process.env.GA_TRACKING_ID} />
         </Head>
@@ -15,8 +15,8 @@ class MyDocument extends Document {
           <NextScript />
         </body>
       </Html>
-    );
+    )
   }
 }
 
-export default MyDocument;
+export default MyDocument

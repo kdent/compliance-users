@@ -1,16 +1,16 @@
-import { Box, Themed } from "theme-ui";
-import { default as NextLink } from "next/link";
-import { Link } from "@carbonplan/components";
-import Tool from "../components/tool";
+import { Box, Themed } from 'theme-ui'
+import { default as NextLink } from 'next/link'
+import { Link } from '@carbonplan/components'
+import Tool from '../components/tool'
 
 const Index = () => {
   const meta = {
-    id: "compliance-users",
-    title: "Compliance users",
-    color: "pink",
-    card: "compliance-users",
-    quickLook: "Tracking the users of compliance offsets",
-  };
+    id: 'compliance-users',
+    title: 'Compliance users',
+    color: 'pink',
+    card: 'compliance-users',
+    quickLook: 'Tracking the users of compliance offsets',
+  }
 
   const description = (
     <span>
@@ -18,17 +18,17 @@ const Index = () => {
       offset projects for compliance purposes. Who are these entities? This
       simple tool lets you search for an offset project, user, or facility, and
       see the linked results. We built it by sourcing and links public datasets.
-      Read more in our{" "}
-      <Link href="https://carbonplan.org/blog/compliance-offset-users">
+      Read more in our{' '}
+      <Link href='https://carbonplan.org/blog/compliance-offset-users'>
         blog post
-      </Link>{" "}
-      or checkout the{" "}
-      <Link href="https://github.com/carbonplan/compliance-users">
+      </Link>{' '}
+      or checkout the{' '}
+      <Link href='https://github.com/carbonplan/compliance-users'>
         GitHub repository
       </Link>
       .
     </span>
-  );
+  )
 
   return (
     <Tool
@@ -41,7 +41,7 @@ const Index = () => {
     >
       Hello
     </Tool>
-  );
-};
+  )
+}
 
-export default Index;
+export default Index
