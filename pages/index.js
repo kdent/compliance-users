@@ -39,7 +39,7 @@ const Index = () => {
       descriptionWidth={[6, 7, 7, 7]}
       quickLookStart={9}
     >
-      Hello
+      This is a test
     </Tool>
   )
 }
