@@ -2,6 +2,7 @@ import { Box, Themed } from 'theme-ui'
 import { default as NextLink } from 'next/link'
 import { Link } from '@carbonplan/components'
 import Tool from '../components/tool'
+import Main from '../tool/main'
 
 const Index = () => {
   const meta = {
@@ -39,7 +40,7 @@ const Index = () => {
       descriptionWidth={[6, 7, 7, 7]}
       quickLookStart={9}
     >
-      This is a test
+      <Main />
     </Tool>
   )
 }
