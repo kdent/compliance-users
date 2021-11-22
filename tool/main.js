@@ -3,6 +3,11 @@ import { Box, Divider } from 'theme-ui'
 import { Row, Column, Filter, Group, Input } from '@carbonplan/components'
 import Results from './results'
 
+// const url =
+//   'https://raw.githubusercontent.com/carbonplan/compliance-users/main/data/outputs/user_data_2013_2019.json'
+
+const url = 'http://localhost:8080/user_data_2013_2019.json'
+
 const sx = {
   heading: {
     fontSize: [5],
@@ -30,9 +35,9 @@ const init = {
     user: true,
     facility: false,
   },
-  timePeriods: {
+  reportingPeriods: {
     '2013-2014': true,
-    '2015-2017': false,
+    '2015-2017': true,
     2018: false,
     2019: false,
   },
@@ -45,10 +50,22 @@ const colors = {
 }
 
 const Main = () => {
+  const [data, setData] = useState()
   const [search, setSearch] = useState('')
+  const [preview, setPreview] = useState([])
   const [searchBy, setSearchBy] = useState(init.searchBy)
   const [showResultsBy, setShowResultsBy] = useState(init.showResultsBy)
-  const [timePeriods, setTimePeriods] = useState(init.timePeriods)
+  const [reportingPeriods, setReportingPeriods] = useState(
+    init.reportingPeriods
+  )
+
+  useEffect(() => {
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        setData(data)
+      })
+  }, [])
 
   useEffect(() => {
     if (searchBy.project) {
@@ -70,6 +87,28 @@ const Main = () => {
       })
     }
   }, [searchBy])
+
+  useEffect(() => {
+    if (!data) return
+    if (searchBy.project) {
+      if (search !== '') {
+        let matches = Object.keys(data.opr_to_arbs)
+          .concat(Object.keys(data.arb_to_oprs))
+          .filter((d) => d.toLowerCase().includes(search.toLowerCase()))
+        if (matches.length > 1) {
+          setPreview(matches)
+        } else if (matches.length === 1) {
+          setPreview([])
+        } else {
+          setPreview(['no matching projects'])
+        }
+      } else {
+        setPreview([])
+      }
+    }
+  }, [data, search, searchBy])
+
+  console.log(data)
 
   return (
     <Box>
@@ -96,6 +135,36 @@ const Main = () => {
               letterSpacing: 'mono',
             }}
           />
+          {preview.length > 0 && (
+            <Box sx={{ mb: [3] }}>
+              {preview.slice(0, 5).map((d) => {
+                return (
+                  <Box
+                    sx={{
+                      color: 'secondary',
+                      fontSize: [1],
+                      fontFamily: 'mono',
+                      letterSpacing: 'mono',
+                    }}
+                  >
+                    {d}
+                  </Box>
+                )
+              })}
+              {preview.length > 5 && (
+                <Box
+                  sx={{
+                    color: 'secondary',
+                    fontSize: [1],
+                    fontFamily: 'mono',
+                    letterSpacing: 'mono',
+                  }}
+                >
+                  <br />+{preview.length - 5} more
+                </Box>
+              )}
+            </Box>
+          )}
           <Divider sx={{ mb: [5] }} />
           <Group spacing='md'>
             <Box>
@@ -115,18 +184,23 @@ const Main = () => {
               />
             </Box>
             <Box>
-              <Box sx={sx.label}>Time periods</Box>
-              <Filter values={timePeriods} setValues={setTimePeriods} />
+              <Box sx={sx.label}>Reporting periods</Box>
+              <Filter
+                values={reportingPeriods}
+                setValues={setReportingPeriods}
+                multiSelect
+              />
             </Box>
           </Group>
         </Column>
         <Column start={5} width={5}>
           <Box sx={sx.heading}>Results</Box>
           <Results
+            data={data}
             search={search}
             searchBy={searchBy}
             showResultsBy={showResultsBy}
-            timePeriods={timePeriods}
+            reportingPeriods={reportingPeriods}
           />
         </Column>
       </Row>

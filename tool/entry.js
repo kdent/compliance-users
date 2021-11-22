@@ -44,7 +44,7 @@ const Value = ({ children }) => {
   )
 }
 
-const Entry = ({ data, d, showResultsBy }) => {
+const Entry = ({ data, d, showResultsBy, last }) => {
   return (
     <Box>
       <Divider sx={{ mb: ['12px'], mt: [3] }} />
@@ -93,6 +93,7 @@ const Entry = ({ data, d, showResultsBy }) => {
           </Group>
         </>
       )}
+      {last && <Divider sx={{ mt: [3] }} />}
     </Box>
   )
 }
