@@ -3,7 +3,7 @@ import { Box, Divider } from 'theme-ui'
 import { Badge } from '@carbonplan/components'
 import { Left, Down } from '@carbonplan/icons'
 import { sx } from './styles'
-import Entry from './entry'
+import { Entry, Group, Label, Value } from './entry'
 
 const addType = (data, type) => {
   return data.map((d) => Object.assign({}, d, { type: type }))
@@ -170,7 +170,6 @@ const Results = ({
         projects = projects
           .flat()
           .filter((d) => reportingPeriodsActive.includes(d.reporting_period))
-        console.log(projects)
         setFiltered(addType(projects, 'project'))
       } else {
         setFiltered([])
@@ -186,22 +185,74 @@ const Results = ({
         Results<Badge sx={{ float: 'right', mt: [3] }}>{filtered.length}</Badge>
       </Box>
       <Box>
-        {filtered.length > 0 &&
-          filtered.map((d, i) => {
-            return (
-              <Entry
-                key={i}
-                d={d}
-                data={data}
-                last={i === filtered.length - 1}
-              />
-            )
-          })}
+        <Divider sx={{ mb: ['12px'], mt: [3], pt: '3px' }} />
+        {searchId && filtered.length > 0 && (
+          <>
+            {searchBy.project && data.arb_to_oprs[searchId] && (
+              <Box>
+                <Group>
+                  <Label>Project ID:</Label>
+                  <Value color='green'>
+                    {data.arb_to_oprs[searchId][0]} / {searchId}
+                  </Value>
+                </Group>
+                <Group>
+                  <Label>Project Name:</Label>
+                  <Value>
+                    {
+                      data.opr_to_project_info[data.arb_to_oprs[searchId][0]]
+                        .project_name
+                    }
+                  </Value>
+                </Group>
+              </Box>
+            )}
+            {searchBy.user && data.user_id_to_name[searchId] && (
+              <>
+                <Group>
+                  <Label>User ID:</Label>
+                  <Value color='blue'>{searchId}</Value>
+                </Group>
+                <Group>
+                  <Label>User Name:</Label>
+                  <Value>{data.user_id_to_name[searchId]}</Value>
+                </Group>
+              </>
+            )}
+            {searchBy.facility && data.facility_id_to_info[searchId] && (
+              <>
+                <Group>
+                  <Label>Facility ID:</Label>
+                  <Value color='pink'>{searchId}</Value>
+                </Group>
+                <Group>
+                  <Label>Facility Name:</Label>
+                  <Value>
+                    {
+                      data.facility_id_to_info[searchId][
+                        Object.keys(data.facility_id_to_info[searchId])[0]
+                      ].facility_name
+                    }
+                  </Value>
+                </Group>
+              </>
+            )}
+            {filtered.map((d, i) => {
+              return (
+                <Entry
+                  key={i}
+                  d={d}
+                  data={data}
+                  last={i === filtered.length - 1}
+                />
+              )
+            })}
+          </>
+        )}
         {data && search === '' && filtered.length === 0 && (
           <>
-            <Divider sx={{ mb: ['12px'], mt: [3] }} />
             <Box>
-              <Left sx={{ color: 'secondary', width: 14 }} />
+              <Left sx={{ mt: ['-4px'], color: 'secondary', width: 14 }} />
             </Box>
             <Box sx={{ mt: [1], fontSize: [2], width: '75%' }}>
               Please enter a search term on the left.
@@ -211,9 +262,8 @@ const Results = ({
         )}
         {data && search !== '' && filtered.length === 0 && (
           <>
-            <Divider sx={{ mb: ['12px'], mt: [3] }} />
             <Box>
-              <Left sx={{ color: 'secondary', width: 14 }} />
+              <Left sx={{ mt: ['-4px'], color: 'secondary', width: 14 }} />
             </Box>
             <Box sx={{ mt: [1], fontSize: [2], width: '75%' }}>
               Please finish entering a unique search term or try changing the
@@ -224,9 +274,8 @@ const Results = ({
         )}
         {!data && (
           <>
-            <Divider sx={{ mb: ['12px'], mt: [3] }} />
             <Box>
-              <Down sx={{ color: 'secondary', width: 14 }} />
+              <Down sx={{ mt: ['-4px'], color: 'secondary', width: 14 }} />
             </Box>
             <Box sx={{ mt: [1], fontSize: [2], width: '75%' }}>
               Please wait while the data loads.
