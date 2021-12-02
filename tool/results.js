@@ -278,7 +278,7 @@ const Results = ({
               <Down sx={{ mt: ['-4px'], color: 'secondary', width: 14 }} />
             </Box>
             <Box sx={{ mt: [1], fontSize: [2], width: '75%' }}>
-              Please wait while the data loads.
+              Loading data...
             </Box>
             <Divider sx={{ mt: ['18px'] }} />
           </>
