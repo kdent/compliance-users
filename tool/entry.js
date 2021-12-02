@@ -41,11 +41,11 @@ const Value = ({ children }) => {
   )
 }
 
-const Entry = ({ data, d, showResultsBy, last }) => {
+const Entry = ({ data, d, last }) => {
   return (
     <Box>
       <Divider sx={{ mb: ['12px'], mt: [3] }} />
-      {showResultsBy.user && (
+      {d.type === 'user' && (
         <>
           <Group>
             <Label>User ID:</Label>
@@ -65,19 +65,18 @@ const Entry = ({ data, d, showResultsBy, last }) => {
           </Group>
         </>
       )}
-      {showResultsBy.project && (
+      {d.type === 'project' && (
         <>
           <Group>
-            <Label>Project:</Label>
+            <Label>Project Name:</Label>
             <Value>
-              {
+              {data.arb_to_oprs[d.arb_id] &&
                 data.opr_to_project_info[data.arb_to_oprs[d.arb_id][0]]
-                  .project_name
-              }
+                  .project_name}
             </Value>
           </Group>
           <Group>
-            <Label>ID:</Label>
+            <Label>Project ID:</Label>
             <Value>{d.arb_id}</Value>
           </Group>
           <Group>
@@ -90,7 +89,7 @@ const Entry = ({ data, d, showResultsBy, last }) => {
           </Group>
         </>
       )}
-      {showResultsBy.facility && (
+      {d.type === 'facility' && (
         <>
           <Group>
             <Label>Facility ID:</Label>

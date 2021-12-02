@@ -3,6 +3,10 @@ import { Box, Divider } from 'theme-ui'
 import { Left, Down } from '@carbonplan/icons'
 import Entry from './entry'
 
+const addType = (data, type) => {
+  return data.map((d) => Object.assign({}, d, { type: type }))
+}
+
 const Results = ({
   data,
   search,
@@ -37,8 +41,11 @@ const Results = ({
       }
       if (showResultsBy.user) {
         setFiltered(
-          data.arb_to_users[searchId].filter((d) =>
-            reportingPeriodsActive.includes(d.reporting_period)
+          addType(
+            data.arb_to_users[searchId].filter((d) =>
+              reportingPeriodsActive.includes(d.reporting_period)
+            ),
+            'user'
           )
         )
       } else if (showResultsBy.facility) {
@@ -75,7 +82,7 @@ const Results = ({
           })
         })
         facilities = facilities.flat().filter((d) => d)
-        setFiltered(facilities)
+        setFiltered(addType(facilities, 'facility'))
       }
     } else if (searchBy.user) {
       if (!data.user_to_arbs[searchId]) {
@@ -84,8 +91,11 @@ const Results = ({
       }
       if (showResultsBy.project) {
         setFiltered(
-          data.user_to_arbs[searchId].filter((d) =>
-            reportingPeriodsActive.includes(d.reporting_period)
+          addType(
+            data.user_to_arbs[searchId].filter((d) =>
+              reportingPeriodsActive.includes(d.reporting_period)
+            ),
+            'project'
           )
         )
       } else if (showResultsBy.facility) {
@@ -107,7 +117,7 @@ const Results = ({
             })
           }
         })
-        setFiltered(facilities)
+        setFiltered(addType(facilities, 'facility'))
       } else {
         setFiltered([])
       }
@@ -121,13 +131,7 @@ const Results = ({
       {filtered.length > 0 &&
         filtered.map((d, i) => {
           return (
-            <Entry
-              key={i}
-              showResultsBy={showResultsBy}
-              data={data}
-              d={d}
-              last={i === filtered.length - 1}
-            />
+            <Entry key={i} d={d} data={data} last={i === filtered.length - 1} />
           )
         })}
       {data && search === '' && filtered.length === 0 && (
