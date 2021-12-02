@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Box, Divider } from 'theme-ui'
+import { Badge } from '@carbonplan/components'
 import { Left, Down } from '@carbonplan/icons'
+import { sx } from './styles'
 import Entry from './entry'
 
 const addType = (data, type) => {
@@ -179,51 +181,61 @@ const Results = ({
   }, [searchId, searchBy, showResultsBy, reportingPeriods, data])
 
   return (
-    <Box>
-      {filtered.length > 0 &&
-        filtered.map((d, i) => {
-          return (
-            <Entry key={i} d={d} data={data} last={i === filtered.length - 1} />
-          )
-        })}
-      {data && search === '' && filtered.length === 0 && (
-        <>
-          <Divider sx={{ mb: ['12px'], mt: [3] }} />
-          <Box>
-            <Left sx={{ color: 'secondary', width: 14 }} />
-          </Box>
-          <Box sx={{ mt: [1], fontSize: [2], width: '75%' }}>
-            Please enter a search term on the left.
-          </Box>
-          <Divider sx={{ mt: ['18px'] }} />
-        </>
-      )}
-      {data && search !== '' && filtered.length === 0 && (
-        <>
-          <Divider sx={{ mb: ['12px'], mt: [3] }} />
-          <Box>
-            <Left sx={{ color: 'secondary', width: 14 }} />
-          </Box>
-          <Box sx={{ mt: [1], fontSize: [2], width: '75%' }}>
-            Please finish entering a unique search term or try changing the
-            search settings.
-          </Box>
-          <Divider sx={{ mt: ['18px'] }} />
-        </>
-      )}
-      {!data && (
-        <>
-          <Divider sx={{ mb: ['12px'], mt: [3] }} />
-          <Box>
-            <Down sx={{ color: 'secondary', width: 14 }} />
-          </Box>
-          <Box sx={{ mt: [1], fontSize: [2], width: '75%' }}>
-            Please wait while the data loads.
-          </Box>
-          <Divider sx={{ mt: ['18px'] }} />
-        </>
-      )}
-    </Box>
+    <>
+      <Box sx={sx.heading}>
+        Results<Badge sx={{ float: 'right', mt: [3] }}>{filtered.length}</Badge>
+      </Box>
+      <Box>
+        {filtered.length > 0 &&
+          filtered.map((d, i) => {
+            return (
+              <Entry
+                key={i}
+                d={d}
+                data={data}
+                last={i === filtered.length - 1}
+              />
+            )
+          })}
+        {data && search === '' && filtered.length === 0 && (
+          <>
+            <Divider sx={{ mb: ['12px'], mt: [3] }} />
+            <Box>
+              <Left sx={{ color: 'secondary', width: 14 }} />
+            </Box>
+            <Box sx={{ mt: [1], fontSize: [2], width: '75%' }}>
+              Please enter a search term on the left.
+            </Box>
+            <Divider sx={{ mt: ['18px'] }} />
+          </>
+        )}
+        {data && search !== '' && filtered.length === 0 && (
+          <>
+            <Divider sx={{ mb: ['12px'], mt: [3] }} />
+            <Box>
+              <Left sx={{ color: 'secondary', width: 14 }} />
+            </Box>
+            <Box sx={{ mt: [1], fontSize: [2], width: '75%' }}>
+              Please finish entering a unique search term or try changing the
+              search settings.
+            </Box>
+            <Divider sx={{ mt: ['18px'] }} />
+          </>
+        )}
+        {!data && (
+          <>
+            <Divider sx={{ mb: ['12px'], mt: [3] }} />
+            <Box>
+              <Down sx={{ color: 'secondary', width: 14 }} />
+            </Box>
+            <Box sx={{ mt: [1], fontSize: [2], width: '75%' }}>
+              Please wait while the data loads.
+            </Box>
+            <Divider sx={{ mt: ['18px'] }} />
+          </>
+        )}
+      </Box>
+    </>
   )
 }
 

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Box, Divider } from 'theme-ui'
 import { Row, Column, Filter, Group, Input } from '@carbonplan/components'
+import { sx, colors } from './styles'
 import Results from './results'
 import Search from './search'
 
@@ -8,23 +9,6 @@ const url =
   'https://raw.githubusercontent.com/carbonplan/compliance-users/main/data/outputs/user_data_2013_2019.json'
 
 // const url = 'http://localhost:8080/user_data_2013_2019.json'
-
-const sx = {
-  heading: {
-    fontSize: [5],
-    fontFamily: 'heading',
-    letterSpacing: 'heading',
-    mb: [3],
-  },
-  label: {
-    fontFamily: 'mono',
-    letterSpacing: 'mono',
-    fontSize: [1],
-    mb: [1],
-    color: 'secondary',
-    textTransform: 'uppercase',
-  },
-}
 
 const init = {
   searchBy: {
@@ -42,12 +26,6 @@ const init = {
     2018: true,
     2019: true,
   },
-}
-
-const colors = {
-  project: 'green',
-  user: 'blue',
-  facility: 'pink',
 }
 
 const Main = () => {
@@ -107,8 +85,6 @@ const Main = () => {
           width={3}
           sx={{ position: 'sticky', top: 100, height: 500 }}
         >
-          <Box sx={sx.heading}>Search</Box>
-          <Divider />
           <Search
             data={data}
             search={search}
@@ -145,7 +121,6 @@ const Main = () => {
           </Group>
         </Column>
         <Column start={5} width={5}>
-          <Box sx={sx.heading}>Results</Box>
           <Results
             data={data}
             search={search}

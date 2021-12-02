@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
-import { Box } from 'theme-ui'
+import { Box, Divider } from 'theme-ui'
 import { Input } from '@carbonplan/components'
 import { shade } from '@theme-ui/color'
+import { sx } from './styles'
 
 const getMatches = (search, targets) => {
   let matches = targets.filter((d) =>
@@ -117,6 +118,8 @@ const Search = ({ data, search, searchBy, setSearch, setSearchId }) => {
 
   return (
     <>
+      <Box sx={sx.heading}>Search</Box>
+      <Divider />
       <Input
         placeholder={'enter search term'}
         onChange={(e) => {
