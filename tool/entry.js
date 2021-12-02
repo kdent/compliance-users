@@ -10,12 +10,10 @@ const Label = ({ children }) => {
     <Column start={1} width={2}>
       <Box
         sx={{
-          width: '200px',
           color: 'secondary',
           fontFamily: 'mono',
           letterSpacing: 'mono',
           textTransform: 'uppercase',
-          display: 'inline-block',
           fontSize: [1],
         }}
       >
@@ -34,7 +32,6 @@ const Value = ({ children }) => {
           fontFamily: 'mono',
           letterSpacing: 'mono',
           textTransform: 'uppercase',
-          display: 'inline-block',
           fontSize: [1],
         }}
       >
@@ -51,12 +48,12 @@ const Entry = ({ data, d, showResultsBy, last }) => {
       {showResultsBy.user && (
         <>
           <Group>
-            <Label>User:</Label>
-            <Value>{data.user_id_to_name[d.user_id]}</Value>
+            <Label>User ID:</Label>
+            <Value>{d.user_id}</Value>
           </Group>
           <Group>
-            <Label>ID:</Label>
-            <Value>{d.user_id}</Value>
+            <Label>User Name:</Label>
+            <Value>{data.user_id_to_name[d.user_id]}</Value>
           </Group>
           <Group>
             <Label>Reporting period:</Label>
@@ -90,6 +87,36 @@ const Entry = ({ data, d, showResultsBy, last }) => {
           <Group>
             <Label>Quantity:</Label>
             <Value>{d.quantity}</Value>
+          </Group>
+        </>
+      )}
+      {showResultsBy.facility && (
+        <>
+          <Group>
+            <Label>Facility ID:</Label>
+            <Value>{d.facility_id}</Value>
+          </Group>
+          <Group>
+            <Label>Facility Name:</Label>
+            <Value>{d.facility_name}</Value>
+          </Group>
+          <Group>
+            <Label>Location:</Label>
+            <Value>
+              {d.city}, {d.state}
+            </Value>
+          </Group>
+          <Group>
+            <Label>Reporting period:</Label>
+            <Value>{d.reporting_period}</Value>
+          </Group>
+          <Group>
+            <Label>User ID:</Label>
+            <Value>{d.user_id}</Value>
+          </Group>
+          <Group>
+            <Label>User Name:</Label>
+            <Value>{data.user_id_to_name[d.user_id]}</Value>
           </Group>
         </>
       )}

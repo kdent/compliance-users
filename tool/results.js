@@ -6,6 +6,7 @@ import Entry from './entry'
 const Results = ({
   data,
   search,
+  searchId,
   searchBy,
   showResultsBy,
   reportingPeriods,
@@ -15,44 +16,105 @@ const Results = ({
   useEffect(() => {
     if (!data) return
 
+    if (!searchId) {
+      setFiltered([])
+      return
+    }
+
+    if (search === '') {
+      setFiltered([])
+      return
+    }
+
     const reportingPeriodsActive = Object.keys(reportingPeriods).filter(
       (d) => reportingPeriods[d]
     )
 
     if (searchBy.project) {
-      let searchId
-
-      if (data.opr_to_arbs[search]) {
-        searchId = data.opr_to_arbs[search][0]
-      } else if (data.arb_to_oprs[search]) {
-        searchId = search
-      }
-
-      if (searchId) {
-        if (showResultsBy.user) {
-          setFiltered(
-            data.arb_to_users[searchId].filter((d) =>
-              reportingPeriodsActive.includes(d.reporting_period)
-            )
-          )
-        }
-      } else {
+      if (!data.arb_to_users[searchId]) {
         setFiltered([])
+        return
       }
-    } else if (searchBy.user && showResultsBy.project) {
-      if (Object.keys(data.user_to_arbs).includes(search)) {
+      if (showResultsBy.user) {
         setFiltered(
-          data.user_to_arbs[search].filter((d) =>
+          data.arb_to_users[searchId].filter((d) =>
             reportingPeriodsActive.includes(d.reporting_period)
           )
         )
+      } else if (showResultsBy.facility) {
+        const users = data.arb_to_users[searchId]
+          .filter((d) => reportingPeriodsActive.includes(d.reporting_period))
+          .map((d) => d.user_id)
+        let facilities = []
+        reportingPeriodsActive.forEach((d) => {
+          facilities.push(
+            users.map((u) => {
+              if (data.user_to_facilities[u][d])
+                return {
+                  user_id: u,
+                  reporting_period: d,
+                  facility_ids: data.user_to_facilities[u][d],
+                }
+            })
+          )
+        })
+        facilities = facilities.flat().filter((d) => d)
+        facilities = facilities.map((d) => {
+          return d.facility_ids.map((id) => {
+            if (data.facility_id_to_info[id]) {
+              return Object.assign(
+                {},
+                {
+                  user_id: d.user_id,
+                  reporting_period: d.reporting_period,
+                  facility_id: id,
+                },
+                data.facility_id_to_info[id][d.reporting_period]
+              )
+            }
+          })
+        })
+        facilities = facilities.flat().filter((d) => d)
+        setFiltered(facilities)
+      }
+    } else if (searchBy.user) {
+      if (!data.user_to_arbs[searchId]) {
+        setFiltered([])
+        return
+      }
+      if (showResultsBy.project) {
+        setFiltered(
+          data.user_to_arbs[searchId].filter((d) =>
+            reportingPeriodsActive.includes(d.reporting_period)
+          )
+        )
+      } else if (showResultsBy.facility) {
+        let facilities = []
+        reportingPeriodsActive.forEach((d) => {
+          if (data.user_to_facilities[searchId][d]) {
+            data.user_to_facilities[searchId][d].map((id) => {
+              facilities.push(
+                Object.assign(
+                  {},
+                  {
+                    user_id: searchId,
+                    reporting_period: d,
+                    facility_id: id,
+                  },
+                  data.facility_id_to_info[id][d]
+                )
+              )
+            })
+          }
+        })
+        setFiltered(facilities)
       } else {
         setFiltered([])
       }
     } else {
       setFiltered([])
     }
-  }, [search, searchBy, showResultsBy, reportingPeriods, data])
+  }, [searchId, searchBy, showResultsBy, reportingPeriods, data])
 
   return (
     <Box>
@@ -87,7 +149,7 @@ const Results = ({
             <Left sx={{ color: 'secondary', width: 14 }} />
           </Box>
           <Box sx={{ mt: [1], fontSize: [2], width: '75%' }}>
-            Please finish entering a valid search term or try changing the
+            Please finish entering a unique search term or try changing the
             search settings.
           </Box>
           <Divider sx={{ mt: ['18px'] }} />

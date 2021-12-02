@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Box, Divider } from 'theme-ui'
 import { Row, Column, Filter, Group, Input } from '@carbonplan/components'
 import Results from './results'
+import Search from './search'
 
 const url =
   'https://raw.githubusercontent.com/carbonplan/compliance-users/main/data/outputs/user_data_2013_2019.json'
@@ -38,8 +39,8 @@ const init = {
   reportingPeriods: {
     '2013-2014': true,
     '2015-2017': true,
-    2018: false,
-    2019: false,
+    2018: true,
+    2019: true,
   },
 }
 
@@ -52,7 +53,7 @@ const colors = {
 const Main = () => {
   const [data, setData] = useState()
   const [search, setSearch] = useState('')
-  const [preview, setPreview] = useState([])
+  const [searchId, setSearchId] = useState(null)
   const [searchBy, setSearchBy] = useState(init.searchBy)
   const [showResultsBy, setShowResultsBy] = useState(init.showResultsBy)
   const [reportingPeriods, setReportingPeriods] = useState(
@@ -63,6 +64,13 @@ const Main = () => {
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
+        data.project_targets = Object.keys(data.arb_to_users).concat(
+          Object.keys(data.opr_to_arbs)
+        )
+        data.user_targets = Object.keys(data.user_to_arbs).concat(
+          Object.keys(data.user_name_to_id)
+        )
+        console.log(data)
         setData(data)
       })
   }, [])
@@ -88,83 +96,23 @@ const Main = () => {
     }
   }, [searchBy])
 
-  useEffect(() => {
-    if (!data) return
-    if (searchBy.project) {
-      if (search !== '') {
-        let matches = Object.keys(data.opr_to_arbs)
-          .concat(Object.keys(data.arb_to_oprs))
-          .filter((d) => d.toLowerCase().includes(search.toLowerCase()))
-        if (matches.length > 1) {
-          setPreview(matches)
-        } else if (matches.length === 1) {
-          setPreview([])
-        } else {
-          setPreview(['no matching projects'])
-        }
-      } else {
-        setPreview([])
-      }
-    }
-  }, [data, search, searchBy])
-
-  console.log(data)
-
   return (
     <Box>
       <Row columns={[6, 8, 10, 10]}>
         <Column
           start={1}
           width={3}
-          sx={{ position: 'sticky', top: 100, height: 400 }}
+          sx={{ position: 'sticky', top: 100, height: 500 }}
         >
           <Box sx={sx.heading}>Search</Box>
           <Divider />
-          <Input
-            placeholder={'enter search term'}
-            onChange={(e) => {
-              setSearch(e.currentTarget.value)
-            }}
-            value={search}
-            sx={{
-              borderStyle: 'none',
-              fontFamily: 'mono',
-              fontSize: [1],
-              width: '100%',
-              py: [2],
-              letterSpacing: 'mono',
-            }}
+          <Search
+            data={data}
+            search={search}
+            searchBy={searchBy}
+            setSearch={setSearch}
+            setSearchId={setSearchId}
           />
-          {preview.length > 0 && (
-            <Box sx={{ mb: [3] }}>
-              {preview.slice(0, 5).map((d) => {
-                return (
-                  <Box
-                    sx={{
-                      color: 'secondary',
-                      fontSize: [1],
-                      fontFamily: 'mono',
-                      letterSpacing: 'mono',
-                    }}
-                  >
-                    {d}
-                  </Box>
-                )
-              })}
-              {preview.length > 5 && (
-                <Box
-                  sx={{
-                    color: 'secondary',
-                    fontSize: [1],
-                    fontFamily: 'mono',
-                    letterSpacing: 'mono',
-                  }}
-                >
-                  <br />+{preview.length - 5} more
-                </Box>
-              )}
-            </Box>
-          )}
           <Divider sx={{ mb: [5] }} />
           <Group spacing='md'>
             <Box>
@@ -198,6 +146,7 @@ const Main = () => {
           <Results
             data={data}
             search={search}
+            searchId={searchId}
             searchBy={searchBy}
             showResultsBy={showResultsBy}
             reportingPeriods={reportingPeriods}
