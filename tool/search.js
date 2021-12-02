@@ -10,7 +10,7 @@ const getMatches = (search, targets) => {
   return matches
 }
 
-const getUniqueKey = (search, obj1, obj2) => {
+const getUniqueKey = (search, obj1, obj2, obj3) => {
   if (obj1[search]) {
     return search
   } else if (obj2[search]) {
@@ -19,6 +19,8 @@ const getUniqueKey = (search, obj1, obj2) => {
     } else {
       return obj2[search]
     }
+  } else if (obj3 && obj3[search]) {
+    return obj2[obj3[search]][0]
   }
 }
 
@@ -65,13 +67,19 @@ const Search = ({ data, search, searchBy, setSearch, setSearchId }) => {
       } else if (matches.length === 1) {
         setPreview(matches)
         setSearchId(
-          getUniqueKey(matches[0], data.arb_to_users, data.opr_to_arbs)
+          getUniqueKey(
+            matches[0],
+            data.arb_to_users,
+            data.opr_to_arbs,
+            data.project_name_to_opr
+          )
         )
       } else {
         setPreview(['no matching projects'])
         setSearchId(null)
       }
-    } else if (searchBy.user) {
+    }
+    if (searchBy.user) {
       let matches = getMatches(search, data.user_targets)
       if (matches.length > 1) {
         setPreview(matches)
@@ -80,6 +88,25 @@ const Search = ({ data, search, searchBy, setSearch, setSearchId }) => {
         setPreview(matches)
         setSearchId(
           getUniqueKey(matches[0], data.user_to_arbs, data.user_name_to_id)
+        )
+      } else {
+        setPreview(['no matching users'])
+        setSearchId(null)
+      }
+    }
+    if (searchBy.facility) {
+      let matches = getMatches(search, data.facility_targets)
+      if (matches.length > 1) {
+        setPreview(matches)
+        setSearchId(null)
+      } else if (matches.length === 1) {
+        setPreview(matches)
+        setSearchId(
+          getUniqueKey(
+            matches[0],
+            data.facility_to_user,
+            data.facility_name_to_id
+          )
         )
       } else {
         setPreview(['no matching users'])

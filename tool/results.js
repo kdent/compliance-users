@@ -118,6 +118,58 @@ const Results = ({
           }
         })
         setFiltered(addType(facilities, 'facility'))
+      }
+    } else if (searchBy.facility) {
+      if (!data.facility_to_user[searchId]) {
+        setFiltered([])
+        return
+      }
+      if (showResultsBy.user) {
+        let users = []
+        reportingPeriodsActive.forEach((d) => {
+          if (data.facility_to_user[searchId][d]) {
+            data.facility_to_user[searchId][d].map((id) => {
+              users.push(
+                Object.assign(
+                  {},
+                  {
+                    user_id: id,
+                    reporting_period: d,
+                  }
+                )
+              )
+            })
+          }
+        })
+        setFiltered(addType(users, 'user'))
+      } else if (showResultsBy.project) {
+        let users = []
+        reportingPeriodsActive.forEach((d) => {
+          if (data.facility_to_user[searchId][d]) {
+            data.facility_to_user[searchId][d].map((id) => {
+              users.push(
+                Object.assign(
+                  {},
+                  {
+                    user_id: id,
+                    reporting_period: d,
+                  }
+                )
+              )
+            })
+          }
+        })
+        let projects = []
+        users.forEach((d) => {
+          if (data.user_to_arbs[d.user_id]) {
+            projects.push(data.user_to_arbs[d.user_id])
+          }
+        })
+        projects = projects
+          .flat()
+          .filter((d) => reportingPeriodsActive.includes(d.reporting_period))
+        console.log(projects)
+        setFiltered(addType(projects, 'project'))
       } else {
         setFiltered([])
       }

@@ -44,7 +44,7 @@ const Value = ({ children }) => {
 const Entry = ({ data, d, last }) => {
   return (
     <Box>
-      <Divider sx={{ mb: ['12px'], mt: [3] }} />
+      <Divider sx={{ mb: ['12px'], mt: [3], pt: ['2px'] }} />
       {d.type === 'user' && (
         <>
           <Group>
@@ -59,10 +59,12 @@ const Entry = ({ data, d, last }) => {
             <Label>Reporting period:</Label>
             <Value>{d.reporting_period}</Value>
           </Group>
-          <Group>
-            <Label>Quantity:</Label>
-            <Value>{d.quantity}</Value>
-          </Group>
+          {d.quantity && (
+            <Group>
+              <Label>Quantity:</Label>
+              <Value>{d.quantity}</Value>
+            </Group>
+          )}
         </>
       )}
       {d.type === 'project' && (
@@ -77,7 +79,9 @@ const Entry = ({ data, d, last }) => {
           </Group>
           <Group>
             <Label>Project ID:</Label>
-            <Value>{d.arb_id}</Value>
+            <Value>
+              {d.arb_id} / {data.arb_to_oprs[d.arb_id][0]}
+            </Value>
           </Group>
           <Group>
             <Label>Reporting period:</Label>
