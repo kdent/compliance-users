@@ -10,8 +10,8 @@ import users_and_projects
 pd.options.mode.chained_assignment = None
 
 # Define years over which compliance data will be considered and where to find it
-compliance_reports = ['2013-2014', '2015-2017', '2018', '2019']
-mrr_data_years = ['2013', '2014', '2015', '2016', '2017', '2018', '2019']
+compliance_reports = ['2013-2014', '2015-2017', '2018-2020']
+mrr_data_years = ['2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020']
 
 compliance_report_path = 'data/compliance-reports/'
 mrr_data_path = 'data/mrr-data/'
