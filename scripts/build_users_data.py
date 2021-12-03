@@ -59,7 +59,7 @@ def write_json(collection, output):
 def main():
     # Read and process offset project data from CARB's issuance table
     project_df = projects.read_project_data(issuance_table_path)
-    opr_to_arbs = projects.make_opr_to_arbs(project_df)
+    opr_to_arbs, combined_arbs = projects.make_opr_to_arbs(project_df)
     arb_to_oprs = projects.make_arb_to_oprs(project_df)
     project_name_to_opr, opr_to_project_info = projects.make_project_info(project_df)
 
@@ -68,7 +68,7 @@ def main():
         compliance_report_path, compliance_reports
     )
     user_to_arbs = users_and_projects.make_user_to_arbs(user_project_df)
-    arb_to_users = users_and_projects.make_arb_to_users(user_project_df)
+    arb_to_users = users_and_projects.make_arb_to_users(user_project_df, combined_arbs)
 
     # Read and process user data from the compliance reports, including associated facility ids
     user_facility_df = users_and_facilities.read_user_facility_data(

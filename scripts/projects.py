@@ -59,13 +59,20 @@ def read_project_data(data_path):
 def make_opr_to_arbs(issuance_df):
     opr_ids = issuance_df['opr_id'].unique().tolist()
     opr_to_arbs = {}
+    combined_arbs = []
     for opr_id in opr_ids:
         arbs = []
         o = issuance_df[issuance_df['opr_id'] == opr_id]
         for i, row in o.iterrows():
             arbs.append(row['arb_id'])
-        opr_to_arbs[opr_id] = arbs
-    return opr_to_arbs
+        # if an opr id maps to multiple arbs (as is the case with certain early
+        # early action projects), concatenate into a combined opr id
+        if len(arbs) > 1:
+            combined_arb = '-'.join(arbs)
+            combined_arbs.append(combined_arb)
+            arbs = [combined_arb]
+        opr_to_arbs[opr_id] = arbs[0]
+    return opr_to_arbs, combined_arbs
 
 
 def make_arb_to_oprs(issuance_df):
@@ -76,7 +83,17 @@ def make_arb_to_oprs(issuance_df):
         a = issuance_df[issuance_df['arb_id'] == arb_id]
         for i, row in a.iterrows():
             oprs.append(row['opr_id'])
-        arb_to_oprs[arb_id] = oprs
+        # currently, there is only one arb id (CAMM5244) that maps to multiple
+        # opr ids; since we've confirmed that the underlying project info is
+        # the same, we are not simply dropping one of the opr ids. if another
+        # multi-mapping occurs, we may need to refactor the project info mapping.
+        if len(oprs) > 1:
+            print()
+            print('HEADS UP! A single arb id is mapping to multiple opr ids.')
+            print('----> ' + arb_id)
+            print('----> ' + str(oprs))
+            print()
+        arb_to_oprs[arb_id] = oprs[0]
     return arb_to_oprs
 
 
