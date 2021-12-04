@@ -6,7 +6,7 @@ import Results from './results'
 import Search from './search'
 
 const url =
-  'https://raw.githubusercontent.com/carbonplan/compliance-users/main/data/outputs/user_data_2013_2020v2.json'
+  'https://raw.githubusercontent.com/carbonplan/compliance-users/main/data/outputs/user_data_2013_2020v3.json'
 
 //const url = 'http://localhost:8080/user_data_2013_2020.json'
 
@@ -36,13 +36,6 @@ const Main = () => {
     init.reportingPeriods
   )
 
-  const excludeList = [
-    'CALS0124-CALS0126',
-    'CAOD0004-CAOD0025',
-    'CAOD0051-CAOD0084',
-    'CALS0110-CALS0117',
-  ]
-
   useEffect(() => {
     fetch(url)
       .then((response) => response.json())
@@ -50,7 +43,7 @@ const Main = () => {
         data.project_targets = Object.keys(data.arb_to_users)
           .concat(Object.keys(data.opr_to_arbs))
           .concat(Object.keys(data.project_name_to_opr))
-          .filter((d) => !excludeList.includes(d))
+          .filter((d) => !data.combined_arbs.includes(d))
         data.user_targets = Object.keys(data.user_to_arbs).concat(
           Object.keys(data.user_name_to_id)
         )
