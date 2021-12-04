@@ -101,9 +101,10 @@ def main():
         'user_id_to_name': user_id_to_name,
         'facility_name_to_id': facility_name_to_id,
         'facility_id_to_info': facility_id_to_info,
+        'combined_arbs': combined_arbs,
     }
 
-    output_suffix = mrr_data_years[0] + '_' + mrr_data_years[-1] + 'v2'
+    output_suffix = mrr_data_years[0] + '_' + mrr_data_years[-1] + 'v3'
     write_json(collection, 'data/outputs/user_data_' + output_suffix + '.json')
 
 
