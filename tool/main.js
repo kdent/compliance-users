@@ -6,9 +6,9 @@ import Results from './results'
 import Search from './search'
 
 const url =
-  'https://raw.githubusercontent.com/carbonplan/compliance-users/main/data/outputs/user_data_2013_2019.json'
+  'https://raw.githubusercontent.com/carbonplan/compliance-users/main/data/outputs/user_data_2013_2020v2.json'
 
-// const url = 'http://localhost:8080/user_data_2013_2019.json'
+//const url = 'http://localhost:8080/user_data_2013_2020.json'
 
 const init = {
   searchBy: {
@@ -18,13 +18,11 @@ const init = {
   },
   showResultsBy: {
     user: true,
-    facility: false,
   },
   reportingPeriods: {
     '2013-2014': true,
     '2015-2017': true,
-    2018: true,
-    2019: true,
+    '2018-2020': true,
   },
 }
 
@@ -45,6 +43,7 @@ const Main = () => {
         data.project_targets = Object.keys(data.arb_to_users)
           .concat(Object.keys(data.opr_to_arbs))
           .concat(Object.keys(data.project_name_to_opr))
+          .filter((d) => !d.includes('-'))
         data.user_targets = Object.keys(data.user_to_arbs).concat(
           Object.keys(data.user_name_to_id)
         )
@@ -59,8 +58,7 @@ const Main = () => {
   useEffect(() => {
     if (searchBy.project) {
       setShowResultsBy({
-        user: showResultsBy.facility ? false : true,
-        facility: showResultsBy.facility ? true : false,
+        user: true,
       })
     }
     if (searchBy.user) {
@@ -71,8 +69,7 @@ const Main = () => {
     }
     if (searchBy.facility) {
       setShowResultsBy({
-        user: showResultsBy.project ? false : true,
-        project: showResultsBy.project ? true : false,
+        user: true,
       })
     }
   }, [searchBy])
@@ -128,6 +125,8 @@ const Main = () => {
             searchBy={searchBy}
             showResultsBy={showResultsBy}
             reportingPeriods={reportingPeriods}
+            setSearch={setSearch}
+            setSearchBy={setSearchBy}
           />
         </Column>
       </Row>

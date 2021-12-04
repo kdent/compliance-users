@@ -15,13 +15,9 @@ const getUniqueKey = (search, obj1, obj2, obj3) => {
   if (obj1[search]) {
     return search
   } else if (obj2[search]) {
-    if (Array.isArray(obj2[search])) {
-      return obj2[search][0]
-    } else {
-      return obj2[search]
-    }
+    return obj2[search]
   } else if (obj3 && obj3[search]) {
-    return obj2[obj3[search]][0]
+    return obj2[obj3[search]]
   }
 }
 

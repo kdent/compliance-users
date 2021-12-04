@@ -16,6 +16,8 @@ const Results = ({
   searchBy,
   showResultsBy,
   reportingPeriods,
+  setSearch,
+  setSearchBy,
 }) => {
   const [filtered, setFiltered] = useState([])
 
@@ -192,16 +194,23 @@ const Results = ({
               <Box>
                 <Group>
                   <Label>Project ID:</Label>
-                  <Value color='green'>
-                    {data.arb_to_oprs[searchId][0]} / {searchId}
-                  </Value>
+                  <Value color='green'>{data.arb_to_oprs[searchId]}</Value>
                 </Group>
                 <Group>
                   <Label>Project Name:</Label>
                   <Value>
                     {
-                      data.opr_to_project_info[data.arb_to_oprs[searchId][0]]
+                      data.opr_to_project_info[data.arb_to_oprs[searchId]]
                         .project_name
+                    }
+                  </Value>
+                </Group>
+                <Group>
+                  <Label>Type:</Label>
+                  <Value>
+                    {
+                      data.opr_to_project_info[data.arb_to_oprs[searchId]]
+                        .project_type
                     }
                   </Value>
                 </Group>
@@ -244,6 +253,8 @@ const Results = ({
                   d={d}
                   data={data}
                   last={i === filtered.length - 1}
+                  setSearch={setSearch}
+                  setSearchBy={setSearchBy}
                 />
               )
             })}
