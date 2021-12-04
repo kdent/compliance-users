@@ -60,7 +60,7 @@ def main():
     # Read and process offset project data from CARB's issuance table
     project_df = projects.read_project_data(issuance_table_path)
     opr_to_arbs, combined_arbs = projects.make_opr_to_arbs(project_df)
-    arb_to_oprs = projects.make_arb_to_oprs(project_df)
+    arb_to_oprs = projects.make_arb_to_oprs(project_df, combined_arbs)
     project_name_to_opr, opr_to_project_info = projects.make_project_info(project_df)
 
     # Read and process offset use data from compliance reports
@@ -103,7 +103,7 @@ def main():
         'facility_id_to_info': facility_id_to_info,
     }
 
-    output_suffix = mrr_data_years[0] + '_' + mrr_data_years[-1]
+    output_suffix = mrr_data_years[0] + '_' + mrr_data_years[-1] + 'v2'
     write_json(collection, 'data/outputs/user_data_' + output_suffix + '.json')
 
 
