@@ -75,7 +75,7 @@ def make_opr_to_arbs(issuance_df):
     return opr_to_arbs, combined_arbs
 
 
-def make_arb_to_oprs(issuance_df):
+def make_arb_to_oprs(issuance_df, combined_arbs):
     arb_ids = issuance_df['arb_id'].unique().tolist()
     arb_to_oprs = {}
     for arb_id in arb_ids:
@@ -94,6 +94,10 @@ def make_arb_to_oprs(issuance_df):
             print('----> ' + str(oprs))
             print()
         arb_to_oprs[arb_id] = oprs[0]
+    # add combined arbs to arb-->opr mapping
+    for combined_arb in combined_arbs:
+        arbs = combined_arb.split('-')
+        arb_to_oprs[combined_arb] = arb_to_oprs[arbs[0]]
     return arb_to_oprs
 
 
