@@ -15,7 +15,7 @@ export const Label = ({ children, color }) => {
           fontFamily: 'mono',
           letterSpacing: 'mono',
           textTransform: 'uppercase',
-          fontSize: [1],
+          fontSize: [1, 1, 1, 2],
         }}
       >
         {children}
@@ -33,7 +33,7 @@ export const Value = ({ children, color }) => {
           fontFamily: 'mono',
           letterSpacing: 'mono',
           textTransform: 'uppercase',
-          fontSize: [1],
+          fontSize: [1, 1, 1, 2],
         }}
       >
         {children}
@@ -47,10 +47,10 @@ const CrossLink = ({ onClick }) => {
     <RotatingArrow
       sx={{
         ml: [2],
-        width: '14px',
+        width: ['14px', '14px', '14px', '16px'],
         cursor: 'pointer',
         mt: ['-14px'],
-        top: ['7px'],
+        top: ['7px', '7px', '7px', '6px'],
         position: 'relative',
       }}
       onClick={onClick}

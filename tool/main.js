@@ -78,8 +78,8 @@ const Main = () => {
     <Box>
       <Row columns={[6, 8, 10, 10]}>
         <Column
-          start={1}
-          width={3}
+          start={[1, 1, 1, 1]}
+          width={[3, 3, 3, 3]}
           sx={{ position: 'sticky', top: 100, height: 500 }}
         >
           <Search
@@ -117,7 +117,7 @@ const Main = () => {
             </Box>
           </Group>
         </Column>
-        <Column start={5} width={5}>
+        <Column start={[5, 4, 5, 5]} width={[5, 5, 5, 5]}>
           <Results
             data={data}
             search={search}

@@ -8,7 +8,7 @@ export const sx = {
   label: {
     fontFamily: 'mono',
     letterSpacing: 'mono',
-    fontSize: [1],
+    fontSize: [1, 1, 1, 2],
     mb: [1],
     color: 'secondary',
     textTransform: 'uppercase',

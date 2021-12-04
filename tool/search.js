@@ -24,7 +24,7 @@ const getUniqueKey = (search, obj1, obj2, obj3) => {
 const PreviewResult = ({ result, search }) => {
   const sx = {
     color: 'secondary',
-    fontSize: [1],
+    fontSize: [1, 1, 1, 2],
     fontFamily: 'mono',
     letterSpacing: 'mono',
   }
@@ -125,7 +125,7 @@ const Search = ({ data, search, searchBy, setSearch, setSearchId }) => {
         sx={{
           borderStyle: 'none',
           fontFamily: 'mono',
-          fontSize: [1],
+          fontSize: [1, 1, 1, 2],
           width: '100%',
           py: [2],
           letterSpacing: 'mono',
@@ -140,7 +140,7 @@ const Search = ({ data, search, searchBy, setSearch, setSearchId }) => {
             <Box
               sx={{
                 color: 'secondary',
-                fontSize: [1],
+                fontSize: [1, 1, 1, 2],
                 fontFamily: 'mono',
                 letterSpacing: 'mono',
               }}
