@@ -40,7 +40,6 @@ const Results = ({
 
     if (searchBy.project) {
       if (!data.arb_to_users[searchId]) {
-        setFiltered([])
         return
       }
       if (showResultsBy.user) {
@@ -90,7 +89,6 @@ const Results = ({
       }
     } else if (searchBy.user) {
       if (!data.user_to_arbs[searchId]) {
-        setFiltered([])
         return
       }
       if (showResultsBy.project) {
@@ -125,7 +123,6 @@ const Results = ({
       }
     } else if (searchBy.facility) {
       if (!data.facility_to_user[searchId]) {
-        setFiltered([])
         return
       }
       if (showResultsBy.user) {

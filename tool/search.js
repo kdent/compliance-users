@@ -21,33 +21,75 @@ const getUniqueKey = (search, obj1, obj2, obj3) => {
   }
 }
 
-const PreviewResult = ({ result, search }) => {
+const PreviewResult = ({ result, search, setSearch, setUniqueId }) => {
   const sx = {
-    color: 'secondary',
-    fontSize: [1, 1, 1, 2],
-    fontFamily: 'mono',
-    letterSpacing: 'mono',
+    base: {
+      width: 'fit-content',
+      color: 'secondary',
+      fontSize: [1, 1, 1, 2],
+      pr: [3],
+      fontFamily: 'mono',
+      letterSpacing: 'mono',
+    },
+    active: {
+      cursor: 'pointer',
+      '@media (hover: hover) and (pointer: fine)': {
+        '&:hover': {
+          color: 'primary',
+        },
+        '&:hover > #inner': {
+          color: 'primary',
+        },
+      },
+    },
   }
 
   if (result.toLowerCase().includes(search.toLowerCase())) {
     const i = result.toLowerCase().indexOf(search.toLowerCase())
     const j = search.length
     return (
-      <Box sx={sx}>
+      <Box
+        sx={{ ...sx.base, ...sx.active }}
+        onClick={() => {
+          setSearch(result)
+          setUniqueId(result)
+        }}
+      >
         <Box as='span'>{result.slice(0, i)}</Box>
-        <Box as='span' sx={{ color: shade('primary', 0.2) }}>
+        <Box as='span' id='inner' sx={{ color: shade('primary', 0.2) }}>
           {result.slice(i, i + j)}
         </Box>
         <Box as='span'>{result.slice(i + j)}</Box>
       </Box>
     )
   } else {
-    return <Box sx={sx}>{result}</Box>
+    return <Box sx={sx.base}>{result}</Box>
   }
 }
 
 const Search = ({ data, search, searchBy, setSearch, setSearchId }) => {
   const [preview, setPreview] = useState([])
+
+  const setUniqueId = (match) => {
+    if (searchBy.project) {
+      setSearchId(
+        getUniqueKey(
+          match,
+          data.arb_to_users,
+          data.opr_to_arbs,
+          data.project_name_to_opr
+        )
+      )
+    }
+    if (searchBy.user) {
+      setSearchId(getUniqueKey(match, data.user_to_arbs, data.user_name_to_id))
+    }
+    if (searchBy.facility) {
+      setSearchId(
+        getUniqueKey(match, data.facility_to_user, data.facility_name_to_id)
+      )
+    }
+  }
 
   useEffect(() => {
     if (!data) return
@@ -63,14 +105,7 @@ const Search = ({ data, search, searchBy, setSearch, setSearchId }) => {
         setSearchId(null)
       } else if (matches.length === 1) {
         setPreview(matches)
-        setSearchId(
-          getUniqueKey(
-            matches[0],
-            data.arb_to_users,
-            data.opr_to_arbs,
-            data.project_name_to_opr
-          )
-        )
+        setUniqueId(matches[0])
       } else {
         setPreview(['no matching projects'])
         setSearchId(null)
@@ -83,9 +118,7 @@ const Search = ({ data, search, searchBy, setSearch, setSearchId }) => {
         setSearchId(null)
       } else if (matches.length === 1) {
         setPreview(matches)
-        setSearchId(
-          getUniqueKey(matches[0], data.user_to_arbs, data.user_name_to_id)
-        )
+        setUniqueId(matches[0])
       } else {
         setPreview(['no matching users'])
         setSearchId(null)
@@ -98,13 +131,7 @@ const Search = ({ data, search, searchBy, setSearch, setSearchId }) => {
         setSearchId(null)
       } else if (matches.length === 1) {
         setPreview(matches)
-        setSearchId(
-          getUniqueKey(
-            matches[0],
-            data.facility_to_user,
-            data.facility_name_to_id
-          )
-        )
+        setUniqueId(matches[0])
       } else {
         setPreview(['no matching users'])
         setSearchId(null)
@@ -134,7 +161,15 @@ const Search = ({ data, search, searchBy, setSearch, setSearchId }) => {
       {preview.length > 0 && (
         <Box sx={{ mb: [3] }}>
           {preview.slice(0, 5).map((d, i) => {
-            return <PreviewResult key={i} result={d} search={search} />
+            return (
+              <PreviewResult
+                key={i}
+                result={d}
+                search={search}
+                setSearch={setSearch}
+                setUniqueId={setUniqueId}
+              />
+            )
           })}
           {preview.length > 5 && (
             <Box

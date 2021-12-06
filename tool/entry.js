@@ -70,8 +70,8 @@ export const Entry = ({ data, d, last, setSearch, setSearchBy }) => {
               {d.user_id}
               <CrossLink
                 onClick={() => {
-                  setSearch(d.user_id)
                   setSearchBy({ project: false, user: true, facility: false })
+                  setSearch(d.user_id)
                 }}
               />
             </Value>
@@ -100,8 +100,8 @@ export const Entry = ({ data, d, last, setSearch, setSearchBy }) => {
               {data.arb_to_oprs[d.arb_id]}
               <CrossLink
                 onClick={() => {
-                  setSearch(d.arb_id)
                   setSearchBy({ project: true, user: false, facility: false })
+                  setSearch(data.arb_to_oprs[d.arb_id])
                 }}
               />
             </Value>
@@ -147,8 +147,8 @@ export const Entry = ({ data, d, last, setSearch, setSearchBy }) => {
               {d.facility_id}
               <CrossLink
                 onClick={() => {
-                  setSearch(d.facility_id)
                   setSearchBy({ project: false, user: false, facility: true })
+                  setSearch(d.facility_id)
                 }}
               />
             </Value>
