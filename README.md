@@ -7,7 +7,7 @@
 
 Working repo to make a simple tool for querying CA compliance data.
 
-[![CI](https://github.com/carbonplan/python-project-template/actions/workflows/main.yaml/badge.svg)](https://github.com/carbonplan/python-project-template/actions/workflows/main.yaml)
+[![CI](https://github.com/carbonplan/compliance-users/actions/workflows/main.yaml/badge.svg)](https://github.com/carbonplan/compliance-users/actions/workflows/main.yaml)
 ![MIT License][]
 
 [mit license]: https://badgen.net/badge/license/MIT/blue
