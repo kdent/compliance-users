@@ -14,15 +14,6 @@ project_types = {
 
 def read_project_data(data_path):
     issuance = pd.read_excel(data_path + 'arboc_issuance.xlsx', 'ARB Offset Credit Issuance')
-    # drop projects that have not been used for CA compliance purposes
-    issuance['used'] = issuance[
-        [
-            'Retired 1st Compliance Period (CA)',
-            'Retired 2nd Compliance Period (CA)',
-            'Retired 3rd Compliance Period (CA)',
-        ]
-    ].sum(axis=1)
-    issuance = issuance[issuance['used'] > 0]
     # subset and rename columns of interest
     issuance_df = issuance[
         [
@@ -83,18 +74,13 @@ def make_arb_to_oprs(issuance_df, combined_arbs):
         a = issuance_df[issuance_df['arb_id'] == arb_id]
         for i, row in a.iterrows():
             oprs.append(row['opr_id'])
-        # currently, there is only one arb id (CAMM5244) that maps to multiple
-        # opr ids; since we've confirmed that the underlying project info is
-        # the same, we are not simply dropping one of the opr ids. if another
-        # multi-mapping occurs, we may need to refactor the project info mapping.
-        if len(oprs) > 1:
-            print()
-            print('HEADS UP! A single arb id is mapping to multiple opr ids.')
-            print('----> ' + arb_id)
-            print('----> ' + str(oprs))
-            print()
-        arb_to_oprs[arb_id] = oprs[0]
-    # add combined arbs to arb-->opr mapping
+        # currently, there are two arb ids (CAMM5244 & CALS5030) that map
+        # to multiple opr ids; after confirming that the underlying project
+        # information is the same, we simply map to the most recent opr id
+        arb_to_oprs[arb_id] = oprs[-1]
+
+    # add combined arbs to arb-->opr mapping as a new entry with the
+    # combined_arb as the key
     for combined_arb in combined_arbs:
         arbs = combined_arb.split('-')
         arb_to_oprs[combined_arb] = arb_to_oprs[arbs[0]]
@@ -106,7 +92,6 @@ def make_project_info(issuance_df):
     opr_rows = issuance_df.drop_duplicates(
         ['opr_id', 'project_name', 'project_type', 'state', 'documentation']
     )
-
     project_name_to_opr = {}
     opr_to_project_info = {}
 
