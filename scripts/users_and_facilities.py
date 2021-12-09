@@ -21,7 +21,7 @@ def read_user_facility_data(data_path, compliance_reports):
         df = df[['user_id', 'user_name', 'facility_ids']]
         df['reporting_period'] = r
 
-        # drop CAISO, which does not have an entity ID nor facility ids
+        # drop CAISO, which does not have an user ID nor facility ids
         df = df[df['facility_ids'].notna()]
 
         # make a row for each facility id connected to a user and compliance period

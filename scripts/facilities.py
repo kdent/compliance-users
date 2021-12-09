@@ -30,15 +30,9 @@ def read_facility_data(data_path, mrr_data_years):
         df = pd.read_excel(
             data_path + r + '-ghg-emissions-' + mrr_file_year[r] + '-11-04.xlsx', r + ' GHG Data'
         )
-
         # clean up dataframe
         df.columns = df.iloc[7]
         df = df[8:].reset_index(drop="true")
-
-        # drop facilities w/ no covered emissions, which shouldn't
-        # be represented in the compliance reports
-        df = df[df['Total Covered Emissions'] > 0]
-
         df.rename(
             columns={
                 'ARB ID': 'facility_id',
