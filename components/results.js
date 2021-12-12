@@ -29,11 +29,6 @@ const Results = ({
       return
     }
 
-    if (search === '') {
-      setFiltered([])
-      return
-    }
-
     const reportingPeriodsActive = Object.keys(reportingPeriods).filter(
       (d) => reportingPeriods[d]
     )
@@ -191,7 +186,9 @@ const Results = ({
               <Box>
                 <Group>
                   <Label>Project ID:</Label>
-                  <Value color='green'>{data.arb_to_oprs[searchId]}</Value>
+                  <Value color='green'>
+                    {searchId} / {data.arb_to_oprs[searchId]}
+                  </Value>
                 </Group>
                 <Group>
                   <Label>Project Name:</Label>
@@ -238,6 +235,16 @@ const Results = ({
                       data.facility_id_to_info[searchId][
                         Object.keys(data.facility_id_to_info[searchId])[0]
                       ].facility_name
+                    }
+                  </Value>
+                </Group>
+                <Group>
+                  <Label>Sector:</Label>
+                  <Value>
+                    {
+                      data.facility_id_to_info[searchId][
+                        Object.keys(data.facility_id_to_info[searchId])[0]
+                      ].sector
                     }
                   </Value>
                 </Group>

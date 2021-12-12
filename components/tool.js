@@ -29,6 +29,7 @@ const Tool = ({
       title={meta.title.toLowerCase() + ' / research / carbonplan'}
       links={'local'}
       nav={'research'}
+      fade={false}
     >
       <Guide />
       <Row sx={{ mb: [3, 4, 5, 6] }}>

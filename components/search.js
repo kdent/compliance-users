@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import { Box, Divider } from 'theme-ui'
 import { Input } from '@carbonplan/components'
 import { shade } from '@theme-ui/color'
@@ -68,26 +69,30 @@ const PreviewResult = ({ result, search, setSearch, setUniqueId }) => {
 }
 
 const Search = ({ data, search, searchBy, setSearch, setSearchId }) => {
+  const { push } = useRouter()
   const [preview, setPreview] = useState([])
 
   const setUniqueId = (match) => {
     if (searchBy.project) {
-      setSearchId(
-        getUniqueKey(
-          match,
-          data.arb_to_users,
-          data.opr_to_arbs,
-          data.project_name_to_opr
-        )
+      const id = getUniqueKey(
+        match,
+        data.arb_to_users,
+        data.opr_to_arbs,
+        data.project_name_to_opr
       )
+      push(`/project/${id}`, null, { scroll: false })
     }
     if (searchBy.user) {
-      setSearchId(getUniqueKey(match, data.user_to_arbs, data.user_name_to_id))
+      const id = getUniqueKey(match, data.user_to_arbs, data.user_name_to_id)
+      push(`/user/${id}`, null, { scroll: false })
     }
     if (searchBy.facility) {
-      setSearchId(
-        getUniqueKey(match, data.facility_to_user, data.facility_name_to_id)
+      const id = getUniqueKey(
+        match,
+        data.facility_to_user,
+        data.facility_name_to_id
       )
+      push(`/facility/${id}`, null, { scroll: false })
     }
   }
 
@@ -95,46 +100,46 @@ const Search = ({ data, search, searchBy, setSearch, setSearchId }) => {
     if (!data) return
     if (search === '') {
       setPreview([])
-      setSearchId(null)
+      push(`/project/`, null, { scroll: false })
       return
     }
     if (searchBy.project) {
       let matches = getMatches(search, data.project_targets)
       if (matches.length > 1) {
         setPreview(matches)
-        setSearchId(null)
+        push(`/project/`, null, { scroll: false })
       } else if (matches.length === 1) {
         setPreview(matches)
         setUniqueId(matches[0])
       } else {
         setPreview(['no matching projects'])
-        setSearchId(null)
+        push(`/project/`, null, { scroll: false })
       }
     }
     if (searchBy.user) {
       let matches = getMatches(search, data.user_targets)
       if (matches.length > 1) {
         setPreview(matches)
-        setSearchId(null)
+        push(`/project/`, null, { scroll: false })
       } else if (matches.length === 1) {
         setPreview(matches)
         setUniqueId(matches[0])
       } else {
         setPreview(['no matching users'])
-        setSearchId(null)
+        push(`/project/`, null, { scroll: false })
       }
     }
     if (searchBy.facility) {
       let matches = getMatches(search, data.facility_targets)
       if (matches.length > 1) {
         setPreview(matches)
-        setSearchId(null)
+        push(`/project/`, null, { scroll: false })
       } else if (matches.length === 1) {
         setPreview(matches)
         setUniqueId(matches[0])
       } else {
         setPreview(['no matching users'])
-        setSearchId(null)
+        push(`/project/`, null, { scroll: false })
       }
     }
   }, [data, search, searchBy])
