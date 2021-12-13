@@ -119,6 +119,10 @@ const Search = () => {
         setSearchId(null)
         push(`/user`, null, { scroll: false })
       }
+      if (searchBy.facility) {
+        setSearchId(null)
+        push(`/facility`, null, { scroll: false })
+      }
       return
     }
     if (searchBy.project) {
