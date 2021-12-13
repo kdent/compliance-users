@@ -13,6 +13,11 @@ export const sx = {
     color: 'secondary',
     textTransform: 'uppercase',
   },
+  tag: {
+    width: 'max-content',
+    mr: [2],
+    mb: [1],
+  },
 }
 
 export const colors = {

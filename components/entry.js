@@ -1,6 +1,8 @@
+import { useRouter } from 'next/router'
 import { Box, Divider } from 'theme-ui'
-import { Row, Column } from '@carbonplan/components'
+import { Button, Row, Column } from '@carbonplan/components'
 import { RotatingArrow } from '@carbonplan/icons'
+import useStore from './store'
 
 export const Group = ({ children }) => {
   return <Row columns={5}>{children}</Row>
@@ -42,23 +44,39 @@ export const Value = ({ children, color }) => {
   )
 }
 
-const CrossLink = ({ onClick }) => {
+const CrossLink = ({ href, color, children }) => {
   return (
-    <RotatingArrow
+    <Button
+      href={href}
+      suffix={
+        <RotatingArrow
+          sx={{
+            width: ['14px', '14px', '14px', '16px'],
+            cursor: 'pointer',
+            top: ['-1px'],
+            position: 'relative',
+          }}
+        />
+      }
       sx={{
-        ml: [2],
-        width: ['14px', '14px', '14px', '16px'],
-        cursor: 'pointer',
-        mt: ['-14px'],
-        top: ['7px', '7px', '7px', '6px'],
+        color: color || 'primary',
+        fontFamily: 'mono',
+        letterSpacing: 'mono',
+        textTransform: 'uppercase',
+        fontSize: [1, 1, 1, 2],
         position: 'relative',
+        bottom: ['-1px'],
+        cursor: 'pointer',
       }}
-      onClick={onClick}
-    />
+    >
+      {children}
+    </Button>
   )
 }
 
-export const Entry = ({ data, d, last, setSearch, setSearchBy }) => {
+export const Entry = ({ data, d, last }) => {
+  const { push } = useRouter()
+
   return (
     <Box>
       <Divider sx={{ mb: ['12px'], mt: [3], pt: ['2px'] }} />
@@ -67,13 +85,9 @@ export const Entry = ({ data, d, last, setSearch, setSearchBy }) => {
           <Group>
             <Label>User ID:</Label>
             <Value color='blue'>
-              {d.user_id}
-              <CrossLink
-                onClick={() => {
-                  setSearchBy({ project: false, user: true, facility: false })
-                  setSearch(d.user_id)
-                }}
-              />
+              <CrossLink color='blue' href={`/user/${d.user_id}`}>
+                {d.user_id}
+              </CrossLink>
             </Value>
           </Group>
           <Group>
@@ -96,14 +110,10 @@ export const Entry = ({ data, d, last, setSearch, setSearchBy }) => {
         <>
           <Group>
             <Label>Project ID:</Label>
-            <Value color='green'>
-              {data.arb_to_oprs[d.arb_id]}
-              <CrossLink
-                onClick={() => {
-                  setSearchBy({ project: true, user: false, facility: false })
-                  setSearch(data.arb_to_oprs[d.arb_id])
-                }}
-              />
+            <Value>
+              <CrossLink color='green' href={`/project/${d.arb_id}`}>
+                {data.arb_to_oprs[d.arb_id]}
+              </CrossLink>
             </Value>
           </Group>
           <Group>
@@ -143,14 +153,10 @@ export const Entry = ({ data, d, last, setSearch, setSearchBy }) => {
         <>
           <Group>
             <Label>Facility ID:</Label>
-            <Value color='pink'>
-              {d.facility_id}
-              <CrossLink
-                onClick={() => {
-                  setSearchBy({ project: false, user: false, facility: true })
-                  setSearch(d.facility_id)
-                }}
-              />
+            <Value>
+              <CrossLink color='pink' href={`/facility/${d.facility_id}`}>
+                {d.facility_id}
+              </CrossLink>
             </Value>
           </Group>
           <Group>

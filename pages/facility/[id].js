@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import Results from '../../components/results'
 import useStore from '../../components/store'
 
-const Project = () => {
+const Facility = () => {
   const router = useRouter()
   const id = router.query.id
 
@@ -16,7 +16,7 @@ const Project = () => {
 
   useEffect(() => {
     router.beforePopState(({ as }) => {
-      if (as !== router.asPath && as === '/project') {
+      if (as !== router.asPath && as === '/facility') {
         setSearch('')
       }
       return true
@@ -28,8 +28,8 @@ const Project = () => {
   }, [router])
 
   useEffect(() => {
-    if (!searchBy.project)
-      setSearchBy({ project: true, user: false, facility: false })
+    if (!searchBy.facility)
+      setSearchBy({ project: false, user: false, facility: true })
     setShowResultsBy({
       user: true,
     })
@@ -42,4 +42,4 @@ const Project = () => {
   return <Results />
 }
 
-export default Project
+export default Facility

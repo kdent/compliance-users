@@ -1,25 +1,24 @@
 import { useState, useEffect } from 'react'
 import { Box, Divider } from 'theme-ui'
-import { Badge } from '@carbonplan/components'
+import { Badge, FadeIn } from '@carbonplan/components'
 import { Left, Down } from '@carbonplan/icons'
 import { sx } from './styles'
 import { Entry, Group, Label, Value } from './entry'
+import useStore from './store'
 
 const addType = (data, type) => {
   return data.map((d) => Object.assign({}, d, { type: type }))
 }
 
-const Results = ({
-  data,
-  search,
-  searchId,
-  searchBy,
-  showResultsBy,
-  reportingPeriods,
-  setSearch,
-  setSearchBy,
-}) => {
-  const [filtered, setFiltered] = useState([])
+const Results = () => {
+  const data = useStore((state) => state.data)
+  const filtered = useStore((state) => state.filtered)
+  const setFiltered = useStore((state) => state.setFiltered)
+  const search = useStore((state) => state.search)
+  const searchId = useStore((state) => state.searchId)
+  const searchBy = useStore((state) => state.searchBy)
+  const showResultsBy = useStore((state) => state.showResultsBy)
+  const reportingPeriods = useStore((state) => state.reportingPeriods)
 
   useEffect(() => {
     if (!data) return
@@ -257,8 +256,6 @@ const Results = ({
                   d={d}
                   data={data}
                   last={i === filtered.length - 1}
-                  setSearch={setSearch}
-                  setSearchBy={setSearchBy}
                 />
               )
             })}

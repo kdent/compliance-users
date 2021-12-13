@@ -4,6 +4,7 @@ import { Box, Divider } from 'theme-ui'
 import { Input } from '@carbonplan/components'
 import { shade } from '@theme-ui/color'
 import { sx } from './styles'
+import useStore from './store'
 
 const getMatches = (search, targets) => {
   let matches = targets.filter((d) =>
@@ -68,9 +69,16 @@ const PreviewResult = ({ result, search, setSearch, setUniqueId }) => {
   }
 }
 
-const Search = ({ data, search, searchBy, setSearch, setSearchId }) => {
+const Search = () => {
   const { push } = useRouter()
   const [preview, setPreview] = useState([])
+
+  const data = useStore((state) => state.data)
+  const search = useStore((state) => state.search)
+  const searchBy = useStore((state) => state.searchBy)
+  const setSearch = useStore((state) => state.setSearch)
+  const setSearchId = useStore((state) => state.setSearchId)
+  const setUniqueSearchId = useStore((state) => state.setUniqueSearchId)
 
   const setUniqueId = (match) => {
     if (searchBy.project) {
@@ -80,10 +88,12 @@ const Search = ({ data, search, searchBy, setSearch, setSearchId }) => {
         data.opr_to_arbs,
         data.project_name_to_opr
       )
+      setSearchId(id)
       push(`/project/${id}`, null, { scroll: false })
     }
     if (searchBy.user) {
       const id = getUniqueKey(match, data.user_to_arbs, data.user_name_to_id)
+      setSearchId(id)
       push(`/user/${id}`, null, { scroll: false })
     }
     if (searchBy.facility) {
@@ -92,6 +102,7 @@ const Search = ({ data, search, searchBy, setSearch, setSearchId }) => {
         data.facility_to_user,
         data.facility_name_to_id
       )
+      setSearchId(id)
       push(`/facility/${id}`, null, { scroll: false })
     }
   }
@@ -100,46 +111,59 @@ const Search = ({ data, search, searchBy, setSearch, setSearchId }) => {
     if (!data) return
     if (search === '') {
       setPreview([])
-      push(`/project/`, null, { scroll: false })
+      if (searchBy.project) {
+        setSearchId(null)
+        push(`/project`, null, { scroll: false })
+      }
+      if (searchBy.user) {
+        setSearchId(null)
+        push(`/user`, null, { scroll: false })
+      }
       return
     }
     if (searchBy.project) {
       let matches = getMatches(search, data.project_targets)
       if (matches.length > 1) {
         setPreview(matches)
-        push(`/project/`, null, { scroll: false })
+        setSearchId(null)
+        push(`/project`, null, { scroll: false })
       } else if (matches.length === 1) {
         setPreview(matches)
         setUniqueId(matches[0])
       } else {
         setPreview(['no matching projects'])
-        push(`/project/`, null, { scroll: false })
+        setSearchId(null)
+        push(`/project`, null, { scroll: false })
       }
     }
     if (searchBy.user) {
       let matches = getMatches(search, data.user_targets)
       if (matches.length > 1) {
         setPreview(matches)
-        push(`/project/`, null, { scroll: false })
+        setSearchId(null)
+        push(`/user/`, null, { scroll: false })
       } else if (matches.length === 1) {
         setPreview(matches)
         setUniqueId(matches[0])
       } else {
         setPreview(['no matching users'])
-        push(`/project/`, null, { scroll: false })
+        setSearchId(null)
+        push(`/user/`, null, { scroll: false })
       }
     }
     if (searchBy.facility) {
       let matches = getMatches(search, data.facility_targets)
       if (matches.length > 1) {
         setPreview(matches)
-        push(`/project/`, null, { scroll: false })
+        setSearchId(null)
+        push(`/facility/`, null, { scroll: false })
       } else if (matches.length === 1) {
         setPreview(matches)
         setUniqueId(matches[0])
       } else {
         setPreview(['no matching users'])
-        push(`/project/`, null, { scroll: false })
+        setSearchId(null)
+        push(`/facility/`, null, { scroll: false })
       }
     }
   }, [data, search, searchBy])

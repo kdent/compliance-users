@@ -4,6 +4,8 @@ const url =
   'https://raw.githubusercontent.com/carbonplan/compliance-users/main/data/outputs/user_data_2013_2020v4.json'
 
 const useStore = create((set) => ({
+  search: '',
+  searchId: null,
   searchBy: {
     project: true,
     user: false,
@@ -16,14 +18,24 @@ const useStore = create((set) => ({
     '2018-2020': true,
   },
   data: null,
-  setSearchBy: (searchBy) => {
-    set({ searchBy: searchBy })
+  filtered: [],
+  setSearch: (value) => {
+    set({ search: value })
   },
-  setShowResultsBy: (showResultsBy) => {
-    set({ showResultsBy: showResultsBy })
+  setSearchId: (value) => {
+    set({ searchId: value })
   },
-  setReportingPeriods: (reportingPeriods) => {
-    set({ reportingPeriods: reportingPeriods })
+  setSearchBy: (value) => {
+    set({ searchBy: value })
+  },
+  setShowResultsBy: (value) => {
+    set({ showResultsBy: value })
+  },
+  setReportingPeriods: (value) => {
+    set({ reportingPeriods: value })
+  },
+  setFiltered: (value) => {
+    set({ filtered: value })
   },
   fetch: async () => {
     fetch(url)
