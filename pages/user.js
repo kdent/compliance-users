@@ -12,8 +12,8 @@ const UserIndex = () => {
     if (!searchBy.user) {
       setSearchBy({ project: false, user: true, facility: false })
       setShowResultsBy({
-        project: showResultsBy.facility ? false : true,
-        facility: showResultsBy.facility ? true : false,
+        project: true,
+        facility: false,
       })
     }
   }, [])

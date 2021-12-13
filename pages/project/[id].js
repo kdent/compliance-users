@@ -28,11 +28,10 @@ const Project = () => {
   }, [router])
 
   useEffect(() => {
-    if (!searchBy.project)
+    if (!searchBy.project) {
       setSearchBy({ project: true, user: false, facility: false })
-    setShowResultsBy({
-      user: true,
-    })
+      setShowResultsBy({ user: true })
+    }
   }, [id])
 
   useEffect(() => {
