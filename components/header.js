@@ -11,6 +11,7 @@ import useStore from './use-store'
 const Header = ({ children }) => {
   const { push } = useRouter()
 
+  const setSearch = useStore((state) => state.setSearch)
   const searchBy = useStore((state) => state.searchBy)
   const setSearchBy = useStore((state) => state.setSearchBy)
   const filtered = useStore((state) => state.filtered)
@@ -51,7 +52,10 @@ const Header = ({ children }) => {
                   },
                 },
               }}
-              onClick={() => push('/', null, { scroll: false })}
+              onClick={() => {
+                setSearch('')
+                push('/', null, { scroll: false })
+              }}
             />
             <Badge sx={{ ml: ['2px'] }}>{filtered.length}</Badge>
           </Box>
