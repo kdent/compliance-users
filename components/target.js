@@ -9,7 +9,7 @@ export const Group = ({ children }) => {
 
 export const Label = ({ children, color }) => {
   return (
-    <Column start={1} width={1}>
+    <Column start={1} width={1} dr={1}>
       <Box sx={sx.label}>{children}</Box>
     </Column>
   )

@@ -16,20 +16,6 @@ const Main = () => {
   const setShowResultsBy = useStore((state) => state.setShowResultsBy)
   const setReportingPeriods = useStore((state) => state.setReportingPeriods)
 
-  useEffect(() => {
-    if (data && searchId) {
-      if (data.user_id_to_name[searchId]) {
-        setShowResultsBy({ project: true, facility: false })
-      }
-      if (data.arb_to_oprs[searchId]) {
-        setShowResultsBy({ user: true })
-      }
-      if (data.facility_id_to_info[searchId]) {
-        setShowResultsBy({ user: true })
-      }
-    }
-  }, [data, searchId])
-
   return (
     <>
       <Box>
@@ -49,11 +35,20 @@ const Main = () => {
                   </Box>
                   <Box>
                     <Box sx={sx.label}>Show results by</Box>
-                    <Filter
-                      values={showResultsBy}
-                      setValues={setShowResultsBy}
-                      colors={colors}
-                    />
+                    {data.user_id_to_name[searchId] && (
+                      <Filter
+                        values={showResultsBy}
+                        setValues={setShowResultsBy}
+                        colors={colors}
+                      />
+                    )}
+                    {!data.user_id_to_name[searchId] && (
+                      <Filter
+                        values={{ user: true }}
+                        setValues={() => {}}
+                        colors={colors}
+                      />
+                    )}
                   </Box>
                   <Box>
                     <Box sx={sx.label}>Reporting periods</Box>

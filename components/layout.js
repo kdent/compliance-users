@@ -15,7 +15,7 @@ const prefix = 'https://images.carbonplan.org'
 const meta = {
   id: 'compliance-users',
   title: 'Compliance users',
-  color: 'pink',
+  color: 'orange',
   card: 'compliance-users',
   quickLook: 'Tracking the users of compliance offsets',
 }

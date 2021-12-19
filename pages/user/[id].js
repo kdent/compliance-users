@@ -34,10 +34,9 @@ const User = () => {
     if (!searchBy.user) {
       setSearchBy({ project: false, user: true, facility: false })
     }
-  }, [id])
+  }, [])
 
   useEffect(() => {
-    console.log(id)
     if (id) setSearchId(id)
   }, [id])
 

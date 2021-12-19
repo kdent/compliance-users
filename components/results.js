@@ -18,6 +18,7 @@ const Results = () => {
   const searchId = useStore((state) => state.searchId)
   const searchBy = useStore((state) => state.searchBy)
   const showResultsBy = useStore((state) => state.showResultsBy)
+  const setShowResultsBy = useStore((state) => state.setShowResultsBy)
   const reportingPeriods = useStore((state) => state.reportingPeriods)
 
   useEffect(() => {
@@ -33,58 +34,15 @@ const Results = () => {
     )
 
     if (data.arb_to_users[searchId]) {
-      if (!data.arb_to_users[searchId]) {
-        return
-      }
-      if (showResultsBy.user) {
-        setFiltered(
-          addType(
-            data.arb_to_users[searchId].filter((d) =>
-              reportingPeriodsActive.includes(d.reporting_period)
-            ),
-            'user'
-          )
+      setFiltered(
+        addType(
+          data.arb_to_users[searchId].filter((d) =>
+            reportingPeriodsActive.includes(d.reporting_period)
+          ),
+          'user'
         )
-      } else if (showResultsBy.facility) {
-        const users = data.arb_to_users[searchId]
-          .filter((d) => reportingPeriodsActive.includes(d.reporting_period))
-          .map((d) => d.user_id)
-        let facilities = []
-        reportingPeriodsActive.forEach((d) => {
-          facilities.push(
-            users.map((u) => {
-              if (data.user_to_facilities[u][d])
-                return {
-                  user_id: u,
-                  reporting_period: d,
-                  facility_ids: data.user_to_facilities[u][d],
-                }
-            })
-          )
-        })
-        facilities = facilities.flat().filter((d) => d)
-        facilities = facilities.map((d) => {
-          return d.facility_ids.map((id) => {
-            if (data.facility_id_to_info[id]) {
-              return Object.assign(
-                {},
-                {
-                  user_id: d.user_id,
-                  reporting_period: d.reporting_period,
-                  facility_id: id,
-                },
-                data.facility_id_to_info[id][d.reporting_period]
-              )
-            }
-          })
-        })
-        facilities = facilities.flat().filter((d) => d)
-        setFiltered(addType(facilities, 'facility'))
-      }
+      )
     } else if (data.user_to_arbs[searchId]) {
-      if (!data.user_to_arbs[searchId]) {
-        return
-      }
       if (showResultsBy.project) {
         setFiltered(
           addType(
@@ -116,61 +74,27 @@ const Results = () => {
         setFiltered(addType(facilities, 'facility'))
       }
     } else if (data.facility_to_user[searchId]) {
-      if (!data.facility_to_user[searchId]) {
-        return
-      }
-      if (showResultsBy.user) {
-        let users = []
-        reportingPeriodsActive.forEach((d) => {
-          if (data.facility_to_user[searchId][d]) {
-            data.facility_to_user[searchId][d].map((id) => {
-              users.push(
-                Object.assign(
-                  {},
-                  {
-                    user_id: id,
-                    reporting_period: d,
-                  }
-                )
+      let users = []
+      reportingPeriodsActive.forEach((d) => {
+        if (data.facility_to_user[searchId][d]) {
+          data.facility_to_user[searchId][d].map((id) => {
+            users.push(
+              Object.assign(
+                {},
+                {
+                  user_id: id,
+                  reporting_period: d,
+                }
               )
-            })
-          }
-        })
-        setFiltered(addType(users, 'user'))
-      } else if (showResultsBy.project) {
-        let users = []
-        reportingPeriodsActive.forEach((d) => {
-          if (data.facility_to_user[searchId][d]) {
-            data.facility_to_user[searchId][d].map((id) => {
-              users.push(
-                Object.assign(
-                  {},
-                  {
-                    user_id: id,
-                    reporting_period: d,
-                  }
-                )
-              )
-            })
-          }
-        })
-        let projects = []
-        users.forEach((d) => {
-          if (data.user_to_arbs[d.user_id]) {
-            projects.push(data.user_to_arbs[d.user_id])
-          }
-        })
-        projects = projects
-          .flat()
-          .filter((d) => reportingPeriodsActive.includes(d.reporting_period))
-        setFiltered(addType(projects, 'project'))
-      } else {
-        setFiltered([])
-      }
+            )
+          })
+        }
+      })
+      setFiltered(addType(users, 'user'))
     } else {
       setFiltered([])
     }
-  }, [searchId, searchBy, showResultsBy, reportingPeriods, data])
+  }, [data, searchId, showResultsBy, reportingPeriods])
 
   return (
     <>

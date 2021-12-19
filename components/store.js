@@ -11,7 +11,7 @@ const useStore = create((set) => ({
     user: false,
     facility: false,
   },
-  showResultsBy: { user: true },
+  showResultsBy: { project: true, facility: false },
   reportingPeriods: {
     '2013-2014': true,
     '2015-2017': true,

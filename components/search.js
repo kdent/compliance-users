@@ -172,7 +172,7 @@ const Search = () => {
         />
         {preview.length > 0 && preview[0] !== search && (
           <Box sx={{ pt: [2], mb: [3] }}>
-            {preview.slice(0, 5).map((d, i) => {
+            {preview.slice(0, 7).map((d, i) => {
               return (
                 <PreviewResult
                   key={i}
@@ -183,7 +183,7 @@ const Search = () => {
                 />
               )
             })}
-            {preview.length > 5 && (
+            {preview.length > 7 && (
               <Box
                 sx={{
                   color: 'secondary',
@@ -192,7 +192,7 @@ const Search = () => {
                   letterSpacing: 'mono',
                 }}
               >
-                <br />+{preview.length - 5} more
+                <br />+{preview.length - 7} more
               </Box>
             )}
           </Box>
