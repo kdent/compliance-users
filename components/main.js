@@ -10,7 +10,6 @@ import useStore from './store'
 const Main = () => {
   const data = useStore((state) => state.data)
   const searchId = useStore((state) => state.searchId)
-  const searchBy = useStore((state) => state.searchBy)
   const showResultsBy = useStore((state) => state.showResultsBy)
   const reportingPeriods = useStore((state) => state.reportingPeriods)
   const setShowResultsBy = useStore((state) => state.setShowResultsBy)

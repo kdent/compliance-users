@@ -25,7 +25,6 @@ export const Value = ({ children, color }) => {
 
 const Target = () => {
   const data = useStore((state) => state.data)
-  const searchBy = useStore((state) => state.searchBy)
   const searchId = useStore((state) => state.searchId)
 
   return (

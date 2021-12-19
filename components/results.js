@@ -14,11 +14,8 @@ const Results = () => {
   const data = useStore((state) => state.data)
   const filtered = useStore((state) => state.filtered)
   const setFiltered = useStore((state) => state.setFiltered)
-  const search = useStore((state) => state.search)
   const searchId = useStore((state) => state.searchId)
-  const searchBy = useStore((state) => state.searchBy)
   const showResultsBy = useStore((state) => state.showResultsBy)
-  const setShowResultsBy = useStore((state) => state.setShowResultsBy)
   const reportingPeriods = useStore((state) => state.reportingPeriods)
 
   useEffect(() => {

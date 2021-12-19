@@ -78,7 +78,6 @@ const Search = () => {
   const searchBy = useStore((state) => state.searchBy)
   const setSearch = useStore((state) => state.setSearch)
   const setSearchId = useStore((state) => state.setSearchId)
-  const setUniqueSearchId = useStore((state) => state.setUniqueSearchId)
 
   const setUniqueId = (match) => {
     if (searchBy.project) {
