@@ -5,7 +5,7 @@ import { Input } from '@carbonplan/components'
 import { shade } from '@theme-ui/color'
 import { useKey } from 'react-use'
 import { sx } from './styles'
-import useStore from './store'
+import useStore from './use-store'
 
 const getMatches = (search, targets) => {
   let matches = targets.filter((d) =>

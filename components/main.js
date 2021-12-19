@@ -5,7 +5,7 @@ import { sx, colors } from './styles'
 import Target from './target'
 import Results from './results'
 import Header from './header'
-import useStore from './store'
+import useStore from './use-store'
 
 const Main = () => {
   const data = useStore((state) => state.data)

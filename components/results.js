@@ -4,7 +4,7 @@ import { Badge, FadeIn } from '@carbonplan/components'
 import { Left, Down } from '@carbonplan/icons'
 import { sx } from './styles'
 import { Entry, Group, Label, Value } from './entry'
-import useStore from './store'
+import useStore from './use-store'
 
 const addType = (data, type) => {
   return data.map((d) => Object.assign({}, d, { type: type }))

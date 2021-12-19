@@ -1,7 +1,7 @@
 import { Box } from 'theme-ui'
 import { Row, Column } from '@carbonplan/components'
 import { sx } from './styles'
-import useStore from './store'
+import useStore from './use-store'
 
 export const Group = ({ children }) => {
   return <Row columns={3}>{children}</Row>

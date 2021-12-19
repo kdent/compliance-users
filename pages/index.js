@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import Main from '../components/main'
-import useStore from '../components/store'
+import useStore from '../components/use-store'
 
 const Index = () => {
   const setSearch = useStore((state) => state.setSearch)

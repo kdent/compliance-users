@@ -3,7 +3,7 @@ import { Box, Divider } from 'theme-ui'
 import { Button, Row, Column } from '@carbonplan/components'
 import { RotatingArrow } from '@carbonplan/icons'
 import { sx } from './styles'
-import useStore from './store'
+import useStore from './use-store'
 
 export const Group = ({ children }) => {
   return <Row columns={5}>{children}</Row>

@@ -1,7 +1,8 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Main from '../../components/main'
-import useStore from '../../components/store'
+import useStore from '../../components/use-store'
+import useDefaults from '../../components/use-defaults'
 
 const Facility = () => {
   const router = useRouter()
@@ -9,24 +10,9 @@ const Facility = () => {
 
   const searchBy = useStore((state) => state.searchBy)
   const setSearchBy = useStore((state) => state.setSearchBy)
-  const setSearch = useStore((state) => state.setSearch)
-  const setFiltered = useStore((state) => state.setFiltered)
   const setSearchId = useStore((state) => state.setSearchId)
 
-  useEffect(() => {
-    router.beforePopState(({ as }) => {
-      if (as !== router.asPath && as === '/') {
-        setSearch('')
-        setSearchId(null)
-        setFiltered([])
-      }
-      return true
-    })
-
-    return () => {
-      router.beforePopState(() => true)
-    }
-  }, [router])
+  useDefaults()
 
   useEffect(() => {
     if (!searchBy.facility) {

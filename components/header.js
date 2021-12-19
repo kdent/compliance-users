@@ -6,7 +6,7 @@ import { Search as SearchIcon, X } from '@carbonplan/icons'
 import { sx, colors } from './styles'
 import Results from './results'
 import Search from './search'
-import useStore from './store'
+import useStore from './use-store'
 
 const Header = ({ children }) => {
   const { push } = useRouter()
