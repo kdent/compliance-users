@@ -21,6 +21,7 @@ const User = () => {
       if (as !== router.asPath && as === '/') {
         setSearch('')
         setSearchId(null)
+        setFiltered([])
       }
       return true
     })
