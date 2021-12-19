@@ -51,7 +51,6 @@ const useStore = create((set) => ({
         data.facility_targets = Object.keys(data.facility_to_user).concat(
           Object.keys(data.facility_name_to_id)
         )
-        console.log(data)
         set({ data: data })
       })
   },
