@@ -19,7 +19,7 @@ const getUniqueKey = (search, obj1, obj2, obj3) => {
   } else if (obj2[search]) {
     return obj2[search]
   } else if (obj3 && obj3[search]) {
-    return obj2[obj3[search]]
+    return obj3[search]
   }
 }
 
@@ -75,32 +75,41 @@ const Search = () => {
 
   const data = useStore((state) => state.data)
   const search = useStore((state) => state.search)
+  const searchId = useStore((state) => state.searchId)
   const searchBy = useStore((state) => state.searchBy)
   const setSearch = useStore((state) => state.setSearch)
   const setSearchId = useStore((state) => state.setSearchId)
 
-  const setUniqueId = (match) => {
+  const getSearchId = (match) => {
+    let id
     if (searchBy.project) {
-      const id = getUniqueKey(
+      id = getUniqueKey(
         match,
-        data.arb_to_users,
         data.opr_to_arbs,
+        data.arb_to_oprs,
         data.project_name_to_opr
       )
+    }
+    if (searchBy.user) {
+      id = getUniqueKey(match, data.user_to_arbs, data.user_name_to_id)
+    }
+    if (searchBy.facility) {
+      id = getUniqueKey(match, data.facility_to_user, data.facility_name_to_id)
+    }
+    return id
+  }
+
+  const setUniqueId = (match) => {
+    const id = getSearchId(match)
+    if (searchBy.project) {
       setSearchId(id)
       push(`/project/${id}`, null, { scroll: false })
     }
     if (searchBy.user) {
-      const id = getUniqueKey(match, data.user_to_arbs, data.user_name_to_id)
       setSearchId(id)
       push(`/user/${id}`, null, { scroll: false })
     }
     if (searchBy.facility) {
-      const id = getUniqueKey(
-        match,
-        data.facility_to_user,
-        data.facility_name_to_id
-      )
       setSearchId(id)
       push(`/facility/${id}`, null, { scroll: false })
     }
@@ -109,6 +118,10 @@ const Search = () => {
   useEffect(() => {
     if (!data) return
     if (search === '') {
+      setPreview([])
+      return
+    }
+    if (getSearchId(search) === searchId) {
       setPreview([])
       return
     }
@@ -139,10 +152,10 @@ const Search = () => {
       } else if (matches.length === 1) {
         setPreview(matches)
       } else {
-        setPreview(['no matching users'])
+        setPreview(['no matching facilities'])
       }
     }
-  }, [data, search, searchBy])
+  }, [data, search, searchId, searchBy])
 
   return (
     <>
@@ -169,7 +182,7 @@ const Search = () => {
             width: '100%',
           }}
         />
-        {preview.length > 0 && preview[0] !== search && (
+        {preview.length > 0 && (
           <Box sx={{ pt: [2], mb: [3] }}>
             {preview.slice(0, 7).map((d, i) => {
               return (

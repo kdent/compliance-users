@@ -29,31 +29,19 @@ const Target = () => {
 
   return (
     <Box>
-      {searchId && data.arb_to_oprs[searchId] && (
+      {searchId && data.opr_to_arbs[searchId] && (
         <Box>
           <Group>
             <Label>ID:</Label>
-            <Value color='green'>
-              {searchId} / {data.arb_to_oprs[searchId]}
-            </Value>
+            <Value color='green'>{searchId}</Value>
           </Group>
           <Group>
             <Label>Name:</Label>
-            <Value>
-              {
-                data.opr_to_project_info[data.arb_to_oprs[searchId]]
-                  .project_name
-              }
-            </Value>
+            <Value>{data.opr_to_project_info[searchId].project_name}</Value>
           </Group>
           <Group>
             <Label>Type:</Label>
-            <Value>
-              {
-                data.opr_to_project_info[data.arb_to_oprs[searchId]]
-                  .project_type
-              }
-            </Value>
+            <Value>{data.opr_to_project_info[searchId].project_type}</Value>
           </Group>
         </Box>
       )}

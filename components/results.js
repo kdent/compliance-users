@@ -30,10 +30,10 @@ const Results = () => {
       (d) => reportingPeriods[d]
     )
 
-    if (data.arb_to_users[searchId]) {
+    if (data.opr_to_arbs[searchId]) {
       setFiltered(
         addType(
-          data.arb_to_users[searchId].filter((d) =>
+          data.arb_to_users[data.opr_to_arbs[searchId]].filter((d) =>
             reportingPeriodsActive.includes(d.reporting_period)
           ),
           'user'

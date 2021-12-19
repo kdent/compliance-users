@@ -29,7 +29,12 @@ const Header = ({ children }) => {
                 mt: ['2px'],
               }}
             />
-            <Filter values={searchBy} setValues={setSearchBy} colors={colors} />
+            <Filter
+              values={searchBy}
+              setValues={setSearchBy}
+              colors={colors}
+              sx={{ flexShrink: 0 }}
+            />
             <Search />
 
             <X

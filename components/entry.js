@@ -102,7 +102,7 @@ export const Entry = ({ data, d, first, last }) => {
               <CrossLink
                 onClick={() => setSearch('')}
                 color='green'
-                href={`/project/${d.arb_id}`}
+                href={`/project/${data.arb_to_oprs[d.arb_id]}`}
               >
                 {data.arb_to_oprs[d.arb_id]}
               </CrossLink>
