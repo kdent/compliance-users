@@ -7,13 +7,10 @@ const Project = () => {
   const router = useRouter()
   const id = router.query.id
 
-  const search = useStore((state) => state.search)
   const searchBy = useStore((state) => state.searchBy)
   const setSearchBy = useStore((state) => state.setSearchBy)
-  const setShowResultsBy = useStore((state) => state.setShowResultsBy)
   const setSearch = useStore((state) => state.setSearch)
   const setFiltered = useStore((state) => state.setFiltered)
-  const searchId = useStore((state) => state.searchId)
   const setSearchId = useStore((state) => state.setSearchId)
 
   useEffect(() => {
