@@ -27,5 +27,5 @@ module.exports = withMDX({
     )
     return config
   },
-  assetPrefix: isDev ? '' : 'https://compliance-users.staging.carbonplan.org',
+  //assetPrefix: isDev ? '' : 'https://compliance-users.staging.carbonplan.org',
 })
