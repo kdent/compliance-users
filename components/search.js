@@ -111,113 +111,94 @@ const Search = () => {
     if (!data) return
     if (search === '') {
       setPreview([])
-      if (searchBy.project) {
-        setSearchId(null)
-        push(`/project`, null, { scroll: false })
-      }
-      if (searchBy.user) {
-        setSearchId(null)
-        push(`/user`, null, { scroll: false })
-      }
-      if (searchBy.facility) {
-        setSearchId(null)
-        push(`/facility`, null, { scroll: false })
-      }
       return
     }
     if (searchBy.project) {
       let matches = getMatches(search, data.project_targets)
       if (matches.length > 1) {
         setPreview(matches)
-        setSearchId(null)
-        push(`/project`, null, { scroll: false })
       } else if (matches.length === 1) {
         setPreview(matches)
-        setUniqueId(matches[0])
       } else {
         setPreview(['no matching projects'])
-        setSearchId(null)
-        push(`/project`, null, { scroll: false })
       }
     }
     if (searchBy.user) {
       let matches = getMatches(search, data.user_targets)
       if (matches.length > 1) {
         setPreview(matches)
-        setSearchId(null)
-        push(`/user/`, null, { scroll: false })
       } else if (matches.length === 1) {
         setPreview(matches)
-        setUniqueId(matches[0])
       } else {
         setPreview(['no matching users'])
-        setSearchId(null)
-        push(`/user/`, null, { scroll: false })
       }
     }
     if (searchBy.facility) {
       let matches = getMatches(search, data.facility_targets)
       if (matches.length > 1) {
         setPreview(matches)
-        setSearchId(null)
-        push(`/facility/`, null, { scroll: false })
       } else if (matches.length === 1) {
         setPreview(matches)
-        setUniqueId(matches[0])
       } else {
         setPreview(['no matching users'])
-        setSearchId(null)
-        push(`/facility/`, null, { scroll: false })
       }
     }
   }, [data, search, searchBy])
 
   return (
     <>
-      <Box sx={sx.heading}>Search</Box>
-      <Divider />
-      <Input
-        placeholder={'enter search term'}
-        onChange={(e) => {
-          setSearch(e.currentTarget.value)
-        }}
-        value={search}
+      <Box
         sx={{
-          borderStyle: 'none',
-          fontFamily: 'mono',
-          fontSize: [1, 1, 1, 2],
-          width: '100%',
-          py: [2],
-          letterSpacing: 'mono',
+          ml: [3],
+          mb: [1],
+          flexGrow: 1,
+          borderBottom: ({ colors }) => `solid 1px ${colors.muted}`,
         }}
-      />
-      {preview.length > 0 && (
-        <Box sx={{ mb: [3] }}>
-          {preview.slice(0, 5).map((d, i) => {
-            return (
-              <PreviewResult
-                key={i}
-                result={d}
-                search={search}
-                setSearch={setSearch}
-                setUniqueId={setUniqueId}
-              />
-            )
-          })}
-          {preview.length > 5 && (
-            <Box
-              sx={{
-                color: 'secondary',
-                fontSize: [1, 1, 1, 2],
-                fontFamily: 'mono',
-                letterSpacing: 'mono',
-              }}
-            >
-              <br />+{preview.length - 5} more
-            </Box>
-          )}
-        </Box>
-      )}
+      >
+        <Input
+          placeholder={'enter search term'}
+          onChange={(e) => {
+            setSearch(e.currentTarget.value)
+          }}
+          value={search}
+          sx={{
+            borderStyle: 'none',
+            fontFamily: 'mono',
+            fontSize: [1, 1, 1, 2],
+            pt: [1],
+            letterSpacing: 'mono',
+            width: '100%',
+          }}
+        />
+        {preview.length > 0 && preview[0] !== search && (
+          <Box sx={{ pt: [2], mb: [3] }}>
+            {preview.slice(0, 5).map((d, i) => {
+              return (
+                <PreviewResult
+                  key={i}
+                  result={d}
+                  search={search}
+                  setSearch={setSearch}
+                  setUniqueId={setUniqueId}
+                />
+              )
+            })}
+            {preview.length > 5 && (
+              <Box
+                sx={{
+                  color: 'secondary',
+                  fontSize: [1, 1, 1, 2],
+                  fontFamily: 'mono',
+                  letterSpacing: 'mono',
+                }}
+              >
+                <br />+{preview.length - 5} more
+              </Box>
+            )}
+          </Box>
+        )}
+      </Box>
+      <Divider />
     </>
   )
 }

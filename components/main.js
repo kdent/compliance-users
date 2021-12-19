@@ -1,85 +1,81 @@
-import { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
+import { useEffect, useRef, useCallback } from 'react'
 import { Box, Divider } from 'theme-ui'
-import { Row, Column, Filter, Group, Input, Tag } from '@carbonplan/components'
+import { Row, Column, Filter, Group } from '@carbonplan/components'
 import { sx, colors } from './styles'
+import Target from './target'
 import Results from './results'
-import Search from './search'
+import Header from './header'
 import useStore from './store'
 
-const Main = ({ children }) => {
-  const { push } = useRouter()
-
+const Main = () => {
+  const data = useStore((state) => state.data)
+  const searchId = useStore((state) => state.searchId)
   const searchBy = useStore((state) => state.searchBy)
   const showResultsBy = useStore((state) => state.showResultsBy)
   const reportingPeriods = useStore((state) => state.reportingPeriods)
   const setShowResultsBy = useStore((state) => state.setShowResultsBy)
   const setReportingPeriods = useStore((state) => state.setReportingPeriods)
 
+  useEffect(() => {
+    if (data && searchId) {
+      if (data.user_id_to_name[searchId]) {
+        setShowResultsBy({ project: true, facility: false })
+      }
+      if (data.arb_to_oprs[searchId]) {
+        setShowResultsBy({ user: true })
+      }
+      if (data.facility_id_to_info[searchId]) {
+        setShowResultsBy({ user: true })
+      }
+    }
+  }, [data, searchId])
+
   return (
-    <Box>
-      <Row columns={[6, 8, 10, 10]}>
-        <Column
-          start={[1, 1, 1, 1]}
-          width={[3, 3, 3, 3]}
-          sx={{ position: 'sticky', top: 100, height: 500 }}
-        >
-          <Search />
-          <Divider sx={{ mb: [5] }} />
-          <Group spacing='md'>
-            <Box>
-              <Box sx={sx.label}>Search by</Box>
-              <Tag
-                value={searchBy.project}
-                sx={{ ...sx.tag, color: colors['project'] }}
-                onClick={() => {
-                  push('/project', null, { scroll: false })
-                }}
+    <>
+      <Box>
+        {data && searchId && (
+          <Box>
+            <Row columns={[6, 8, 10, 10]}>
+              <Column
+                start={[1, 1, 1, 1]}
+                width={[3, 3, 3, 3]}
+                sx={{ position: 'sticky', top: 84, height: 300 }}
               >
-                Project
-              </Tag>
-              <Tag
-                value={searchBy.user}
-                sx={{ ...sx.tag, color: colors['user'] }}
-                onClick={() => {
-                  push('/user', null, { scroll: false })
-                }}
-              >
-                User
-              </Tag>
-              <Tag
-                value={searchBy.facility}
-                sx={{ ...sx.tag, color: colors['facility'] }}
-                onClick={() => {
-                  push('/facility', null, { scroll: false })
-                }}
-              >
-                Facility
-              </Tag>
-            </Box>
-            <Box>
-              <Box sx={sx.label}>Show results by</Box>
-              <Filter
-                values={showResultsBy}
-                setValues={setShowResultsBy}
-                colors={colors}
-              />
-            </Box>
-            <Box>
-              <Box sx={sx.label}>Reporting periods</Box>
-              <Filter
-                values={reportingPeriods}
-                setValues={setReportingPeriods}
-                multiSelect
-              />
-            </Box>
-          </Group>
-        </Column>
-        <Column start={[5, 4, 5, 5]} width={[5, 5, 5, 5]}>
-          {children}
-        </Column>
-      </Row>
-    </Box>
+                <Group spacing='md'>
+                  <Box>
+                    <Divider sx={{ mb: [3] }} />
+                    <Target />
+                    <Divider sx={{ mt: [3] }} />
+                  </Box>
+                  <Box>
+                    <Box sx={sx.label}>Show results by</Box>
+                    <Filter
+                      values={showResultsBy}
+                      setValues={setShowResultsBy}
+                      colors={colors}
+                    />
+                  </Box>
+                  <Box>
+                    <Box sx={sx.label}>Reporting periods</Box>
+                    <Filter
+                      values={reportingPeriods}
+                      setValues={setReportingPeriods}
+                      multiSelect
+                    />
+                  </Box>
+                </Group>
+              </Column>
+              <Column id='right' start={[5, 4, 5, 5]} width={[5, 5, 5, 5]}>
+                <Divider sx={{ mb: [3] }} />
+                <Results />
+                <Divider sx={{ mt: [3] }} />
+              </Column>
+            </Row>
+          </Box>
+        )}
+      </Box>
+      {!data && <Box sx={sx.label}>Loading data...</Box>}
+    </>
   )
 }
 

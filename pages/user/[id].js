@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import Results from '../../components/results'
+import Main from '../../components/main'
 import useStore from '../../components/store'
 
 const User = () => {
@@ -12,12 +12,15 @@ const User = () => {
   const setSearchBy = useStore((state) => state.setSearchBy)
   const setShowResultsBy = useStore((state) => state.setShowResultsBy)
   const setSearch = useStore((state) => state.setSearch)
+  const setFiltered = useStore((state) => state.setFiltered)
   const searchId = useStore((state) => state.searchId)
+  const setSearchId = useStore((state) => state.setSearchId)
 
   useEffect(() => {
     router.beforePopState(({ as }) => {
-      if (as !== router.asPath && as === '/user') {
+      if (as !== router.asPath && as === '/') {
         setSearch('')
+        setSearchId(null)
       }
       return true
     })
@@ -30,18 +33,15 @@ const User = () => {
   useEffect(() => {
     if (!searchBy.user) {
       setSearchBy({ project: false, user: true, facility: false })
-      setShowResultsBy({
-        project: true,
-        facility: false,
-      })
     }
   }, [id])
 
   useEffect(() => {
-    if ((id && id !== searchId) || (id && search === '')) setSearch(id)
+    console.log(id)
+    if (id) setSearchId(id)
   }, [id])
 
-  return <Results />
+  return <Main />
 }
 
 export default User

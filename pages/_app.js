@@ -6,8 +6,9 @@ import '@carbonplan/components/fonts.css'
 import '@carbonplan/components/globals.css'
 import theme from '@carbonplan/theme'
 import useStore from '../components/store'
-import Main from '../components/main'
+import Header from '../components/header'
 import Layout from '../components/layout'
+import Info from '../components/info'
 
 const App = ({ Component, pageProps }) => {
   const data = useStore((state) => state.data)
@@ -22,9 +23,9 @@ const App = ({ Component, pageProps }) => {
       <MDXProvider>
         <FadeIn>
           <Layout>
-            <Main>
-              <Component {...pageProps} />
-            </Main>
+            <Header />
+            <Component {...pageProps} />
+            <Info />
           </Layout>
         </FadeIn>
       </MDXProvider>
