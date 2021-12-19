@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
 import { Box, Divider } from 'theme-ui'
 import { Input } from '@carbonplan/components'
 import { shade } from '@theme-ui/color'
+import { useKey } from 'react-use'
 import { sx } from './styles'
 import useStore from './store'
 
@@ -23,11 +24,22 @@ const getUniqueKey = (search, obj1, obj2, obj3) => {
   }
 }
 
-const PreviewResult = ({ result, search, setSearch, setUniqueId }) => {
+const isEmpty = (preview) => {
+  return preview.length === 1 && preview[0].includes('no matching')
+}
+
+const PreviewResult = ({
+  result,
+  search,
+  highlight,
+  setSearch,
+  setUniqueId,
+  onMouseOver,
+}) => {
   const sx = {
     base: {
       width: 'fit-content',
-      color: 'secondary',
+      color: highlight ? 'primary' : 'secondary',
       fontSize: [1, 1, 1, 2],
       pr: [3],
       fontFamily: 'mono',
@@ -52,13 +64,18 @@ const PreviewResult = ({ result, search, setSearch, setUniqueId }) => {
     return (
       <Box
         sx={{ ...sx.base, ...sx.active }}
+        onMouseOver={onMouseOver}
         onClick={() => {
           setSearch(result)
           setUniqueId(result)
         }}
       >
         <Box as='span'>{result.slice(0, i)}</Box>
-        <Box as='span' id='inner' sx={{ color: shade('primary', 0.2) }}>
+        <Box
+          as='span'
+          id='inner'
+          sx={{ color: highlight ? 'primary' : shade('primary', 0.2) }}
+        >
           {result.slice(i, i + j)}
         </Box>
         <Box as='span'>{result.slice(i + j)}</Box>
@@ -72,6 +89,59 @@ const PreviewResult = ({ result, search, setSearch, setUniqueId }) => {
 const Search = () => {
   const { push } = useRouter()
   const [preview, setPreview] = useState([])
+  const [highlighted, setHighlighted] = useState(-1)
+
+  useKey('/', (e) => {
+    e.preventDefault()
+    input.current.focus()
+  })
+
+  useKey(
+    'Enter',
+    (e) => {
+      if (preview.length == 0 || highlighted === -1) return
+      e.preventDefault()
+      const result = preview[highlighted]
+      setSearch(result)
+      setUniqueId(result)
+    },
+    {},
+    [preview, highlighted]
+  )
+
+  useKey(
+    'ArrowDown',
+    (e) => {
+      if (preview.length == 0 || isEmpty(preview)) return
+      e.preventDefault()
+      input.current.blur()
+      list.current.focus()
+      setHighlighted((prev) => {
+        return Math.min(prev + 1, Math.min(preview.length - 1, 6))
+      })
+    },
+    {},
+    [preview]
+  )
+
+  useKey(
+    'ArrowUp',
+    (e) => {
+      if (preview.length == 0 || isEmpty(preview)) return
+      e.preventDefault()
+      input.current.blur()
+      list.current.focus()
+      setHighlighted((prev) => {
+        if (prev === -1) return Math.min(preview.length, 6)
+        else return Math.max(prev - 1, 0)
+      })
+    },
+    {},
+    [preview]
+  )
+
+  const input = useRef(null)
+  const list = useRef(null)
 
   const data = useStore((state) => state.data)
   const search = useStore((state) => state.search)
@@ -168,9 +238,13 @@ const Search = () => {
         }}
       >
         <Input
+          ref={input}
           placeholder={'enter search term'}
           onChange={(e) => {
             setSearch(e.currentTarget.value)
+          }}
+          onFocus={(e) => {
+            setHighlighted(-1)
           }}
           value={search}
           sx={{
@@ -183,15 +257,32 @@ const Search = () => {
           }}
         />
         {preview.length > 0 && (
-          <Box sx={{ pt: [2], mb: [3] }}>
+          <Box
+            sx={{ pt: [2], mb: [3], outline: 'none !important' }}
+            ref={list}
+            tabIndex='0'
+            onKeyDown={(e) => {
+              if (!['ArrowDown', 'ArrowUp', 'Enter'].includes(e.code)) {
+                input.current.focus()
+                setHighlighted(-1)
+              }
+            }}
+          >
             {preview.slice(0, 7).map((d, i) => {
               return (
                 <PreviewResult
                   key={i}
                   result={d}
+                  highlight={i === highlighted}
                   search={search}
                   setSearch={setSearch}
                   setUniqueId={setUniqueId}
+                  onMouseOver={() => {
+                    setHighlighted(-1)
+                  }}
+                  onMouseEnter={() => {
+                    setHighlighted(-1)
+                  }}
                 />
               )
             })}

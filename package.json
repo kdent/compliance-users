@@ -23,12 +23,13 @@
     "@carbonplan/components": "^10.3.0",
     "@carbonplan/icons": "^1.1.0",
     "@carbonplan/theme": "^7.0.0",
-    "@theme-ui/color": "^0.12.1",
     "@mdx-js/loader": "^1.6.22",
     "@next/mdx": "^11.0.1",
+    "@theme-ui/color": "^0.12.1",
     "next": "^12.0.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-use": "^17.3.1",
     "theme-ui": "^0.12.0",
     "zustand": "^3.6.7"
   }
