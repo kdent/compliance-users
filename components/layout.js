@@ -1,6 +1,6 @@
 import { Box, Text, Grid, Container, Themed } from 'theme-ui'
 import {
-  Layout,
+  Layout as BaseLayout,
   Guide,
   Row,
   Column,
@@ -12,23 +12,45 @@ import QuickLook from './quick-look'
 
 const prefix = 'https://images.carbonplan.org'
 
-const Tool = ({
-  title,
-  description,
-  meta,
-  contentWidth = [6, 10],
-  descriptionWidth = [6, 6, 6, 6],
-  quickLookStart = 8,
-  children,
-}) => {
+const meta = {
+  id: 'compliance-users',
+  title: 'Compliance users',
+  color: 'blue',
+  card: 'compliance-users',
+  quickLook: 'Tracking the users of compliance offsets',
+}
+
+const description = (
+  <span>
+    In the California cap-and-trade program, polluting entities use carbon
+    offsets for compliance. Who are they? This tool lets you search for an
+    offset project, user, or facility, and see the linked results. Read more in
+    our{' '}
+    <Link href='https://carbonplan.org/blog/compliance-offset-users'>
+      blog post
+    </Link>{' '}
+    or checkout the{' '}
+    <Link href='https://github.com/carbonplan/compliance-users'>
+      GitHub repository
+    </Link>
+    .
+  </span>
+)
+
+const contentWidth = [6, 8, 10, 10]
+const descriptionWidth = [6, 7, 7, 7]
+const quickLookStart = 9
+
+const Layout = ({ children }) => {
   return (
-    <Layout
+    <BaseLayout
       card={`${prefix}/social/${meta.card}.png`}
       metadata={false}
       description={meta.quickLook + '.'}
       title={meta.title.toLowerCase() + ' / research / carbonplan'}
       links={'local'}
       nav={'research'}
+      fade={false}
     >
       <Guide />
       <Row sx={{ mb: [3, 4, 5, 6] }}>
@@ -53,7 +75,7 @@ const Tool = ({
         <Column start={[1, 2]} width={descriptionWidth}>
           <Box sx={{}}>
             <Box as='h1' variant='styles.h1' sx={{ mt: [5, 7, 7, 8] }}>
-              {title}
+              {meta.title}
             </Box>
             <Box sx={{ mb: [0, 0, 4], mt: [0, 0, 5, 6] }}>
               <Themed.p>{description}</Themed.p>
@@ -69,8 +91,8 @@ const Tool = ({
           {children}
         </Column>
       </Row>
-    </Layout>
+    </BaseLayout>
   )
 }
 
-export default Tool
+export default Layout
