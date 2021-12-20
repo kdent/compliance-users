@@ -105,7 +105,9 @@ def main():
     user_id_to_name = users_and_facilities.make_user_id_to_name(user_facility_df)
 
     # map facility id to facility info
-    facility_name_to_id, facility_id_to_info = facilities.make_facility_info(facility_df)
+    facility_name_to_id, facility_id_to_info = facilities.make_facility_info(
+        facility_df, user_facility_df
+    )
 
     # Create collection and write to json
     collection = {
@@ -125,7 +127,7 @@ def main():
         'combined_arbs': combined_arbs,
     }
 
-    output_suffix = mrr_data_years[0] + '_' + mrr_data_years[-1] + 'v4'
+    output_suffix = mrr_data_years[0] + '_' + mrr_data_years[-1] + 'v5'
     write_json(collection, 'data/outputs/user_data_' + output_suffix + '.json')
 
 
