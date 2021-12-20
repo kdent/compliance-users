@@ -5,7 +5,7 @@ import Methods from './methods.md'
 
 const Info = () => {
   return (
-    <Row sx={{ mt: [9] }} columns={[6, 8, 10, 10]}>
+    <Row sx={{ mt: [7] }} columns={[6, 8, 10, 10]}>
       <Column start={1} width={4}>
         <About />
       </Column>

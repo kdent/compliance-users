@@ -12,6 +12,7 @@ const Index = () => {
     setSearchId(null)
     setFiltered([])
   }, [])
+
   return <Main />
 }
 
