@@ -39,9 +39,10 @@ def read_project_data(data_path):
     # standardizing ids, table cleanup
     issuance_df['arb_id'] = issuance_df['arb_id'].str.strip()
     issuance_df['opr_id'] = issuance_df['opr_id'].astype(str).str.strip()
-    for i, row in issuance_df.iterrows():
-        row['project_type'] = project_types[row['project_type']]
-        row['arb_id'] = re.search('.*(?=-)', row['arb_id']).group(0)
+
+    issuance_df['project_type'] = issuance_df['project_type'].map(project_types)
+    issuance_df['arb_id'] = issuance_df['arb_id'].str.split('-').apply(lambda x: x[0])
+
     # keep most recent project information associated with an arb/opr id pair
     issuance_df = issuance_df.drop_duplicates(['arb_id', 'opr_id'], keep='last')
     return issuance_df
