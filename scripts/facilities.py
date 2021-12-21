@@ -26,10 +26,10 @@ reporting_periods = {
 
 def read_facility_data(data_path, mrr_data_years):
     facility_df = pd.DataFrame()
-    for r in mrr_data_years:
+    for mrr_data_year in mrr_data_years:
         df = pd.read_excel(
-            data_path + r + "-ghg-emissions-" + mrr_file_year[r] + "-11-04.xlsx",
-            sheet_name=r + " GHG Data",
+            data_path + mrr_data_year + "-ghg-emissions-" + mrr_file_year[mrr_data_year] + "-11-04.xlsx",
+            sheet_name=mrr_data_year + " GHG Data",
             skiprows=8,
         )
 
@@ -46,7 +46,7 @@ def read_facility_data(data_path, mrr_data_years):
             inplace=True,
         )
         df = df[rename_d.values()]
-        df["reporting_period"] = reporting_periods[r]
+        df["reporting_period"] = reporting_periods[mrr_data_year]
         facility_df = facility_df.append(df)
 
     facility_df["facility_id"] = facility_df["facility_id"].astype(str).str.strip()

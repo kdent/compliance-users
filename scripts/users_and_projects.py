@@ -3,16 +3,16 @@ import re
 import pandas as pd
 
 
-def read_user_project_data(data_path, compliance_reports):
+def read_user_project_data(data_path, reporting_periods):
     user_project_df = pd.DataFrame()
-    for r in compliance_reports:
+    for reporting_period in reporting_periods:
         df = pd.read_excel(
-            data_path + r + "compliancereport.xlsx",
-            sheet_name=r + " " + "Offset Detail",
+            data_path + reporting_period + "compliancereport.xlsx",
+            sheet_name=reporting_period + " " + "Offset Detail",
             skiprows=4,
         )
         df = df[~pd.isnull(df).any(axis=1)]
-        df["reporting_period"] = r
+        df["reporting_period"] = reporting_period
         user_project_df = user_project_df.append(df)
     rename_d = {
         "Entity ID": "user_id",

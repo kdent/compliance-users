@@ -3,12 +3,12 @@ from collections import defaultdict
 import pandas as pd
 
 
-def read_user_facility_data(data_path, compliance_reports):
+def read_user_facility_data(data_path, reporting_periods):
     entity_facility_df = pd.DataFrame()
-    for r in compliance_reports:
+    for reporting_period in reporting_periods:
         df = pd.read_excel(
-            data_path + r + "compliancereport.xlsx",
-            r + " " + "Compliance Summary",
+            data_path + reporting_period + "compliancereport.xlsx",
+            sheet_name=reporting_period + " " + "Compliance Summary",
             skiprows=4,
         )
 
@@ -24,7 +24,7 @@ def read_user_facility_data(data_path, compliance_reports):
         )
 
         df = df[rename_d.values()]
-        df["reporting_period"] = r
+        df["reporting_period"] = reporting_period
 
         # drop CAISO, which does not have an user ID nor facility ids
         df = df[df["facility_ids"].notna()]
