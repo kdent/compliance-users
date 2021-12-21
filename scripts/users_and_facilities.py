@@ -30,9 +30,7 @@ def read_user_facility_data(data_path, reporting_periods):
         df = df[df['facility_ids'].notna()]
 
         # make a row for each facility id connected to a user and compliance period
-        df['facility_ids'] = df['facility_ids'].apply(
-            lambda x: str(x).replace(' ', '').split(',')
-        )
+        df['facility_ids'] = df['facility_ids'].apply(lambda x: str(x).replace(' ', '').split(','))
         df = df.explode('facility_ids')
         df = df.rename(columns={'facility_ids': 'facility_id'})
 

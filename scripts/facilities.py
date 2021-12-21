@@ -28,7 +28,11 @@ def read_facility_data(data_path, mrr_data_years):
     facility_df = pd.DataFrame()
     for mrr_data_year in mrr_data_years:
         df = pd.read_excel(
-            data_path + mrr_data_year + '-ghg-emissions-' + mrr_file_year[mrr_data_year] + '-11-04.xlsx',
+            data_path
+            + mrr_data_year
+            + '-ghg-emissions-'
+            + mrr_file_year[mrr_data_year]
+            + '-11-04.xlsx',
             sheet_name=mrr_data_year + ' GHG Data',
             skiprows=8,
         )
@@ -55,9 +59,7 @@ def read_facility_data(data_path, mrr_data_years):
     facility_df['state'] = facility_df['state'].str.upper().str.strip()
 
     # keep most recent info associated with a fid in each reporting period
-    facility_df = facility_df.drop_duplicates(
-        ['facility_id', 'reporting_period'], keep='last'
-    )
+    facility_df = facility_df.drop_duplicates(['facility_id', 'reporting_period'], keep='last')
     return facility_df
 
 

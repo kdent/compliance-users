@@ -23,17 +23,13 @@ def read_user_project_data(data_path, reporting_periods):
         columns=rename_d,
         inplace=True,
     )
-    user_project_df = user_project_df[
-        ['user_id', 'arb_id', 'quantity', 'reporting_period']
-    ]
+    user_project_df = user_project_df[['user_id', 'arb_id', 'quantity', 'reporting_period']]
     user_project_df['user_id'] = user_project_df['user_id'].str.strip()
     user_project_df['arb_id'] = user_project_df['arb_id'].str.strip()
 
     # ignoring offset vintage lets us simplify arb_id and collapse
     # rows that had the same entity and project but different vintages
-    user_project_df['arb_id'] = (
-        user_project_df['arb_id'].str.split('-').apply(lambda x: x[0])
-    )
+    user_project_df['arb_id'] = user_project_df['arb_id'].str.split('-').apply(lambda x: x[0])
 
     user_project_df = (
         user_project_df.groupby(['user_id', 'arb_id', 'reporting_period'])['quantity']
