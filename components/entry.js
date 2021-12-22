@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 import { Box, Divider } from 'theme-ui'
+import { format } from 'd3-format'
 import { Button, Row, Column } from '@carbonplan/components'
 import { RotatingArrow } from '@carbonplan/icons'
 import { sx } from './styles'
@@ -61,6 +62,8 @@ export const Entry = ({ data, d, first, last }) => {
 
   const setSearch = useStore((state) => state.setSearch)
 
+  const formatter = format(',.0r')
+
   return (
     <Box>
       {!first && <Divider sx={{ mb: ['12px'], mt: [3], pt: ['2px'] }} />}
@@ -89,7 +92,7 @@ export const Entry = ({ data, d, first, last }) => {
           {d.quantity && (
             <Group>
               <Label>Quantity:</Label>
-              <Value>{d.quantity}</Value>
+              <Value>{formatter(d.quantity)}</Value>
             </Group>
           )}
         </>
@@ -137,7 +140,7 @@ export const Entry = ({ data, d, first, last }) => {
           </Group>
           <Group>
             <Label>Quantity:</Label>
-            <Value>{d.quantity}</Value>
+            <Value>{formatter(d.quantity)}</Value>
           </Group>
         </>
       )}

@@ -99,11 +99,17 @@ const Search = () => {
   useKey(
     'Enter',
     (e) => {
-      if (preview.length == 0 || highlighted === -1) return
-      e.preventDefault()
-      const result = preview[highlighted]
-      setSearch(result)
-      setUniqueId(result)
+      if (preview.length == 0) return
+      if (
+        (preview.length === 1 && highlighted === -1) ||
+        (preview.length === 1 && highlighted === 0) ||
+        (preview.length > 1 && highlighted !== -1)
+      ) {
+        e.preventDefault()
+        const result = highlighted == -1 ? preview[0] : preview[highlighted]
+        setSearch(result)
+        setUniqueId(result)
+      }
     },
     {},
     [preview, highlighted]

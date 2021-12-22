@@ -10,13 +10,25 @@ import Header from '../components/header'
 import Layout from '../components/layout'
 import Info from '../components/info'
 
-const App = ({ Component, pageProps }) => {
+const App = ({ Component, pageProps, router }) => {
   const data = useStore((state) => state.data)
   const fetch = useStore((state) => state.fetch)
 
   useEffect(() => {
     if (!data) fetch()
   }, [])
+
+  if (router.route === '/404') {
+    return (
+      <ThemeProvider theme={theme}>
+        <MDXProvider>
+          <FadeIn>
+            <Component {...pageProps} />
+          </FadeIn>
+        </MDXProvider>
+      </ThemeProvider>
+    )
+  }
 
   return (
     <ThemeProvider theme={theme}>
