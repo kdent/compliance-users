@@ -237,9 +237,12 @@ const Search = () => {
     <>
       <Box
         sx={{
-          ml: [3],
+          ml: [0, 3, 3, 3],
+          mt: ['12px', 0, 0, 0],
           mb: [1],
+          pb: ['6px', 0, 0, 0],
           flexGrow: 1,
+          width: ['1px', 'unset', 'unset', 'unset'],
           borderBottom: ({ colors }) => `solid 1px ${colors.muted}`,
         }}
       >

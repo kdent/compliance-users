@@ -23,8 +23,12 @@ const Main = () => {
             <Row columns={[6, 8, 10, 10]}>
               <Column
                 start={[1, 1, 1, 1]}
-                width={[3, 3, 3, 3]}
-                sx={{ position: 'sticky', top: 84, height: 300 }}
+                width={[6, 3, 3, 3]}
+                sx={{
+                  position: ['unset', 'sticky', 'sticky', 'sticky'],
+                  top: 84,
+                  height: 300,
+                }}
               >
                 <Group spacing='md'>
                   <Box>
@@ -59,7 +63,7 @@ const Main = () => {
                   </Box>
                 </Group>
               </Column>
-              <Column id='right' start={[5, 4, 5, 5]} width={[5, 5, 5, 5]}>
+              <Column id='right' start={[1, 4, 5, 5]} width={[6, 5, 5, 5]}>
                 <Divider sx={{ mb: [3] }} />
                 <Results />
                 <Divider sx={{ mt: [3] }} />

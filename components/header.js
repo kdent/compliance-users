@@ -19,8 +19,8 @@ const Header = ({ children }) => {
   return (
     <Box>
       <Row columns={[6, 8, 10, 10]} sx={{ mb: [5] }}>
-        <Column start={[1, 1, 1, 1]} width={[9, 9, 9, 9]}>
-          <Box sx={{ display: 'flex' }}>
+        <Column start={[1, 1, 1, 1]} width={[6, 9, 9, 9]}>
+          <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
             <SearchIcon
               sx={{
                 mr: [3],
@@ -36,12 +36,19 @@ const Header = ({ children }) => {
               colors={colors}
               sx={{ flexShrink: 0 }}
             />
+            <Box
+              sx={{
+                display: ['unset', 'none', 'none', 'none'],
+                flexBasis: '100%',
+                height: 0,
+              }}
+            />
             <Search />
-
             <X
               sx={{
                 cursor: 'pointer',
                 mx: [2],
+                mt: ['12px', 0, 0, 0],
                 strokeWidth: 1.5,
                 color: 'secondary',
                 width: 18,
@@ -57,7 +64,9 @@ const Header = ({ children }) => {
                 push('/', null, { scroll: false })
               }}
             />
-            <Badge sx={{ ml: ['2px'] }}>{filtered.length}</Badge>
+            <Badge sx={{ mt: ['12px', 0, 0, 0], ml: ['2px'] }}>
+              {filtered.length}
+            </Badge>
           </Box>
         </Column>
       </Row>
