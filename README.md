@@ -1,14 +1,25 @@
-<img
-  src='https://carbonplan-assets.s3.amazonaws.com/monogram/dark-small.png'
-  height='48'
-/>
+<p align='left'>
+  <a href='https://carbonplan.org/#gh-light-mode-only'>
+    <img
+      src='https://carbonplan-assets.s3.amazonaws.com/monogram/dark-small.png'
+      height='48px'
+    />
+  </a>
+  <a href='https://carbonplan.org/#gh-dark-mode-only'>
+    <img
+      src='https://carbonplan-assets.s3.amazonaws.com/monogram/light-small.png'
+      height='48px'
+    />
+  </a>
+</p>
 
 # carbonplan/compliance-users
 
 Working repo to make a simple tool for querying CA compliance data.
 
-[![CI](https://github.com/carbonplan/compliance-users/actions/workflows/main.yaml/badge.svg)](https://github.com/carbonplan/compliance-users/actions/workflows/main.yaml)
-![MIT License][]
+![GitHub branch checks state](https://img.shields.io/github/checks-status/carbonplan/compliance-users/main?style=flat-square)
+![GitHub deployments](https://img.shields.io/github/deployments/carbonplan/compliance-users/production?label=vercel&logo=vercel&logoColor=white&style=flat-square)
+![GitHub](https://img.shields.io/github/license/carbonplan/compliance-users?style=flat-square)
 
 [mit license]: https://badgen.net/badge/license/MIT/blue
 
@@ -74,4 +85,4 @@ All the code in this repository is [MIT](https://choosealicense.com/licenses/mit
 
 ## about us
 
-CarbonPlan is a non-profit organization working on the science and data of carbon removal. We aim to improve the transparency and scientific integrity of carbon removal and climate solutions through open data and tools. Find out more at [carbonplan.org](https://carbonplan.org/) or get in touch by [opening an issue](https://github.com/carbonplan/compliance-users/issues/new) or [sending us an email](mailto:hello@carbonplan.org).
+CarbonPlan is a non-profit organization that uses data and science for climate action. We aim to improve the transparency and scientific integrity of carbon removal and climate solutions through open data and tools. Find out more at [carbonplan.org](https://carbonplan.org/) or get in touch by [opening an issue](https://github.com/carbonplan/compliance-users/issues/new) or [sending us an email](mailto:hello@carbonplan.org).
