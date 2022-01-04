@@ -10,7 +10,7 @@ import users_and_projects
 pd.options.mode.chained_assignment = None
 
 # Define years over which compliance data will be considered and where to find it
-compliance_reports = ['2013-2014', '2015-2017', '2018-2020']
+reporting_periods = ['2013-2014', '2015-2017', '2018-2020']
 mrr_data_years = ['2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020']
 
 compliance_report_path = 'data/compliance-reports/'
@@ -67,7 +67,7 @@ def prune_data(user_project_df, project_df, user_facility_df, facility_df):
 
 def write_json(collection, output):
     with open(output, "w") as f:
-        f.write(json.dumps(collection))
+        f.write(json.dumps(collection, indent=2))
 
 
 def main():
@@ -76,10 +76,10 @@ def main():
     project_df = projects.read_project_data(issuance_table_path)
     facility_df = facilities.read_facility_data(mrr_data_path, mrr_data_years)
     user_project_df = users_and_projects.read_user_project_data(
-        compliance_report_path, compliance_reports
+        compliance_report_path, reporting_periods
     )
     user_facility_df = users_and_facilities.read_user_facility_data(
-        compliance_report_path, compliance_reports
+        compliance_report_path, reporting_periods
     )
 
     # prune data to min-set for representing offset use

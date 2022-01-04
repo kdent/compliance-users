@@ -26,34 +26,37 @@ reporting_periods = {
 
 def read_facility_data(data_path, mrr_data_years):
     facility_df = pd.DataFrame()
-    for r in mrr_data_years:
+    for mrr_data_year in mrr_data_years:
         df = pd.read_excel(
-            data_path + r + '-ghg-emissions-' + mrr_file_year[r] + '-11-04.xlsx', r + ' GHG Data'
+            data_path
+            + mrr_data_year
+            + '-ghg-emissions-'
+            + mrr_file_year[mrr_data_year]
+            + '-11-04.xlsx',
+            sheet_name=mrr_data_year + ' GHG Data',
+            skiprows=8,
         )
+
         # clean up dataframe
-        df.columns = df.iloc[7]
-        df = df[8:].reset_index(drop="true")
+        rename_d = {
+            'ARB ID': 'facility_id',
+            'Facility Name': 'facility_name',
+            'City': 'city',
+            'State': 'state',
+            'Industry Sector': 'sector',
+        }
         df.rename(
-            columns={
-                'ARB ID': 'facility_id',
-                'Facility Name': 'facility_name',
-                'City': 'city',
-                'State': 'state',
-                'Industry Sector': 'sector',
-            },
+            columns=rename_d,
             inplace=True,
         )
-        df = df[['facility_id', 'facility_name', 'city', 'state', 'sector']]
-        df['reporting_period'] = reporting_periods[r]
+        df = df[rename_d.values()]
+        df['reporting_period'] = reporting_periods[mrr_data_year]
         facility_df = facility_df.append(df)
 
-    facility_df['facility_id'] = facility_df['facility_id'].astype(str)
-    facility_df['facility_id'] = facility_df['facility_id'].str.strip()
+    facility_df['facility_id'] = facility_df['facility_id'].astype(str).str.strip()
     facility_df['facility_name'] = facility_df['facility_name'].str.strip()
-    facility_df['city'] = facility_df['city'].str.title()
-    facility_df['city'] = facility_df['city'].str.strip()
-    facility_df['state'] = facility_df['state'].str.upper()
-    facility_df['state'] = facility_df['state'].str.strip()
+    facility_df['city'] = facility_df['city'].str.title().str.strip()
+    facility_df['state'] = facility_df['state'].str.upper().str.strip()
 
     # keep most recent info associated with a fid in each reporting period
     facility_df = facility_df.drop_duplicates(['facility_id', 'reporting_period'], keep='last')
@@ -61,10 +64,11 @@ def read_facility_data(data_path, mrr_data_years):
 
 
 def make_facility_info(facility_df, user_facility_df):
-    facility_name_to_id = {}
+
+    facility_name_to_id = facility_df.set_index('facility_name')['facility_id'].to_dict()
+
     facility_id_to_info = defaultdict(dict)
     for i, row in facility_df.iterrows():
-        facility_name_to_id[row['facility_name']] = row['facility_id']
         facility_id_to_info[row['facility_id']][row['reporting_period']] = {
             'facility_name': row['facility_name'],
             'city': row['city'],
@@ -75,7 +79,7 @@ def make_facility_info(facility_df, user_facility_df):
     # There are a handful of cases where a facility listed in in a certain compliance report
     # (e.g. appearing in the user_facility_df in reporting period 2018-2020) doesn't correspond
     # with a facility listed with covered emissions in the MRR data for the same time period
-    # (e.g. 2018, 2019, 2020). In these cases, we treat the compliance data as the "ground truth"
+    # (e.g. 2018, 2019, 2020). In these cases, we treat the compliance data as the 'ground truth'
     # for which facilities are associated with a user in a given compliance period, and reference
     # the facility's information from previous compliance periods. We mark these cases by
     # prepending ** to the beginning a facility's name for the non-contemporary compliance periods.

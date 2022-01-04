@@ -3,17 +3,24 @@ import re
 import pandas as pd
 
 
-def read_user_project_data(data_path, compliance_reports):
+def read_user_project_data(data_path, reporting_periods):
     user_project_df = pd.DataFrame()
-    for r in compliance_reports:
-        df = pd.read_excel(data_path + r + 'compliancereport.xlsx', r + ' ' + 'Offset Detail')
-        df.columns = df.iloc[3]
-        df = df[4:].reset_index(drop="true")
+    for reporting_period in reporting_periods:
+        df = pd.read_excel(
+            data_path + reporting_period + 'compliancereport.xlsx',
+            sheet_name=reporting_period + ' ' + 'Offset Detail',
+            skiprows=4,
+        )
         df = df[~pd.isnull(df).any(axis=1)]
-        df['reporting_period'] = r
+        df['reporting_period'] = reporting_period
         user_project_df = user_project_df.append(df)
+    rename_d = {
+        'Entity ID': 'user_id',
+        'Quantity': 'quantity',
+        'ARB Project ID #': 'arb_id',
+    }
     user_project_df.rename(
-        columns={'Entity ID': 'user_id', 'Quantity': 'quantity', 'ARB Project ID #': 'arb_id'},
+        columns=rename_d,
         inplace=True,
     )
     user_project_df = user_project_df[['user_id', 'arb_id', 'quantity', 'reporting_period']]
@@ -22,30 +29,24 @@ def read_user_project_data(data_path, compliance_reports):
 
     # ignoring offset vintage lets us simplify arb_id and collapse
     # rows that had the same entity and project but different vintages
-    for i, row in user_project_df.iterrows():
-        row['arb_id'] = re.search('.*(?=-)', row['arb_id']).group(0)
+    user_project_df['arb_id'] = user_project_df['arb_id'].str.split('-').apply(lambda x: x[0])
+
     user_project_df = (
         user_project_df.groupby(['user_id', 'arb_id', 'reporting_period'])['quantity']
         .sum()
+        .astype(int)
         .reset_index()
     )
     return user_project_df
 
 
 def make_user_to_arbs(user_project_df):
-    user_ids = user_project_df['user_id'].unique().tolist()
-    user_to_arbs = {}
-    for user_id in user_ids:
-        projects = []
-        p = user_project_df[user_project_df['user_id'] == user_id]
-        for i, row in p.iterrows():
-            project = {
-                'arb_id': row['arb_id'],
-                'reporting_period': row['reporting_period'],
-                'quantity': row['quantity'],
-            }
-            projects.append(project)
-        user_to_arbs[user_id] = projects
+    user_to_arbs = (
+        user_project_df.groupby('user_id')
+        .apply(lambda x: x.set_index('user_id').to_dict(orient='records'))
+        .to_dict()
+    )
+
     return user_to_arbs
 
 
@@ -64,7 +65,7 @@ def make_arb_to_users(user_project_df, combined_arbs):
             users.append(user)
         arb_to_user[arb_id] = users
     # Add an extra entry to be able to easily look up the users for
-    # "combined arb ids". In other words, if multiple arb_ids have
+    # 'combined arb ids'. In other words, if multiple arb_ids have
     # used to represent the same underlying project (i.e. the same)
     # opr id), this allows for a seach by the opr id that returns all
     # the users associated with the multiple arb ids.

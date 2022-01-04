@@ -1,5 +1,3 @@
-import re
-
 import pandas as pd
 
 project_types = {
@@ -39,9 +37,10 @@ def read_project_data(data_path):
     # standardizing ids, table cleanup
     issuance_df['arb_id'] = issuance_df['arb_id'].str.strip()
     issuance_df['opr_id'] = issuance_df['opr_id'].astype(str).str.strip()
-    for i, row in issuance_df.iterrows():
-        row['project_type'] = project_types[row['project_type']]
-        row['arb_id'] = re.search('.*(?=-)', row['arb_id']).group(0)
+
+    issuance_df['project_type'] = issuance_df['project_type'].map(project_types)
+    issuance_df['arb_id'] = issuance_df['arb_id'].str.split('-').apply(lambda x: x[0])
+
     # keep most recent project information associated with an arb/opr id pair
     issuance_df = issuance_df.drop_duplicates(['arb_id', 'opr_id'], keep='last')
     return issuance_df
@@ -52,10 +51,9 @@ def make_opr_to_arbs(issuance_df):
     opr_to_arbs = {}
     combined_arbs = []
     for opr_id in opr_ids:
-        arbs = []
-        o = issuance_df[issuance_df['opr_id'] == opr_id]
-        for i, row in o.iterrows():
-            arbs.append(row['arb_id'])
+
+        arbs = issuance_df.loc[issuance_df['opr_id'] == opr_id, 'arb_id'].unique().tolist()
+
         # if an opr id maps to multiple arbs (as is the case with certain early
         # early action projects), concatenate into a combined opr id
         if len(arbs) > 1:
@@ -70,10 +68,7 @@ def make_arb_to_oprs(issuance_df, combined_arbs):
     arb_ids = issuance_df['arb_id'].unique().tolist()
     arb_to_oprs = {}
     for arb_id in arb_ids:
-        oprs = []
-        a = issuance_df[issuance_df['arb_id'] == arb_id]
-        for i, row in a.iterrows():
-            oprs.append(row['opr_id'])
+        oprs = issuance_df.loc[issuance_df['arb_id'] == arb_id, 'opr_id'].unique().tolist()
         # currently, there are two arb ids (CAMM5244 & CALS5030) that map
         # to multiple opr ids; after confirming that the underlying project
         # information is the same, we simply map to the most recent opr id
@@ -92,21 +87,9 @@ def make_project_info(issuance_df):
     opr_rows = issuance_df.drop_duplicates(
         ['opr_id', 'project_name', 'project_type', 'state', 'documentation']
     )
-    project_name_to_opr = {}
-    opr_to_project_info = {}
+    opr_rows = opr_rows[['opr_id', 'project_name', 'project_type', 'state', 'documentation']]
 
-    for i, row in opr_rows.iterrows():
-        opr_id = row['opr_id']
-        # skip row if opr_id has already been entered into dictionary
-        # functionally, arbitrarily choosing the first-seen set of project info
-        if opr_id in opr_to_project_info.keys():
-            continue
-        opr_to_project_info[opr_id] = {
-            'project_name': row['project_name'],
-            'project_type': row['project_type'],
-            'state': row['state'],
-            'documentation': row['documentation'],
-        }
-        project_name_to_opr[row['project_name']] = opr_id
+    opr_to_project_info = opr_rows.set_index('opr_id').to_dict(orient='index')
+    project_name_to_opr = opr_rows.set_index('project_name')['opr_id'].to_dict()
 
     return project_name_to_opr, opr_to_project_info

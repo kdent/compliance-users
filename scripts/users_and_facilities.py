@@ -3,23 +3,28 @@ from collections import defaultdict
 import pandas as pd
 
 
-def read_user_facility_data(data_path, compliance_reports):
+def read_user_facility_data(data_path, reporting_periods):
     entity_facility_df = pd.DataFrame()
-    for r in compliance_reports:
-        df = pd.read_excel(data_path + r + 'compliancereport.xlsx', r + ' ' + 'Compliance Summary')
+    for reporting_period in reporting_periods:
+        df = pd.read_excel(
+            data_path + reporting_period + 'compliancereport.xlsx',
+            sheet_name=reporting_period + ' ' + 'Compliance Summary',
+            skiprows=4,
+        )
 
         # clean up dataframe
-        df.columns = df.iloc[3]
+        rename_d = {
+            'Entity ID': 'user_id',
+            'Legal Name': 'user_name',
+            'ARB GHG ID': 'facility_ids',
+        }
         df.rename(
-            columns={
-                'Entity ID': 'user_id',
-                'Legal Name': 'user_name',
-                'ARB GHG ID': 'facility_ids',
-            },
+            columns=rename_d,
             inplace=True,
         )
-        df = df[['user_id', 'user_name', 'facility_ids']]
-        df['reporting_period'] = r
+
+        df = df[rename_d.values()]
+        df['reporting_period'] = reporting_period
 
         # drop CAISO, which does not have an user ID nor facility ids
         df = df[df['facility_ids'].notna()]
@@ -29,7 +34,6 @@ def read_user_facility_data(data_path, compliance_reports):
         df = df.explode('facility_ids')
         df = df.rename(columns={'facility_ids': 'facility_id'})
 
-        df = df[1:].reset_index(drop=True)
         entity_facility_df = entity_facility_df.append(df)
 
     entity_facility_df['user_id'] = entity_facility_df['user_id'].str.strip()
