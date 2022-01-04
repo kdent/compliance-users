@@ -127,8 +127,7 @@ def main():
         'combined_arbs': combined_arbs,
     }
 
-    output_suffix = mrr_data_years[0] + '_' + mrr_data_years[-1] + 'v5'
-    write_json(collection, 'data/outputs/user_data_' + output_suffix + '.json')
+    write_json(collection, 'data/outputs/user_data_v1.0.json')
 
 
 if __name__ == "__main__":
