@@ -62,7 +62,7 @@ export const Entry = ({ data, d, first, last }) => {
 
   const setSearch = useStore((state) => state.setSearch)
 
-  const formatter = format(',.0r')
+  const formatter = format(',.0d')
 
   return (
     <Box>
