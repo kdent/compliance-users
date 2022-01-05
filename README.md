@@ -79,6 +79,12 @@ Note that based on the structure on the structure of public data, offset project
 
 Full documentation of handling edge cases can be found in our [methods google doc](https://docs.google.com/document/d/1DZT6bWENq4EZ_BAnscwMWN-Tc1ketSiWeEQ3hhSmi10/edit#heading=h.2umnfgrdaf01). Edge case examples include facility_ids or arb_ids that appear in the compliance data, but not in the issuance table or MRR data.
 
+## changelog
+
+### 1.0.0 (Jan 4, 2022)
+
+Initial release.
+
 ## license
 
 All the code in this repository is [MIT](https://choosealicense.com/licenses/mit/) licensed, but we request that you please provide attribution if reusing any of our digital content (graphics, logo, articles, etc.).
