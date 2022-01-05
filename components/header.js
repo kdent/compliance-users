@@ -60,6 +60,16 @@ const Header = ({ children }) => {
                 height: 18,
                 flexShrink: 0,
               }}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  setSearch('')
+                  push('/research/compliance-users', null, { scroll: false })
+                }
+              }}
+              onClick={() => {
+                setSearch('')
+                push('/research/compliance-users', null, { scroll: false })
+              }}
             >
               <X
                 sx={{
@@ -71,10 +81,6 @@ const Header = ({ children }) => {
                       stroke: 'primary',
                     },
                   },
-                }}
-                onClick={() => {
-                  setSearch('')
-                  push('/research/compliance-users', null, { scroll: false })
                 }}
               />
             </IconButton>
