@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { Box, Divider } from 'theme-ui'
+import { Box, Divider, IconButton } from 'theme-ui'
 import { Row, Column, Filter, Badge } from '@carbonplan/components'
 import { Search as SearchIcon, X } from '@carbonplan/icons'
 import { sx, colors } from './styles'
@@ -44,26 +44,33 @@ const Header = ({ children }) => {
               }}
             />
             <Search />
-            <X
+            <IconButton
               sx={{
                 cursor: 'pointer',
+                p: [0],
+                mt: ['15px', '3px', '3px', '4px'],
                 mx: [2],
-                mt: ['12px', 0, 0, 0],
-                strokeWidth: 1.5,
-                color: 'secondary',
                 width: 18,
-                transition: 'stroke 0.15s',
-                '@media (hover: hover) and (pointer: fine)': {
-                  '&:hover': {
-                    stroke: 'primary',
+                height: 18,
+              }}
+            >
+              <X
+                sx={{
+                  strokeWidth: 1.5,
+                  color: 'secondary',
+                  transition: 'stroke 0.15s',
+                  '@media (hover: hover) and (pointer: fine)': {
+                    '&:hover': {
+                      stroke: 'primary',
+                    },
                   },
-                },
-              }}
-              onClick={() => {
-                setSearch('')
-                push('/', null, { scroll: false })
-              }}
-            />
+                }}
+                onClick={() => {
+                  setSearch('')
+                  push('/', null, { scroll: false })
+                }}
+              />
+            </IconButton>
             <Badge sx={{ mt: ['12px', 0, 0, 0], ml: ['2px'] }}>
               {filtered.length}
             </Badge>
