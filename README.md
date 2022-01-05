@@ -20,6 +20,7 @@ Working repo to make a simple tool for querying CA compliance data.
 ![GitHub branch checks state](https://img.shields.io/github/checks-status/carbonplan/compliance-users/main?style=flat-square)
 ![GitHub deployments](https://img.shields.io/github/deployments/carbonplan/compliance-users/production?label=vercel&logo=vercel&logoColor=white&style=flat-square)
 ![GitHub](https://img.shields.io/github/license/carbonplan/compliance-users?style=flat-square)
+[![DOI](https://img.shields.io/badge/DOI-10.5281/zenodo.5819475-blue?style=flat-square)](https://doi.org/10.5281/zenodo.5819475)
 
 [mit license]: https://badgen.net/badge/license/MIT/blue
 
