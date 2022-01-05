@@ -36,6 +36,6 @@
     "zustand": "^3.6.8"
   },
   "devDependencies": {
-    "@carbonplan/prettier": "^1.0.0"
+    "@carbonplan/prettier": "^1.1.0"
   }
 }
