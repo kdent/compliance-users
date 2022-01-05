@@ -26,7 +26,7 @@ const description = (
     offsets for compliance. Who are they? This tool lets you search for an
     offset project, user, or facility, and see the linked results. Read more in
     our{' '}
-    <Link href='https://carbonplan.org/blog/compliance-offset-users'>
+    <Link href='https://carbonplan.org/blog/compliance-users-release'>
       blog post
     </Link>{' '}
     or checkout the{' '}
