@@ -27,7 +27,7 @@ const User = () => {
       if (useId(data, id.toUpperCase())) {
         setSearchId(id.toUpperCase())
       } else {
-        router.push('/')
+        router.push('/research/compliance-users')
       }
     }
   }, [data, id])
