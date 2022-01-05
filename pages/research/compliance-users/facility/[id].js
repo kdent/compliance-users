@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import Main from '../../components/main'
-import useStore from '../../components/use-store'
-import useDefaults from '../../components/use-defaults'
-import useId from '../../components/use-id'
+import Main from '../../../../components/main'
+import useStore from '../../../../components/use-store'
+import useDefaults from '../../../../components/use-defaults'
+import useId from '../../../../components/use-id'
 
-const User = () => {
+const Facility = () => {
   const router = useRouter()
   const id = router.query.id
 
@@ -17,8 +17,8 @@ const User = () => {
   useDefaults()
 
   useEffect(() => {
-    if (!searchBy.user) {
-      setSearchBy({ project: false, user: true, facility: false })
+    if (!searchBy.facility) {
+      setSearchBy({ project: false, user: false, facility: true })
     }
   }, [])
 
@@ -35,4 +35,4 @@ const User = () => {
   return <Main />
 }
 
-export default User
+export default Facility

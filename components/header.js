@@ -67,7 +67,7 @@ const Header = ({ children }) => {
                 }}
                 onClick={() => {
                   setSearch('')
-                  push('/', null, { scroll: false })
+                  push('/research/compliance-users', null, { scroll: false })
                 }}
               />
             </IconButton>

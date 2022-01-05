@@ -179,15 +179,15 @@ const Search = () => {
     const id = getSearchId(match)
     if (searchBy.project) {
       setSearchId(id)
-      push(`/project/${id}`, null, { scroll: false })
+      push(`/research/compliance-users/project/${id}`, null, { scroll: false })
     }
     if (searchBy.user) {
       setSearchId(id)
-      push(`/user/${id}`, null, { scroll: false })
+      push(`/research/compliance-users/user/${id}`, null, { scroll: false })
     }
     if (searchBy.facility) {
       setSearchId(id)
-      push(`/facility/${id}`, null, { scroll: false })
+      push(`/research/compliance-users/facility/${id}`, null, { scroll: false })
     }
   }
 

@@ -75,7 +75,7 @@ export const Entry = ({ data, d, first, last }) => {
               <CrossLink
                 onClick={() => setSearch('')}
                 color='blue'
-                href={`/user/${d.user_id}`}
+                href={`/research/compliance-users/user/${d.user_id}`}
               >
                 {d.user_id}
               </CrossLink>
@@ -105,7 +105,9 @@ export const Entry = ({ data, d, first, last }) => {
               <CrossLink
                 onClick={() => setSearch('')}
                 color='green'
-                href={`/project/${data.arb_to_oprs[d.arb_id]}`}
+                href={`/research/compliance-users/project/${
+                  data.arb_to_oprs[d.arb_id]
+                }`}
               >
                 {data.arb_to_oprs[d.arb_id]}
               </CrossLink>
@@ -152,7 +154,7 @@ export const Entry = ({ data, d, first, last }) => {
               <CrossLink
                 onClick={() => setSearch('')}
                 color='pink'
-                href={`/facility/${d.facility_id}`}
+                href={`/research/compliance-users/facility/${d.facility_id}`}
               >
                 {d.facility_id}
               </CrossLink>
