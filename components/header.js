@@ -20,7 +20,12 @@ const Header = ({ children }) => {
     <Box>
       <Row columns={[6, 8, 10, 10]} sx={{ mb: [5] }}>
         <Column start={[1, 1, 1, 1]} width={[6, 9, 9, 9]}>
-          <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexWrap: ['wrap', 'nowrap', 'nowrap', 'nowrap'],
+            }}
+          >
             <SearchIcon
               sx={{
                 mr: [3],
@@ -28,6 +33,7 @@ const Header = ({ children }) => {
                 color: 'secondary',
                 strokeWidth: 1.5,
                 mt: ['2px'],
+                flexShrink: 0,
               }}
             />
             <Filter
@@ -52,6 +58,7 @@ const Header = ({ children }) => {
                 mx: [2],
                 width: 18,
                 height: 18,
+                flexShrink: 0,
               }}
             >
               <X
@@ -71,7 +78,7 @@ const Header = ({ children }) => {
                 }}
               />
             </IconButton>
-            <Badge sx={{ mt: ['12px', 0, 0, 0], ml: ['2px'] }}>
+            <Badge sx={{ mt: ['12px', 0, 0, 0], ml: ['2px'], flexShrink: 0 }}>
               {filtered.length}
             </Badge>
           </Box>
