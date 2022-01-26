@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import { ThemeProvider } from 'theme-ui'
 import { MDXProvider } from '@mdx-js/react'
-import { FadeIn } from '@carbonplan/components'
 import '@carbonplan/components/fonts.css'
 import '@carbonplan/components/globals.css'
 import theme from '@carbonplan/theme'
@@ -22,9 +21,7 @@ const App = ({ Component, pageProps, router }) => {
     return (
       <ThemeProvider theme={theme}>
         <MDXProvider>
-          <FadeIn>
-            <Component {...pageProps} />
-          </FadeIn>
+          <Component {...pageProps} />
         </MDXProvider>
       </ThemeProvider>
     )
@@ -33,13 +30,11 @@ const App = ({ Component, pageProps, router }) => {
   return (
     <ThemeProvider theme={theme}>
       <MDXProvider>
-        <FadeIn>
-          <Layout>
-            <Header />
-            <Component {...pageProps} />
-            <Info />
-          </Layout>
-        </FadeIn>
+        <Layout>
+          <Header />
+          <Component {...pageProps} />
+          <Info />
+        </Layout>
       </MDXProvider>
     </ThemeProvider>
   )

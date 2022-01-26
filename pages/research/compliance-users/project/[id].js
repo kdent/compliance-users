@@ -23,7 +23,7 @@ const Project = () => {
   }, [])
 
   useEffect(() => {
-    if (data) {
+    if (data && id) {
       if (useId(data, id.toUpperCase())) {
         setSearchId(id.toUpperCase())
       } else {
