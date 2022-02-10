@@ -47,7 +47,7 @@ const Layout = ({ children }) => {
       card={`${prefix}/social/${meta.card}.png`}
       metadata={false}
       description={meta.quickLook + '.'}
-      title={meta.title.toLowerCase() + ' / research / carbonplan'}
+      title={meta.title + ' – CarbonPlan'}
       links={'local'}
       nav={'research'}
     >
