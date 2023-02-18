@@ -10,12 +10,13 @@ import users_and_projects
 pd.options.mode.chained_assignment = None
 
 # Define years over which compliance data will be considered and where to find it
-reporting_periods = ['2013-2014', '2015-2017', '2018-2020']
-mrr_data_years = ['2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020']
+# FOR UPDATES: add reporting and mrr data years
+reporting_periods = ['2013-2014', '2015-2017', '2018-2020', '2021']
+mrr_data_years = ['2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021']
 
-compliance_report_path = 'data/compliance-reports/'
-mrr_data_path = 'data/mrr-data/'
-issuance_table_path = 'data/'
+compliance_report_path = '../data/compliance-reports/'
+mrr_data_path = '../data/mrr-data/'
+issuance_table_path = '../data/'
 
 
 def prune_data(user_project_df, project_df, user_facility_df, facility_df):
@@ -127,7 +128,8 @@ def main():
         'combined_arbs': combined_arbs,
     }
 
-    write_json(collection, 'data/outputs/user_data_v1.0.json')
+    # FOR UPDATES: change json destination
+    write_json(collection, '../data/outputs/user_data_v2.0.json')
 
 
 if __name__ == "__main__":

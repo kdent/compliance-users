@@ -2,6 +2,7 @@ from collections import defaultdict
 
 import pandas as pd
 
+# FOR UPDATES: add new mrr data key
 mrr_file_year = {
     '2013': '2019',
     '2014': '2019',
@@ -11,6 +12,7 @@ mrr_file_year = {
     '2018': '2020',
     '2019': '2020',
     '2020': '2021',
+    '2021': '2022',
 }
 reporting_periods = {
     '2013': '2013-2014',
@@ -21,6 +23,7 @@ reporting_periods = {
     '2018': '2018-2020',
     '2019': '2018-2020',
     '2020': '2018-2020',
+    '2021': '2021',
 }
 
 
