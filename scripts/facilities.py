@@ -67,7 +67,6 @@ def read_facility_data(data_path, mrr_data_years):
 
 
 def make_facility_info(facility_df, user_facility_df):
-
     facility_name_to_id = facility_df.set_index('facility_name')['facility_id'].to_dict()
 
     facility_id_to_info = defaultdict(dict)

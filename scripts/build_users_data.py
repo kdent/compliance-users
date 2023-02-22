@@ -72,7 +72,6 @@ def write_json(collection, output):
 
 
 def main():
-
     # read data
     project_df = projects.read_project_data(issuance_table_path)
     facility_df = facilities.read_facility_data(mrr_data_path, mrr_data_years)
