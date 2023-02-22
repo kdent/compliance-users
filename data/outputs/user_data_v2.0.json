@@ -7164,6 +7164,11 @@
         "quantity": 147
       },
       {
+        "arb_id": "CAFR6339",
+        "reporting_period": "2018-2020",
+        "quantity": 20
+      },
+      {
         "arb_id": "CALS5169",
         "reporting_period": "2018-2020",
         "quantity": 266
@@ -9715,6 +9720,11 @@
       },
       {
         "arb_id": "CAFR6339",
+        "reporting_period": "2018-2020",
+        "quantity": 5265
+      },
+      {
+        "arb_id": "CAFR6339",
         "reporting_period": "2021",
         "quantity": 9643
       },
@@ -9964,6 +9974,11 @@
         "arb_id": "CAFR5425",
         "reporting_period": "2018-2020",
         "quantity": 8000
+      },
+      {
+        "arb_id": "CAFR6339",
+        "reporting_period": "2018-2020",
+        "quantity": 637481
       },
       {
         "arb_id": "CALS0008",
@@ -10747,6 +10762,11 @@
         "quantity": 30179
       },
       {
+        "arb_id": "CAFR6339",
+        "reporting_period": "2018-2020",
+        "quantity": 1908
+      },
+      {
         "arb_id": "CAOD0019",
         "reporting_period": "2013-2014",
         "quantity": 19114
@@ -11017,7 +11037,7 @@
       {
         "arb_id": "CAFR0058",
         "reporting_period": "2018-2020",
-        "quantity": 14843
+        "quantity": 15067
       },
       {
         "arb_id": "CAFR0058",
@@ -15045,6 +15065,11 @@
         "quantity": 200000
       },
       {
+        "arb_id": "CAFR5072",
+        "reporting_period": "2018-2020",
+        "quantity": 1112
+      },
+      {
         "arb_id": "CAFR5089",
         "reporting_period": "2018-2020",
         "quantity": 17776
@@ -15143,6 +15168,11 @@
         "arb_id": "CAFR5234",
         "reporting_period": "2021",
         "quantity": 97806
+      },
+      {
+        "arb_id": "CAFR5253",
+        "reporting_period": "2018-2020",
+        "quantity": 2898
       },
       {
         "arb_id": "CAFR5270",
@@ -15267,7 +15297,7 @@
       {
         "arb_id": "CALS5123",
         "reporting_period": "2018-2020",
-        "quantity": 29731
+        "quantity": 25721
       },
       {
         "arb_id": "CALS5131",
@@ -18916,6 +18946,11 @@
         "quantity": 51600
       },
       {
+        "user_id": "CA2106",
+        "reporting_period": "2018-2020",
+        "quantity": 2898
+      },
+      {
         "user_id": "CA2829",
         "reporting_period": "2018-2020",
         "quantity": 21530
@@ -21922,6 +21957,11 @@
         "quantity": 20968
       },
       {
+        "user_id": "CA2106",
+        "reporting_period": "2018-2020",
+        "quantity": 1112
+      },
+      {
         "user_id": "CA2722",
         "reporting_period": "2018-2020",
         "quantity": 420
@@ -22722,7 +22762,7 @@
       {
         "user_id": "CA2106",
         "reporting_period": "2018-2020",
-        "quantity": 29731
+        "quantity": 25721
       }
     ],
     "CALS5132": [
@@ -24816,14 +24856,34 @@
         "quantity": 13215
       },
       {
+        "user_id": "CA1137",
+        "reporting_period": "2018-2020",
+        "quantity": 20
+      },
+      {
         "user_id": "CA1143",
         "reporting_period": "2021",
         "quantity": 20953
       },
       {
         "user_id": "CA1248",
+        "reporting_period": "2018-2020",
+        "quantity": 5265
+      },
+      {
+        "user_id": "CA1248",
         "reporting_period": "2021",
         "quantity": 9643
+      },
+      {
+        "user_id": "CA1251",
+        "reporting_period": "2018-2020",
+        "quantity": 637481
+      },
+      {
+        "user_id": "CA1290",
+        "reporting_period": "2018-2020",
+        "quantity": 1908
       },
       {
         "user_id": "CA2056",
@@ -26968,7 +27028,7 @@
       {
         "user_id": "CA1304",
         "reporting_period": "2018-2020",
-        "quantity": 14843
+        "quantity": 15067
       },
       {
         "user_id": "CA1304",
