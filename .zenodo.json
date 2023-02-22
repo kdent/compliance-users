@@ -1,0 +1,27 @@
+{
+  "title": "Compliance Users",
+  "description": "In the California cap-and-trade program, polluting entities use carbon offsets for compliance. Who are they? This tool lets you search for an offset project, user, or facility, and see the linked results. Read more in our original blog post or checkout the GitHub repository. This tool was updated as of February 2023. ",
+  "creators": [
+    {
+      "name": "Freya Chay",
+      "affiliation": "CarbonPlan",
+      "orcid": "0000-0002-5397-017X"
+    },
+    {
+      "name": "Jeremy Freeman",
+      "affiliation": "CarbonPlan",
+      "orcid": "0000-0001-7077-7972"
+    },
+    {
+      "name": "Danny Cullenward",
+      "affiliation": "CarbonPlan",
+      "orcid": "0000-0002-6803-9572"
+    }
+  ],
+  "upload_type": "software",
+  "keywords": [
+    "california",
+    "cap and trade",
+    "offsets"
+  ]
+}
