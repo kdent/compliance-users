@@ -4,7 +4,6 @@ import { Box, Divider } from 'theme-ui'
 import { Input } from '@carbonplan/components'
 import { shade } from '@theme-ui/color'
 import { useKey } from 'react-use'
-import { sx } from './styles'
 import useStore from './use-store'
 
 const getMatches = (search, targets) => {

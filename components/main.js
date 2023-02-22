@@ -1,11 +1,10 @@
-import { useEffect, useRef, useCallback } from 'react'
 import { Box, Divider } from 'theme-ui'
 import { Row, Column, Filter, Group } from '@carbonplan/components'
 import { sx, colors } from './styles'
 import Target from './target'
 import Results from './results'
-import Header from './header'
 import useStore from './use-store'
+import { useMemo } from 'react'
 
 const Main = () => {
   const data = useStore((state) => state.data)
@@ -15,6 +14,13 @@ const Main = () => {
   const setShowResultsBy = useStore((state) => state.setShowResultsBy)
   const setReportingPeriods = useStore((state) => state.setReportingPeriods)
 
+  const order = useMemo(
+    () =>
+      Object.keys(reportingPeriods).sort(
+        (a, b) => Number(a.split('-')[0]) - Number(b.split('-')[0])
+      ),
+    [reportingPeriods]
+  )
   return (
     <>
       <Box>
@@ -56,6 +62,7 @@ const Main = () => {
                   <Box>
                     <Box sx={sx.label}>Reporting periods</Box>
                     <Filter
+                      order={order}
                       values={reportingPeriods}
                       setValues={setReportingPeriods}
                       multiSelect
