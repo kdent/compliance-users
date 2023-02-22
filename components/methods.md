@@ -1,6 +1,6 @@
 ## Methods
 
-The California Air Resources Board (CARB) — the regulator in charge of implementing the cap-and-trade program — publishes a variety of cap-and-trade data. This tool connects the dots between three of CARB’s published data sources. Here we describe those sources.
+The California Air Resources Board (CARB) — the regulator in charge of implementing the cap-and-trade program — publishes a variety of cap-and-trade data. This tool connects the dots between three of CARB's published data sources. Here we describe those sources.
 
 [Compliance reports](https://ww2.arb.ca.gov/our-work/programs/cap-and-trade-program/cap-and-trade-program-data) are published at the end of each compliance period (2013-2014, 2015-2017, and 2018-2020) and detail how regulated entities comply with their cap-and-trade obligations, including through use of offset credits. We use the compliance reports to associate regulated entities (i.e. users) with offset project IDs and facility IDs.
 

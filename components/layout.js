@@ -25,7 +25,7 @@ const description = (
     In the California cap-and-trade program, polluting entities use carbon
     offsets for compliance. Who are they? This tool lets you search for an
     offset project, user, or facility, and see the linked results. Read more in
-    our{' '}
+    our original{' '}
     <Link href='https://carbonplan.org/blog/compliance-users-release'>
       blog post
     </Link>{' '}
@@ -33,7 +33,7 @@ const description = (
     <Link href='https://github.com/carbonplan/compliance-users'>
       GitHub repository
     </Link>
-    .
+    . This tool was updated as of February 2023.
   </span>
 )
 
