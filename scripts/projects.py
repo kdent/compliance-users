@@ -51,7 +51,6 @@ def make_opr_to_arbs(issuance_df):
     opr_to_arbs = {}
     combined_arbs = []
     for opr_id in opr_ids:
-
         arbs = issuance_df.loc[issuance_df['opr_id'] == opr_id, 'arb_id'].unique().tolist()
 
         # if an opr id maps to multiple arbs (as is the case with certain early

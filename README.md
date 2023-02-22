@@ -40,7 +40,7 @@ This repository is being used to develop a simple tool to query California Cap &
 
 ### data sources
 
-- [Compliance Reports](https://ww2.arb.ca.gov/our-work/programs/cap-and-trade-program/cap-and-trade-program-data): Specifically, we are using the reports published at the end of each full compliance period (2013-2014, 2015-2017, 2018-2020) detailing how regulated entities complied with their Cap & Trade Obligations, including their use of offset credits. We also use annual compliance reports (2021) where no report for the full compliance period is available. 
+- [Compliance Reports](https://ww2.arb.ca.gov/our-work/programs/cap-and-trade-program/cap-and-trade-program-data): Specifically, we are using the reports published at the end of each full compliance period (2013-2014, 2015-2017, 2018-2020) detailing how regulated entities complied with their Cap & Trade Obligations, including their use of offset credits. We also use annual compliance reports (2021) where no report for the full compliance period is available.
 
 - [Offset Credit Issuance Table](https://ww2.arb.ca.gov/our-work/programs/cap-and-trade-program/cap-and-trade-program-data): This table spreadsheet provides information about the issuance of ARB offset credits, i.e. offset credits that are eligible for use in the Cap & Trade program. This table is typically updated multiple times a month; we are using the issuance table published on Feb 8, 2023.
 
