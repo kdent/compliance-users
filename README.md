@@ -40,9 +40,9 @@ This repository is being used to develop a simple tool to query California Cap &
 
 ### data sources
 
-- [Compliance Reports](https://ww2.arb.ca.gov/our-work/programs/cap-and-trade-program/cap-and-trade-program-data): Specifically, we are using the reports published at the end of each compliance period (2013-2014, 2015-2017, 2018-2020) detailing how regulated entities complied with their Cap & Trade Obligations, including their use of offset credits.
+- [Compliance Reports](https://ww2.arb.ca.gov/our-work/programs/cap-and-trade-program/cap-and-trade-program-data): Specifically, we are using the reports published at the end of each full compliance period (2013-2014, 2015-2017, 2018-2020) detailing how regulated entities complied with their Cap & Trade Obligations, including their use of offset credits. We also use annual compliance reports (2021) where no report for the full compliance period is available. 
 
-- [Offset Credit Issuance Table](https://ww2.arb.ca.gov/our-work/programs/cap-and-trade-program/cap-and-trade-program-data): This table spreadsheet provides information about the issuance of ARB offset credits, i.e. offset credits that are eligible for use in the Cap & Trade program. This table is typically updated multiple times a month; we are using the issuance table published on Nov 24, 2021.
+- [Offset Credit Issuance Table](https://ww2.arb.ca.gov/our-work/programs/cap-and-trade-program/cap-and-trade-program-data): This table spreadsheet provides information about the issuance of ARB offset credits, i.e. offset credits that are eligible for use in the Cap & Trade program. This table is typically updated multiple times a month; we are using the issuance table published on Feb 8, 2023.
 
 - [Mandatory GHG Reporting Data (MRR)](https://ww2.arb.ca.gov/mrr-data): Annual MRR data provides details on the emissions from facilities who are covered by the Cap & Trade program.
 
@@ -56,13 +56,13 @@ Note that based on the structure on the structure of public data, offset project
 
 - _User / offset project data (compliance reports)_: The compliance reports have an “Offset Detail” tab which connects users to quantities of offset credits from different projects. The users are identified by a name and id. The projects are identified by an arb_id (a project id given by CARB).
 
-- _User / facility data (compliance reports)_: The compliance reports have a “Compliance Summary” tab which associates users with facilities whose emissions they were responsible for covering during the compliance period.The users are identified by a name and id. The facilities are identified by a list of facility_ids called ARB GHG Ids.
+- _User / facility data (compliance reports)_: The compliance reports have a “Compliance Summary” tab which associates users with facilities whose emissions they were responsible for covering during the compliance period. The users are identified by a name and id. The facilities are identified by a list of facility_ids called ARB GHG Ids.
 
 - _Issuance table_: The issuance table has an “ARB Offset Credit Issuance” tab which associates an arb_id with an opr_id and underlying project information.
 
 - _Facility data (MRR data)_: Facility data (MRR data): The MRR data have a “GHG Data” tab which associates facility ids with facility information, including name, location and sector.
 
-- _Prune data_: For the purposes of this tool, we are only interested in projects and facilities associated with users who have turned in offset credits for compliance purposes. We drop project, facility and user data for which this is not true.
+- _Prune data_: For the purposes of this tool, we are only interested in projects and facilities associated with users who have turned in offset credits for compliance purposes. We drop project, facility, and user data for which this is not true.
 
 #### map users <--> offset projects
 
@@ -85,6 +85,10 @@ Full documentation of handling edge cases can be found in our [methods google do
 ### 1.0.0 (Jan 4, 2022)
 
 Initial release.
+
+### 2.0.0 (Feb 21, 2023)
+
+Update to reflect compliance data released in December 2022.
 
 ## license
 
