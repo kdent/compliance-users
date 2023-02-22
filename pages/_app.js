@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { ThemeProvider } from 'theme-ui'
-import { MDXProvider } from '@mdx-js/react'
+import { MDXProvider, useMDXComponents } from '@mdx-js/react'
+import { useThemedStylesWithMdx } from '@theme-ui/mdx'
 import '@carbonplan/components/fonts.css'
 import '@carbonplan/components/globals.css'
 import theme from '@carbonplan/theme'
@@ -12,6 +13,7 @@ import Info from '../components/info'
 const App = ({ Component, pageProps, router }) => {
   const data = useStore((state) => state.data)
   const fetch = useStore((state) => state.fetch)
+  const components = useThemedStylesWithMdx(useMDXComponents())
 
   useEffect(() => {
     if (!data) fetch()
@@ -20,7 +22,7 @@ const App = ({ Component, pageProps, router }) => {
   if (router.route === '/404') {
     return (
       <ThemeProvider theme={theme}>
-        <MDXProvider>
+        <MDXProvider components={components}>
           <Component {...pageProps} />
         </MDXProvider>
       </ThemeProvider>
@@ -29,7 +31,7 @@ const App = ({ Component, pageProps, router }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <MDXProvider>
+      <MDXProvider components={components}>
         <Layout>
           <Header />
           <Component {...pageProps} />

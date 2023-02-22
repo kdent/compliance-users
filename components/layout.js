@@ -1,4 +1,4 @@
-import { Box, Text, Grid, Container, Themed } from 'theme-ui'
+import { Box } from 'theme-ui'
 import {
   Layout as BaseLayout,
   Guide,
@@ -77,7 +77,9 @@ const Layout = ({ children }) => {
               {meta.title}
             </Box>
             <Box sx={{ mb: [0, 0, 4], mt: [0, 0, 5, 6] }}>
-              <Themed.p>{description}</Themed.p>
+              <Box as='p' variant='styles.p'>
+                {description}
+              </Box>
             </Box>
           </Box>
         </Column>
