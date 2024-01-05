@@ -4,15 +4,16 @@ import pandas as pd
 
 # FOR UPDATES: add new mrr data key
 mrr_file_year = {
-    '2013': '2019',
-    '2014': '2019',
-    '2015': '2019',
-    '2016': '2020',
-    '2017': '2020',
-    '2018': '2020',
-    '2019': '2020',
-    '2020': '2021',
-    '2021': '2022',
+    '2013': '2019-11-04',
+    '2014': '2019-11-04',
+    '2015': '2019-11-04',
+    '2016': '2020-11-04',
+    '2017': '2020-11-04',
+    '2018': '2020-11-04',
+    '2019': '2020-11-04',
+    '2020': '2021-11-04',
+    '2021': '2022-11-04',
+    '2022': '2023-11-06'
 }
 reporting_periods = {
     '2013': '2013-2014',
@@ -24,21 +25,33 @@ reporting_periods = {
     '2019': '2018-2020',
     '2020': '2018-2020',
     '2021': '2021',
+    '2022': '2022'
 }
 
 
 def read_facility_data(data_path, mrr_data_years):
     facility_df = pd.DataFrame()
     for mrr_data_year in mrr_data_years:
-        df = pd.read_excel(
-            data_path
-            + mrr_data_year
-            + '-ghg-emissions-'
-            + mrr_file_year[mrr_data_year]
-            + '-11-04.xlsx',
-            sheet_name=mrr_data_year + ' GHG Data',
-            skiprows=8,
-        )
+        if mrr_data_year == '2022':
+            df = pd.read_excel(
+                data_path
+                + mrr_data_year
+                + '-ghg-emissions-'
+                + mrr_file_year[mrr_data_year]
+                + '.xlsx',
+                sheet_name=mrr_data_year + ' GHG Data',
+                skiprows=9,
+            )
+        else:
+            df = pd.read_excel(
+                data_path
+                + mrr_data_year
+                + '-ghg-emissions-'
+                + mrr_file_year[mrr_data_year]
+                + '.xlsx',
+                sheet_name=mrr_data_year + ' GHG Data',
+                skiprows=8,
+            )
 
         # clean up dataframe
         rename_d = {

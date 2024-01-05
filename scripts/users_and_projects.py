@@ -4,11 +4,20 @@ import pandas as pd
 def read_user_project_data(data_path, reporting_periods):
     user_project_df = pd.DataFrame()
     for reporting_period in reporting_periods:
-        df = pd.read_excel(
-            data_path + reporting_period + 'compliancereport.xlsx',
-            sheet_name=reporting_period + ' ' + 'Offset Detail',
-            skiprows=4,
-        )
+        if reporting_period == '2022':
+            df = pd.read_excel(
+                data_path + 'nc-' + reporting_period + 'compliancereport.xlsx',
+                sheet_name=reporting_period + ' ' + 'Offset Detail',
+                skiprows=4,
+                usecols='A:E'
+            )
+        else: 
+            df = pd.read_excel(
+                data_path + reporting_period + 'compliancereport.xlsx',
+                sheet_name=reporting_period + ' ' + 'Offset Detail',
+                skiprows=4,
+                usecols='A:E'
+            )
         df = df[~pd.isnull(df).any(axis=1)]
         df['reporting_period'] = reporting_period
         user_project_df = user_project_df.append(df)
