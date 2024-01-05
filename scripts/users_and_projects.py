@@ -36,6 +36,7 @@ def read_user_project_data(data_path, reporting_periods):
 
     # ignoring offset vintage lets us simplify arb_id and collapse
     # rows that had the same entity and project but different vintages
+    user_project_df['arb_id'] = user_project_df['arb_id'].str.replace('CAFR-', 'CAFR') # typo in 2022 data for CAFR-6339
     user_project_df['arb_id'] = user_project_df['arb_id'].str.split('-').apply(lambda x: x[0])
 
     user_project_df = (
