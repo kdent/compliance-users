@@ -7106,6 +7106,11 @@
         "quantity": 26045
       },
       {
+        "arb_id": "CAFR6339",
+        "reporting_period": "2022",
+        "quantity": 125000
+      },
+      {
         "arb_id": "CAFR6368",
         "reporting_period": "2021",
         "quantity": 100000
@@ -10127,6 +10132,11 @@
         "quantity": 9643
       },
       {
+        "arb_id": "CAFR6339",
+        "reporting_period": "2022",
+        "quantity": 16957
+      },
+      {
         "arb_id": "CAMM5493",
         "reporting_period": "2022",
         "quantity": 3848
@@ -11898,6 +11908,11 @@
         "quantity": 198
       },
       {
+        "arb_id": "CAFR6339",
+        "reporting_period": "2022",
+        "quantity": 168
+      },
+      {
         "arb_id": "CALS5169",
         "reporting_period": "2018-2020",
         "quantity": 115
@@ -13153,6 +13168,11 @@
         "arb_id": "CAFR5378",
         "reporting_period": "2022",
         "quantity": 268
+      },
+      {
+        "arb_id": "CAFR6339",
+        "reporting_period": "2022",
+        "quantity": 3668
       },
       {
         "arb_id": "CALS5169",
@@ -15350,6 +15370,11 @@
         "quantity": 257
       },
       {
+        "arb_id": "CAFR6339",
+        "reporting_period": "2022",
+        "quantity": 257
+      },
+      {
         "arb_id": "CALS5077",
         "reporting_period": "2018-2020",
         "quantity": 2491
@@ -15718,6 +15743,11 @@
         "arb_id": "CAFR6339",
         "reporting_period": "2021",
         "quantity": 1196
+      },
+      {
+        "arb_id": "CAFR6339",
+        "reporting_period": "2022",
+        "quantity": 637
       },
       {
         "arb_id": "CALS5040",
@@ -16822,6 +16852,11 @@
         "quantity": 25235
       },
       {
+        "arb_id": "CAFR6339",
+        "reporting_period": "2022",
+        "quantity": 3952
+      },
+      {
         "arb_id": "CALS5145",
         "reporting_period": "2018-2020",
         "quantity": 13182
@@ -16947,6 +16982,11 @@
         "arb_id": "CAFR6339",
         "reporting_period": "2021",
         "quantity": 792
+      },
+      {
+        "arb_id": "CAFR6339",
+        "reporting_period": "2022",
+        "quantity": 1358
       },
       {
         "arb_id": "CAOD5521",
@@ -17358,6 +17398,11 @@
         "arb_id": "CAFR5413",
         "reporting_period": "2021",
         "quantity": 1400
+      },
+      {
+        "arb_id": "CAFR6339",
+        "reporting_period": "2022",
+        "quantity": 1800
       },
       {
         "arb_id": "CAMM5593",
@@ -26544,6 +26589,11 @@
         "quantity": 13215
       },
       {
+        "user_id": "CA1119",
+        "reporting_period": "2022",
+        "quantity": 125000
+      },
+      {
         "user_id": "CA1137",
         "reporting_period": "2018-2020",
         "quantity": 20
@@ -26564,6 +26614,11 @@
         "quantity": 9643
       },
       {
+        "user_id": "CA1248",
+        "reporting_period": "2022",
+        "quantity": 16957
+      },
+      {
         "user_id": "CA1251",
         "reporting_period": "2018-2020",
         "quantity": 637481
@@ -26574,9 +26629,29 @@
         "quantity": 1908
       },
       {
+        "user_id": "CA1316",
+        "reporting_period": "2022",
+        "quantity": 168
+      },
+      {
+        "user_id": "CA1561",
+        "reporting_period": "2022",
+        "quantity": 3668
+      },
+      {
+        "user_id": "CA1967",
+        "reporting_period": "2022",
+        "quantity": 257
+      },
+      {
         "user_id": "CA2056",
         "reporting_period": "2021",
         "quantity": 1196
+      },
+      {
+        "user_id": "CA2056",
+        "reporting_period": "2022",
+        "quantity": 637
       },
       {
         "user_id": "CA2068",
@@ -26584,14 +26659,29 @@
         "quantity": 2910
       },
       {
+        "user_id": "CA2829",
+        "reporting_period": "2022",
+        "quantity": 3952
+      },
+      {
         "user_id": "CA2904",
         "reporting_period": "2021",
         "quantity": 792
       },
       {
+        "user_id": "CA2904",
+        "reporting_period": "2022",
+        "quantity": 1358
+      },
+      {
         "user_id": "CA3076",
         "reporting_period": "2021",
         "quantity": 72
+      },
+      {
+        "user_id": "CA3320",
+        "reporting_period": "2022",
+        "quantity": 1800
       }
     ],
     "CAMM5173": [

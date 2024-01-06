@@ -2,7 +2,7 @@ from collections import defaultdict
 
 import pandas as pd
 
-# FOR UPDATES: add new mrr data key
+# FOR UPDATES: add new mrr data keys
 mrr_file_year = {
     '2013': '2019-11-04',
     '2014': '2019-11-04',
