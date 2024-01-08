@@ -8,16 +8,16 @@ def read_user_facility_data(data_path, reporting_periods):
     for reporting_period in reporting_periods:
         if reporting_period == '2022':
             df = pd.read_excel(
-                data_path + 'nc-' +reporting_period + 'compliancereport.xlsx',
+                data_path + 'nc-' + reporting_period + 'compliancereport.xlsx',
                 sheet_name=reporting_period + ' ' + 'Compliance Summary',
                 skiprows=4,
             )
-        else: 
+        else:
             df = pd.read_excel(
                 data_path + reporting_period + 'compliancereport.xlsx',
                 sheet_name=reporting_period + ' ' + 'Compliance Summary',
                 skiprows=4,
-            )   
+            )
 
         # clean up dataframe
         rename_d = {
