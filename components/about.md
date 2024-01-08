@@ -8,4 +8,4 @@ Additional information about forest projects in particular — including total i
 
 You can cite this work as:
 
-F Chay, J Freeman, D Cullenward (2023) “Compliance users” CarbonPlan [doi:10.5281/zenodo.7668230](https://doi.org/10.5281/zenodo.7668230)
+F Chay, J Freeman, D Cullenward (2024) “Compliance users” CarbonPlan [doi:10.5281/zenodo.7668230](https://doi.org/10.5281/zenodo.7668230)

@@ -90,6 +90,10 @@ Initial release.
 
 Update to reflect compliance data released in December 2022.
 
+### 3.0.0 (Jan 5, 2024)
+
+Update to reflect compliance data released in December 2023.
+
 ## license
 
 All the code in this repository is [MIT](https://choosealicense.com/licenses/mit/) licensed, but we request that you please provide attribution if reusing any of our digital content (graphics, logo, articles, etc.).

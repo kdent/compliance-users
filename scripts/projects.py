@@ -11,7 +11,7 @@ project_types = {
 
 
 def read_project_data(data_path):
-    issuance = pd.read_excel(data_path + 'arboc_issuance.xlsx', 'ARB Offset Credit Issuance')
+    issuance = pd.read_excel(data_path, 'ARB Offset Credit Issuance')
     # subset and rename columns of interest
     issuance_df = issuance[
         [
