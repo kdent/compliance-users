@@ -33,6 +33,8 @@ Update documentation:
 
 - Update the "last updated" date and list of years included in 'methods.md', 'layout.js', and '.zenodo.json'. 
 
+- Update citation date in 'about.md'. 
+
 
 Update and test front-end: 
 
