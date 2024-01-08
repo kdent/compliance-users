@@ -1,7 +1,10 @@
 import create from 'zustand'
 
+// const url =
+//   'https://raw.githubusercontent.com/carbonplan/compliance-users/main/data/outputs/user_data_v3.0.json'
+
 const url =
-  'https://raw.githubusercontent.com/carbonplan/compliance-users/main/data/outputs/user_data_v3.0.json'
+  'https://raw.githubusercontent.com/carbonplan/compliance-users/1f4ef6ce890b44a24d811362a59d9960db58b0d3/data/outputs/user_data_v3.0.json'
 
 const useStore = create((set) => ({
   search: '',
