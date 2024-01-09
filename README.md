@@ -1,28 +1,18 @@
-<p align='left'>
-  <a href='https://carbonplan.org/#gh-light-mode-only'>
-    <img
-      src='https://carbonplan-assets.s3.amazonaws.com/monogram/dark-small.png'
-      height='48px'
-    />
-  </a>
-  <a href='https://carbonplan.org/#gh-dark-mode-only'>
-    <img
-      src='https://carbonplan-assets.s3.amazonaws.com/monogram/light-small.png'
-      height='48px'
-    />
-  </a>
+<p align="left" >
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://carbonplan-assets.s3.amazonaws.com/monogram/light-small.png">
+  <img alt="CarbonPlan monogram." height="48" src="https://carbonplan-assets.s3.amazonaws.com/monogram/dark-small.png">
+</picture>
 </p>
 
 # carbonplan/compliance-users
 
 Working repo to make a simple tool for querying CA compliance data.
 
-![GitHub branch checks state](https://img.shields.io/github/checks-status/carbonplan/compliance-users/main?style=flat-square)
-![GitHub deployments](https://img.shields.io/github/deployments/carbonplan/compliance-users/production?label=vercel&logo=vercel&logoColor=white&style=flat-square)
-![GitHub](https://img.shields.io/github/license/carbonplan/compliance-users?style=flat-square)
-[![DOI](https://img.shields.io/badge/DOI-10.5281/zenodo.5819475-blue?style=flat-square)](https://doi.org/10.5281/zenodo.5819475)
-
-[mit license]: https://badgen.net/badge/license/MIT/blue
+![Checks status](https://github.com/carbonplan/compliance-users/actions/workflows/main.yml/badge.svg)
+![GitHub deployments](https://img.shields.io/github/deployments/carbonplan/compliance-users/production?label=vercel&style=flat)
+[![License](https://img.shields.io/github/license/carbonplan/compliance-users?style=flat)](https://github.com/carbonplan/compliance-users/blob/main/LICENSE)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7668230.svg)](https://doi.org/10.5281/zenodo.7668230)
 
 This repository is being used to develop a simple tool to query California Cap & Trade compliance data. Specifically, the tool allows a user to ask which regulated entities in California – whom we call users throughout the repo – have turned in credits from a particular offset project (project-->users) or which offset projects a particular user has used credits from (user-->projects).
 
